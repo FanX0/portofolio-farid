@@ -1,6 +1,6 @@
 const RulerDev = () => {
   // semua tick tiap 10px sampai 10000px
-  const allTicks = Array.from({ length: 1000 }, (_, i) => (i + 1) * 10);
+  const allTicks = Array.from({ length: 2000 }, (_, i) => (i + 1) * 10);
 
   return (
     <div className="pointer-events-none relative inset-y-0 left-[90%] w-16 z-50 mix-blend-difference">

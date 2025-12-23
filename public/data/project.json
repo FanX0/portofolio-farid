@@ -1,0 +1,92 @@
+[
+  {
+    "id": 1,
+    "title": "Project 1",
+    "description": "A modern web application focused on performance and usability.",
+    "technologies": ["React", "Next.js", "Tailwind CSS"],
+    "liveDemo": "https://project-1-demo.com",
+    "sourceCode": "https://github.com/faridazhari/project-1",
+    "image": "/images/projects/project-1.jpg"
+  },
+  {
+    "id": 2,
+    "title": "Project 2",
+    "description": "A responsive and scalable frontend built with modern tools.",
+    "technologies": ["React", "Next.js", "Tailwind CSS"],
+    "liveDemo": "https://project-2-demo.com",
+    "sourceCode": "https://github.com/faridazhari/project-2",
+    "image": "/images/projects/project-2.jpg"
+  },
+  {
+    "id": 3,
+    "title": "Project 3",
+    "description": "An interactive user experience with clean UI and smooth animations.",
+    "technologies": ["React", "Next.js", "GSAP"],
+    "liveDemo": "https://project-3-demo.com",
+    "sourceCode": "https://github.com/faridazhari/project-3",
+    "image": "/images/projects/project-3.jpg"
+  },
+  {
+    "id": 4,
+    "title": "Project 4",
+    "description": "A fast and optimized website designed for real-world use cases.",
+    "technologies": ["Next.js", "TypeScript", "Tailwind CSS"],
+    "liveDemo": "https://project-4-demo.com",
+    "sourceCode": "https://github.com/faridazhari/project-4",
+    "image": "/images/projects/project-4.jpg"
+  },
+  {
+    "id": 5,
+    "title": "Project 5",
+    "description": "A clean and minimal digital product with strong UX principles.",
+    "technologies": ["React", "Tailwind CSS"],
+    "liveDemo": "https://project-5-demo.com",
+    "sourceCode": "https://github.com/faridazhari/project-5",
+    "image": "/images/projects/project-5.jpg"
+  },
+  {
+    "id": 6,
+    "title": "Project 6",
+    "description": "A full-stack project focused on scalability and maintainability.",
+    "technologies": ["Next.js", "Node.js", "Prisma"],
+    "liveDemo": "https://project-6-demo.com",
+    "sourceCode": "https://github.com/faridazhari/project-6",
+    "image": "/images/projects/project-6.jpg"
+  },
+  {
+    "id": 7,
+    "title": "Project 7",
+    "description": "A feature-rich web application with clean architecture.",
+    "technologies": ["React", "TypeScript", "Zod"],
+    "liveDemo": "https://project-7-demo.com",
+    "sourceCode": "https://github.com/faridazhari/project-7",
+    "image": "/images/projects/project-7.jpg"
+  },
+  {
+    "id": 8,
+    "title": "Project 8",
+    "description": "A smooth and interactive UI built with animation-first thinking.",
+    "technologies": ["Next.js", "GSAP", "Tailwind CSS"],
+    "liveDemo": "https://project-8-demo.com",
+    "sourceCode": "https://github.com/faridazhari/project-8",
+    "image": "/images/projects/project-8.jpg"
+  },
+  {
+    "id": 9,
+    "title": "Project 9",
+    "description": "A production-ready web app optimized for performance and SEO.",
+    "technologies": ["Next.js", "TypeScript", "SEO"],
+    "liveDemo": "https://project-9-demo.com",
+    "sourceCode": "https://github.com/faridazhari/project-9",
+    "image": "/images/projects/project-9.jpg"
+  },
+  {
+    "id": 10,
+    "title": "Project 10",
+    "description": "A polished portfolio-grade project showcasing modern development practices.",
+    "technologies": ["React", "Next.js", "Tailwind CSS"],
+    "liveDemo": "https://project-10-demo.com",
+    "sourceCode": "https://github.com/faridazhari/project-10",
+    "image": "/images/projects/project-10.jpg"
+  }
+]
