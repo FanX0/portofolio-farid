@@ -85,7 +85,7 @@ const HeroSection = () => {
     <div ref={container}>
       <div className="bg-[var(--white-color)] h-dvh">
         <div className="container h-full flex items-start pt-[8rem] lg:items-end pb-[2rem]    ">
-          <div className="w-full h-full lg:py-0 lg:h-[20rem]   flex flex-col  gap-[4rem] lg:gap-[1rem] lg:flex-row justify-center justify-between  ">
+          <div className="w-full h-full lg:py-0 lg:h-[20rem]   flex flex-col  gap-[4rem] lg:gap-[1rem] lg:flex-row justify-center lg:justify-between  ">
             <div
               id="container-a"
               className="flex  w-full h-[20rem] lg:h-full  lg:w-[50%] lg:order-2 "
