@@ -60,7 +60,6 @@ const HeroSection = () => {
           start: "center center",
           end: "+=700",
           scrub: true,
-          markers: true,
 
           animation: flipTween,
         });
@@ -72,7 +71,6 @@ const HeroSection = () => {
           start: "center center",
           end: "+=1000",
           scrub: true,
-          markers: true,
 
           animation: flipTween,
         });

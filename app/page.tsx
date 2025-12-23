@@ -6,12 +6,10 @@ import HeroSection from "./components/HeroSection";
 import Nav from "./components/Nav";
 import Project from "./components/Project";
 import ProjectAnimation from "./components/ProjectAnimation";
-import RulerDev from "./components/RulerDev";
 
 export default function HomePage() {
   return (
     <>
-      <RulerDev />
       <header className="fixed top-0 w-full z-50 text-white mix-blend-difference">
         <Nav />
       </header>
