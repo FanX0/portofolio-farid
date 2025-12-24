@@ -225,7 +225,7 @@ const ProjectAnimation = () => {
                   return (
                     <div
                       key={project.id}
-                      className="bg-purple-500 w-[20rem] h-[12rem] lg:w-[30rem] lg:h-[18rem] rounded-[2rem] overflow-hidden"
+                      className=" w-[20rem] h-[12rem] lg:w-[30rem] lg:h-[18rem] rounded-[2rem] overflow-hidden"
                     >
                       <Image
                         width={1280}
@@ -246,7 +246,7 @@ const ProjectAnimation = () => {
                   return (
                     <div
                       key={project.id}
-                      className="bg-purple-500 w-[20rem] h-[12rem] lg:w-[30rem] lg:h-[18rem] rounded-[2rem] overflow-hidden"
+                      className=" w-[20rem] h-[12rem] lg:w-[30rem] lg:h-[18rem] rounded-[2rem] overflow-hidden"
                     >
                       <Image
                         width={1280}
@@ -267,7 +267,7 @@ const ProjectAnimation = () => {
                   return (
                     <div
                       key={project.id}
-                      className="bg-purple-500 w-[20rem] h-[12rem] lg:w-[30rem] lg:h-[18rem] rounded-[2rem] overflow-hidden"
+                      className=" w-[20rem] h-[12rem] lg:w-[30rem] lg:h-[18rem] rounded-[2rem] overflow-hidden"
                     >
                       <Image
                         width={1280}

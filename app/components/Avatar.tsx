@@ -54,7 +54,6 @@ const Avatar = () => {
         end: "+=200%",
         scrub: true,
         pin: true,
-        markers: true,
       });
 
       gsap.to(q("#avatar"), {
@@ -109,7 +108,6 @@ const Avatar = () => {
         },
       });
 
-      // ✏️ Gambar path dari 0% → 100%
       tl.to(
         [
           htmlVector,
@@ -141,7 +139,7 @@ const Avatar = () => {
           ease: "power1.inOut",
 
           motionPath: {
-            path: htmlVector, // bisa pakai path langsung
+            path: htmlVector,
             align: htmlVector,
             autoRotate: true,
             alignOrigin: [0.5, 0.5],
@@ -155,7 +153,7 @@ const Avatar = () => {
           duration: 5,
           ease: "power1.inOut",
           motionPath: {
-            path: vueVector, // bisa pakai path langsung
+            path: vueVector,
             align: vueVector,
             autoRotate: true,
             alignOrigin: [0.5, 0.5],
@@ -169,7 +167,7 @@ const Avatar = () => {
           duration: 5,
           ease: "power1.inOut",
           motionPath: {
-            path: reactVector, // bisa pakai path langsung
+            path: reactVector,
             align: reactVector,
             autoRotate: true,
             alignOrigin: [0.5, 0.5],
@@ -183,7 +181,7 @@ const Avatar = () => {
           duration: 5,
           ease: "power1.inOut",
           motionPath: {
-            path: jsVector, // bisa pakai path langsung
+            path: jsVector,
             align: jsVector,
             autoRotate: true,
             alignOrigin: [0.5, 0.5],
@@ -197,7 +195,7 @@ const Avatar = () => {
           duration: 5,
           ease: "power1.inOut",
           motionPath: {
-            path: nestjsVector, // bisa pakai path langsung
+            path: nestjsVector,
             align: nestjsVector,
             autoRotate: true,
             alignOrigin: [0.5, 0.5],
@@ -211,7 +209,7 @@ const Avatar = () => {
           duration: 5,
           ease: "power1.inOut",
           motionPath: {
-            path: cssVector, // bisa pakai path langsung
+            path: cssVector,
             align: cssVector,
             autoRotate: true,
             alignOrigin: [0.5, 0.5],
@@ -225,7 +223,7 @@ const Avatar = () => {
           duration: 5,
           ease: "power1.inOut",
           motionPath: {
-            path: expressVector, // bisa pakai path langsung
+            path: expressVector,
             align: expressVector,
             autoRotate: true,
             alignOrigin: [0.5, 0.5],
@@ -239,7 +237,7 @@ const Avatar = () => {
           duration: 5,
           ease: "power1.inOut",
           motionPath: {
-            path: nuxtVector, // bisa pakai path langsung
+            path: nuxtVector,
             align: nuxtVector,
             autoRotate: true,
             alignOrigin: [0.5, 0.5],
@@ -253,7 +251,7 @@ const Avatar = () => {
           duration: 5,
           ease: "power1.inOut",
           motionPath: {
-            path: phpVector, // bisa pakai path langsung
+            path: phpVector,
             align: phpVector,
             autoRotate: true,
             alignOrigin: [0.5, 0.5],
@@ -267,7 +265,7 @@ const Avatar = () => {
           duration: 5,
           ease: "power1.inOut",
           motionPath: {
-            path: laravelVector, // bisa pakai path langsung
+            path: laravelVector,
             align: laravelVector,
             autoRotate: true,
             alignOrigin: [0.5, 0.5],
@@ -281,7 +279,7 @@ const Avatar = () => {
           duration: 5,
           ease: "power1.inOut",
           motionPath: {
-            path: svelteVector, // bisa pakai path langsung
+            path: svelteVector,
             align: svelteVector,
             autoRotate: true,
             alignOrigin: [0.5, 0.5],
@@ -295,7 +293,7 @@ const Avatar = () => {
           duration: 5,
           ease: "power1.inOut",
           motionPath: {
-            path: nextjsVector, // bisa pakai path langsung
+            path: nextjsVector,
             align: nextjsVector,
             autoRotate: true,
             alignOrigin: [0.5, 0.5],
@@ -309,7 +307,7 @@ const Avatar = () => {
           duration: 5,
           ease: "power1.inOut",
           motionPath: {
-            path: tsVector, // bisa pakai path langsung
+            path: tsVector,
             align: tsVector,
             autoRotate: true,
             alignOrigin: [0.5, 0.5],
@@ -323,7 +321,7 @@ const Avatar = () => {
           duration: 5,
           ease: "power1.inOut",
           motionPath: {
-            path: tailwindVector, // bisa pakai path langsung
+            path: tailwindVector,
             align: tailwindVector,
             autoRotate: true,
             alignOrigin: [0.5, 0.5],
