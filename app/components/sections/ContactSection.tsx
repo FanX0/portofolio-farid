@@ -13,7 +13,7 @@ import type { EmailState } from "@/app/types/email";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const Contact = () => {
+const ContactSection = () => {
   const container = useRef<HTMLDivElement>(null);
   const tlClick = useRef<gsap.core.Timeline | null>(null);
 
@@ -262,4 +262,4 @@ const Contact = () => {
     </div>
   );
 };
-export default Contact;
+export default ContactSection;

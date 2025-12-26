@@ -4,13 +4,13 @@ import { useRef } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import TextClipPath from "./TextClipPath";
-import Avatar from "./Avatar";
-import TextMaskScroll from "./ui/TextMaskScroll";
+import TextClipPath from "@/app/components/ui/TextClipPath";
+import Avatar from "./AvatarSection";
+import TextMaskScroll from "@/app/components/ui/TextMaskScroll";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
-const About = () => {
+const AboutSection = () => {
   const container = useRef<HTMLDivElement | null>(null);
   useGSAP(
     (context) => {
@@ -58,4 +58,4 @@ const About = () => {
     </div>
   );
 };
-export default About;
+export default AboutSection;

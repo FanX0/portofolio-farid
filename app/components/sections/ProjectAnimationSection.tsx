@@ -10,7 +10,7 @@ type Props = {
   projects: Project[];
 };
 
-const ProjectAnimation = ({ projects = [] }: Props) => {
+const ProjectAnimationSection = ({ projects = [] }: Props) => {
   const container = useRef<HTMLDivElement>(null);
 
   const latestProjects = [...projects].reverse();
@@ -283,4 +283,4 @@ const ProjectAnimation = ({ projects = [] }: Props) => {
   );
 };
 
-export default ProjectAnimation;
+export default ProjectAnimationSection;

@@ -1,6 +1,6 @@
 "use client";
 
-import TextMask from "./ui/TextMask";
+import TextMask from "../ui/TextMask";
 import { useState, useRef } from "react";
 import type { Project } from "@/app/types/project";
 import Image from "next/image";
@@ -9,7 +9,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import { Flip } from "gsap/Flip";
-import LogoTransition from "./LogoTransition";
+import LogoTransition from "@/app/components/common/LogoTransition";
 
 import { getImageUrl } from "@/app/lib/sanity/image";
 

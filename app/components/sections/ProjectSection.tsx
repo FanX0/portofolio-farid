@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useRef } from "react";
 import type { Project } from "@/app/types/project";
-import TextMaskScroll from "./ui/TextMaskScroll";
+import TextMaskScroll from "../ui/TextMaskScroll";
 import Image from "next/image";
 
 import gsap from "gsap";
@@ -17,7 +17,7 @@ type Props = {
   projects: Project[];
 };
 
-const Project = ({ projects }: Props) => {
+const ProjectSection = ({ projects }: Props) => {
   const [activedList, setactivedList] = useState<boolean>(true);
   const [activeProject, setActiveProject] = useState<Project | null>(null);
   const [imageIndex, setImageIndex] = useState(0);
@@ -447,4 +447,4 @@ const Project = ({ projects }: Props) => {
   );
 };
 
-export default Project;
+export default ProjectSection;

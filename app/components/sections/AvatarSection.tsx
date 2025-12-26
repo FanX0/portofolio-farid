@@ -10,7 +10,7 @@ import { PixiPlugin } from "gsap/PixiPlugin";
 
 gsap.registerPlugin(ScrollTrigger, DrawSVGPlugin, MotionPathPlugin, PixiPlugin);
 
-const Avatar = () => {
+const AvatarSection = () => {
   const container = useRef<HTMLDivElement>(null);
 
   useGSAP(
@@ -778,4 +778,4 @@ const Avatar = () => {
     </div>
   );
 };
-export default Avatar;
+export default AvatarSection;

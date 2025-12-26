@@ -1,11 +1,11 @@
-import About from "./components/About";
-import Avatar from "./components/Avatar";
-import Contact from "./components/Contact";
-import Footer from "./components/Footer";
-import HeroSection from "./components/HeroSection";
-import Nav from "./components/Nav";
-import Project from "./components/Project";
-import ProjectAnimation from "./components/ProjectAnimation";
+import AboutSection from "@/app/components/sections/AboutSection";
+import AvatarSection from "@/app/components/sections/AvatarSection";
+import ContactSection from "@/app/components/sections/ContactSection";
+import Footer from "@/app/components/layout/Footer";
+import HeroSection from "@/app/components/sections/HeroSection";
+import Nav from "@/app/components/layout/Nav";
+import ProjectSection from "./components/sections/ProjectSection";
+import ProjectAnimationSection from "./components/sections/ProjectAnimationSection";
 import { getProjects } from "@/app/lib/sanity/queries";
 
 export default async function HomePage() {
@@ -22,17 +22,17 @@ export default async function HomePage() {
             <HeroSection projects={projects} />
           </section>
           <section>
-            <About />
+            <AboutSection />
           </section>
           <section>
-            <Avatar />
+            <AvatarSection />
           </section>
           <section>
-            <ProjectAnimation projects={projects} />
-            <Project projects={projects} />
+            <ProjectAnimationSection projects={projects} />
+            <ProjectSection projects={projects} />
           </section>
           <section>
-            <Contact />
+            <ContactSection />
           </section>
         </article>
       </main>
