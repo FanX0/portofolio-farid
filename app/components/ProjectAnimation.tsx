@@ -5,7 +5,7 @@ import { useGSAP } from "@gsap/react";
 import { useState, useRef, useEffect } from "react";
 import type { Project } from "@/app/types/project";
 import Image from "next/image";
-import { urlFor } from "@/app/lib/sanity/client";
+import { urlFor } from "@/app/lib/sanity/image";
 type Props = {
   projects: Project[];
 };
