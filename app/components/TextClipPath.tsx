@@ -27,13 +27,10 @@ const TextClipPath = ({
     () => {
       if (!container.current) return;
 
-      // Split the text into characters
       const split = new SplitText(container.current, { type: "chars" });
 
-      // set initial color
       gsap.set(split.chars, { display: "inline", color: "#404040" });
 
-      // animate color to white while scrolling
       const mm = gsap.matchMedia();
 
       mm.add("(min-width: 64rem)", () => {

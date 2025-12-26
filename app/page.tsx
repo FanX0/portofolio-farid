@@ -6,8 +6,11 @@ import HeroSection from "./components/HeroSection";
 import Nav from "./components/Nav";
 import Project from "./components/Project";
 import ProjectAnimation from "./components/ProjectAnimation";
+import { getProjects } from "@/app/lib/sanity/queries";
 
-export default function HomePage() {
+export default async function HomePage() {
+  const projects = await getProjects();
+
   return (
     <>
       <header className="fixed top-0 w-full z-50 text-white mix-blend-difference">
@@ -16,7 +19,7 @@ export default function HomePage() {
       <main>
         <article>
           <section className=" ">
-            <HeroSection />
+            <HeroSection projects={projects} />
           </section>
           <section>
             <About />
@@ -25,8 +28,8 @@ export default function HomePage() {
             <Avatar />
           </section>
           <section>
-            <ProjectAnimation />
-            <Project />
+            <ProjectAnimation projects={projects} />
+            <Project projects={projects} />
           </section>
           <section>
             <Contact />

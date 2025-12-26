@@ -11,26 +11,18 @@ import { useGSAP } from "@gsap/react";
 import { Flip } from "gsap/Flip";
 import LogoTransition from "./LogoTransition";
 
+import { getImageUrl } from "@/app/lib/sanity/image";
+
 gsap.registerPlugin(ScrollTrigger, Flip);
 
-const HeroSection = () => {
-  const [projects, setProjects] = useState<Project[]>([]);
+type Props = {
+  projects: Project[];
+};
+
+const HeroSection = ({ projects }: Props) => {
   const [imageReady, setImageReady] = useState(false);
 
   const container = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const res = await fetch("/data/project.json");
-        const data: Project[] = await res.json();
-        setProjects(data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchProducts();
-  }, []);
 
   useGSAP(
     (context) => {
@@ -92,17 +84,21 @@ const HeroSection = () => {
                 id="project-image"
                 className="flex w-full h-full  rounded-[2rem] overflow-hidden "
               >
-                {projects.slice(-1).map((project) => (
-                  <Image
-                    width={1280}
-                    height={1280}
-                    key={project.id}
-                    src={project.image}
-                    alt={project.title}
-                    className="object-cover w-full h-full "
-                    onLoadingComplete={() => setImageReady(true)}
-                  />
-                ))}
+                {projects.slice(-1).map((project) => {
+                  const imageUrl = getImageUrl(project.images?.[0]);
+
+                  return (
+                    <Image
+                      width={1280}
+                      height={1280}
+                      key={project.id}
+                      src={imageUrl}
+                      alt={project.title}
+                      className="object-cover w-full h-full "
+                      onLoadingComplete={() => setImageReady(true)}
+                    />
+                  );
+                })}
               </div>
             </div>
             <div className="flex flex-col gap-[3rem] lg:justify-between lg:order-1 ">

@@ -3,46 +3,57 @@
 import { useEffect, useState, useRef } from "react";
 import type { Project } from "@/app/types/project";
 import TextMaskScroll from "./ui/TextMaskScroll";
+import Image from "next/image";
 
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { Draggable } from "gsap/Draggable";
-import Image from "next/image";
+
+import { getImageUrl } from "@/app/lib/sanity/image";
 
 gsap.registerPlugin(Draggable);
 
-const Project = () => {
-  const [projects, setProjects] = useState<Project[]>([]);
+type Props = {
+  projects: Project[];
+};
+
+const Project = ({ projects }: Props) => {
   const [activedList, setactivedList] = useState<boolean>(true);
   const [activeProject, setActiveProject] = useState<Project | null>(null);
+  const [imageIndex, setImageIndex] = useState(0);
 
   const container = useRef<HTMLDivElement>(null);
   const modalRef = useRef<HTMLDivElement>(null);
   const backdropRef = useRef<HTMLDivElement>(null);
   const modalTl = useRef<gsap.core.Timeline | null>(null);
-
   const tl = useRef<gsap.core.Timeline | null>(null);
 
+  const modalImage = getImageUrl(activeProject?.images?.[imageIndex]);
+
   useEffect(() => {
-    const fetchProducts = async () => {
-      const res = await fetch("/data/project.json");
-      const data: Project[] = await res.json();
-      setProjects(data);
-    };
-    fetchProducts();
-  }, []);
+    if (!activeProject) return;
+    setImageIndex(0);
+  }, [activeProject]);
+
+  useEffect(() => {
+    if (!activeProject || !activeProject.images?.length) return;
+
+    const interval = setInterval(() => {
+      setImageIndex((prev) => (prev + 1) % activeProject.images.length);
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [activeProject]);
 
   useEffect(() => {
     if (!activeProject || !modalRef.current) return;
 
-    // Kill old timeline
     modalTl.current?.kill();
     modalTl.current = null;
 
     const backdrop = backdropRef.current;
     modalTl.current = gsap.timeline({ paused: true });
 
-    // Animate backdrop blur + opacity
     if (backdrop) {
       modalTl.current.fromTo(
         backdrop,
@@ -53,11 +64,10 @@ const Project = () => {
           duration: 0.45,
           ease: "power3.out",
         },
-        0 // start at the same time as modal
+        0
       );
     }
 
-    // Animate modal
     modalTl.current.fromTo(
       modalRef.current,
       { yPercent: 100, opacity: 0 },
@@ -109,13 +119,11 @@ const Project = () => {
       tl.current = gsap.timeline({
         paused: true,
 
-        // when switching TO image view
         onStart: () => {
           gsap.set(listWrapper, { pointerEvents: "none" });
           gsap.set(imageWrapper, { pointerEvents: "auto" });
         },
 
-        // when switching BACK to list view
         onReverseComplete: () => {
           gsap.set(listWrapper, { pointerEvents: "auto" });
           gsap.set(imageWrapper, { pointerEvents: "none" });
@@ -127,7 +135,6 @@ const Project = () => {
         listWrapper.clientHeight - listLine.scrollHeight
       );
 
-      // vertical drag
       Draggable.create(listLine, {
         type: "y",
         inertia: true,
@@ -233,14 +240,14 @@ const Project = () => {
 
   const handlePrevious = () => {
     if (!activeProject) return;
-    const currentIndex = projects.findIndex((p) => p.id === activeProject.id);
+    const currentIndex = projects.findIndex((p) => p._id === activeProject._id);
     const prevIndex = (currentIndex - 1 + projects.length) % projects.length;
     setActiveProject(projects[prevIndex]);
   };
 
   const handleNext = () => {
     if (!activeProject) return;
-    const currentIndex = projects.findIndex((p) => p.id === activeProject.id);
+    const currentIndex = projects.findIndex((p) => p._id === activeProject._id);
     const nextIndex = (currentIndex + 1) % projects.length;
     setActiveProject(projects[nextIndex]);
   };
@@ -293,32 +300,34 @@ const Project = () => {
               className=" h-full border-y border-gray-300 "
             >
               <div id="list-line" className="">
-                {projects.map((project, index) => (
-                  <button
-                    key={project.id}
-                    onClick={() => handleOpenProject(project)}
-                    className="project-item  border-b border-gray-500 w-full"
-                  >
-                    <div className="project-text overflow-hidden h-[4rem]">
-                      <div className=" project-text-inner flex flex-col ">
-                        <div className="flex justify-start h-[4rem] px-4">
-                          <h2 className="text-3xl">{project.title}</h2>
-                        </div>
-                        {/* hover */}
-                        <div className="flex justify-between bg-white text-black h-[4rem] px-4">
-                          <h2 className="text-3xl">{project.title}</h2>
-                          <a className="text-sm" href={project.liveDemo}>
-                            Live Website
-                          </a>
-                        </div>
-                        {/* default */}
-                        <div className="flex justify-start h-[4rem] px-4">
-                          <h2 className="text-3xl">{project.title}</h2>
+                {projects.map((project, index) => {
+                  return (
+                    <button
+                      key={project._id}
+                      onClick={() => handleOpenProject(project)}
+                      className="project-item  border-b border-gray-500 w-full"
+                    >
+                      <div className="project-text overflow-hidden h-[4rem]">
+                        <div className=" project-text-inner flex flex-col ">
+                          <div className="flex justify-start h-[4rem] px-4">
+                            <h2 className="text-3xl">{project.title}</h2>
+                          </div>
+                          {/* hover */}
+                          <div className="flex justify-between bg-white text-black h-[4rem] px-4">
+                            <h2 className="text-3xl">{project.title}</h2>
+                            <a className="text-sm" href={project.liveDemo}>
+                              Live Website
+                            </a>
+                          </div>
+                          {/* default */}
+                          <div className="flex justify-start h-[4rem] px-4">
+                            <h2 className="text-3xl">{project.title}</h2>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  </button>
-                ))}
+                    </button>
+                  );
+                })}
               </div>
             </section>
             <section
@@ -330,19 +339,23 @@ const Project = () => {
                 className="grid grid-cols-1 lg:grid-cols-3 gap-[4rem] h-full w-full items-start mt-[4rem] "
               >
                 {projects.map((project) => {
+                  const imageUrl = getImageUrl(project.images?.[0]);
+
                   return (
                     <button
-                      key={project.id}
+                      key={project._id}
                       onClick={() => handleOpenProject(project)}
                     >
                       <div className=" w-[25rem] h-[15rem] rounded-[2rem] overflow-hidden">
-                        <Image
-                          src={project.image}
-                          width={1280}
-                          height={1280}
-                          alt={project.title}
-                          className=" w-full h-full object-cover"
-                        />
+                        {imageUrl && (
+                          <Image
+                            src={imageUrl}
+                            width={1280}
+                            height={1280}
+                            alt={project.title}
+                            className="w-full h-full object-cover"
+                          />
+                        )}
                       </div>
                     </button>
                   );
@@ -358,7 +371,7 @@ const Project = () => {
                   <div
                     ref={backdropRef}
                     className="fixed inset-0 bg-black/5  pointer-events-auto"
-                    onClick={handleCloseProject} // close if click outside
+                    onClick={handleCloseProject}
                   />
                   <div
                     ref={modalRef}
@@ -398,13 +411,15 @@ const Project = () => {
                       </div>
 
                       <div className="w-full h-[15rem] lg:h-[40rem] ">
-                        <Image
-                          src={activeProject.image}
-                          alt={activeProject.title}
-                          width={1280}
-                          height={720}
-                          className="w-full h-full object-cover"
-                        />
+                        {modalImage && (
+                          <Image
+                            src={modalImage}
+                            alt={activeProject.title}
+                            width={1280}
+                            height={720}
+                            className="w-full h-full object-cover"
+                          />
+                        )}
                       </div>
                       <div className="flex justify-between px-[1rem] lg:absolute bottom-0 lg:w-full lg:pb-[1rem]">
                         <button

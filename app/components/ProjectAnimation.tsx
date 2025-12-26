@@ -5,26 +5,15 @@ import { useGSAP } from "@gsap/react";
 import { useState, useRef, useEffect } from "react";
 import type { Project } from "@/app/types/project";
 import Image from "next/image";
+import { urlFor } from "@/app/lib/sanity/client";
+type Props = {
+  projects: Project[];
+};
 
-const ProjectAnimation = () => {
-  const [projects, setProjects] = useState<Project[]>([]);
-
+const ProjectAnimation = ({ projects = [] }: Props) => {
   const container = useRef<HTMLDivElement>(null);
 
   const latestProjects = [...projects].reverse();
-
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const res = await fetch("/data/project.json");
-        const data: Project[] = await res.json();
-        setProjects(data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchProducts();
-  }, []);
 
   useGSAP(
     (context) => {
@@ -103,7 +92,7 @@ const ProjectAnimation = () => {
         tl.to(
           q("#line-1"),
           {
-            x: "-200%",
+            x: "-300%",
             duration: 1,
             ease: "power1.inOut",
           },
@@ -121,7 +110,7 @@ const ProjectAnimation = () => {
         tl.to(
           q("#line-3"),
           {
-            x: "200%",
+            x: "300%",
             duration: 1,
             ease: "power1.inOut",
           },
@@ -224,16 +213,18 @@ const ProjectAnimation = () => {
                 {latestProjects.slice(0, 2).map((project) => {
                   return (
                     <div
-                      key={project.id}
+                      key={project._id}
                       className=" w-[20rem] h-[12rem] lg:w-[30rem] lg:h-[18rem] rounded-[2rem] overflow-hidden"
                     >
-                      <Image
-                        width={1280}
-                        height={1280}
-                        src={project.image}
-                        alt={project.title}
-                        className="w-full h-full "
-                      ></Image>
+                      {project.images?.[0]?.asset && (
+                        <Image
+                          width={1280}
+                          height={1280}
+                          src={urlFor(project.images[0]).url()}
+                          alt={project.title}
+                          className="w-full h-full"
+                        />
+                      )}
                     </div>
                   );
                 })}
@@ -245,16 +236,18 @@ const ProjectAnimation = () => {
                 {latestProjects.slice(3, 5).map((project) => {
                   return (
                     <div
-                      key={project.id}
+                      key={project._id}
                       className=" w-[20rem] h-[12rem] lg:w-[30rem] lg:h-[18rem] rounded-[2rem] overflow-hidden"
                     >
-                      <Image
-                        width={1280}
-                        height={1280}
-                        src={project.image}
-                        alt={project.title}
-                        className="w-full h-full "
-                      ></Image>
+                      {project.images?.[0]?.asset && (
+                        <Image
+                          width={1280}
+                          height={1280}
+                          src={urlFor(project.images[0]).url()}
+                          alt={project.title}
+                          className="w-full h-full"
+                        />
+                      )}
                     </div>
                   );
                 })}
@@ -266,16 +259,18 @@ const ProjectAnimation = () => {
                 {latestProjects.slice(6, 8).map((project) => {
                   return (
                     <div
-                      key={project.id}
+                      key={project._id}
                       className=" w-[20rem] h-[12rem] lg:w-[30rem] lg:h-[18rem] rounded-[2rem] overflow-hidden"
                     >
-                      <Image
-                        width={1280}
-                        height={1280}
-                        src={project.image}
-                        alt={project.title}
-                        className="w-full h-full "
-                      ></Image>
+                      {project.images?.[0]?.asset && (
+                        <Image
+                          width={1280}
+                          height={1280}
+                          src={urlFor(project.images[0]).url()}
+                          alt={project.title}
+                          className="w-full h-full"
+                        />
+                      )}
                     </div>
                   );
                 })}

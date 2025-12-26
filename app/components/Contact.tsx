@@ -1,7 +1,6 @@
 "use client";
 
-import { useRef, useEffect, useState } from "react";
-import { useFormState } from "react-dom";
+import { useRef, useEffect, useState, useActionState } from "react";
 
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
@@ -17,17 +16,21 @@ gsap.registerPlugin(ScrollTrigger);
 const Contact = () => {
   const container = useRef<HTMLDivElement>(null);
   const tlClick = useRef<gsap.core.Timeline | null>(null);
-  const hasReset = useRef(false);
 
   const initialState: EmailState = { success: false };
 
-  const [state, formAction] = useFormState(sendEmail, initialState);
+  const [state, formAction] = useActionState(sendEmail, initialState);
   const [values, setValues] = useState({
     name: "",
     email: "",
     message: "",
   });
-  const formKey = state.success ? "success" : "idle";
+
+  useEffect(() => {
+    if (state.success) {
+      tlClick.current?.play();
+    }
+  }, [state.success]);
 
   useGSAP(
     (context) => {
@@ -37,7 +40,7 @@ const Contact = () => {
         scrollTrigger: {
           trigger: container.current,
           start: "top top",
-          end: "+=800%",
+          end: "+=400%",
           scrub: true,
           pin: true,
         },
@@ -45,8 +48,8 @@ const Contact = () => {
 
       tlScroll.fromTo(
         q("#text"),
-        { x: "100%" },
-        { x: "-100%", ease: "power2.inOut" }
+        { x: "110%" },
+        { x: "-110%", ease: "power2.inOut" }
       );
 
       gsap.set(q("#mail-stamp"), { opacity: 0, scale: 2, rotate: 2 });
@@ -86,7 +89,7 @@ const Contact = () => {
       <div className=" w-full overflow-hidden">
         <div
           id="text"
-          className="h-dvh flex items-center w-[70rem] lg:w-[140rem]  "
+          className="h-dvh flex items-center w-[70rem] lg:w-[140rem] "
         >
           <p className="text-white text-[9rem] lg:text-[18.75rem]  font-bold ">
             LETS TALK IDEA
@@ -95,7 +98,7 @@ const Contact = () => {
       </div>
       <div className="h-dvh  ">
         <div className="h-full  flex items-end ">
-          <form key={formKey} action={formAction} className=" w-full">
+          <form action={formAction} className=" w-full">
             <fieldset className="relative  flex flex-col  justify-end items-center h-[45rem]  overflow-hidden">
               <legend className="w-full text-center text-white py-[1rem]  text-[4rem] font-semibold">
                 Say Hello
