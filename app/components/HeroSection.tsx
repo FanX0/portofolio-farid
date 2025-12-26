@@ -1,7 +1,7 @@
 "use client";
 
 import TextMask from "./ui/TextMask";
-import { useEffect, useState, useRef } from "react";
+import { useState, useRef } from "react";
 import type { Project } from "@/app/types/project";
 import Image from "next/image";
 
@@ -86,6 +86,7 @@ const HeroSection = ({ projects }: Props) => {
               >
                 {projects.slice(-1).map((project) => {
                   const imageUrl = getImageUrl(project.images?.[0]);
+                  if (!imageUrl) return null;
 
                   return (
                     <Image
