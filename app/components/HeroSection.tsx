@@ -92,7 +92,7 @@ const HeroSection = ({ projects }: Props) => {
                     <Image
                       width={1280}
                       height={1280}
-                      key={project.id}
+                      key={project._id}
                       src={imageUrl}
                       alt={project.title}
                       className="object-cover w-full h-full "
