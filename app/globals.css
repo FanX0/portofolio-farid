@@ -9,12 +9,14 @@
 html {
   font-size: 100%;
   box-sizing: border-box;
+  overflow-x: hidden;
 }
 body {
   background-color: var(--black-color);
   font-family: var(--font-poppins);
   font-size: 1rem;
   line-height: 1;
+  overflow-x: hidden;
 }
 .container {
   @apply mx-auto px-[1rem] lg:px-[5rem];
