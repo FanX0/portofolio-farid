@@ -4,7 +4,7 @@ import { useRef, useState } from "react";
 import type { HeroSectionProps } from "./hero.types";
 
 import TextMask from "@/app/components/ui/TextMask";
-import LogoTransition from "@/app/components/common/LogoTransition";
+import LogoTransition from "@/app/components/common/logotransition/LogoTransition.server";
 import Image from "next/image";
 
 import { initHeroAnimation } from "./hero.animation";
