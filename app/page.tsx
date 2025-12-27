@@ -1,12 +1,12 @@
-import AboutSection from "@/app/components/sections/AboutSection";
-import AvatarSection from "@/app/components/sections/AvatarSection";
-import ContactSection from "@/app/components/sections/ContactSection";
+import HeroSection from "@/app/components/sections/hero/HeroSection.server";
+import AboutSection from "@/app/components/sections/about/AboutSection.server";
+import AvatarSection from "@/app/components/sections/avatar/AvatarSection.server";
+import ContactSection from "@/app/components/sections/contact/ContactSection.server";
 import Footer from "@/app/components/layout/Footer";
-import HeroSection from "@/app/components/sections/HeroSection";
-import Nav from "@/app/components/layout/Nav";
-import ProjectSection from "./components/sections/ProjectSection";
-import ProjectAnimationSection from "./components/sections/ProjectAnimationSection";
+import Navbar from "@/app/components/layout/nav/Navbar.server";
+import ProjectSection from "./components/sections/project/ProjectSection.server";
 import { getProjects } from "@/app/lib/sanity/queries";
+import ProjectScrollSection from "./components/sections/project-scroll/ProjectScrollSection.server";
 
 export default async function HomePage() {
   const projects = await getProjects();
@@ -14,7 +14,7 @@ export default async function HomePage() {
   return (
     <>
       <header className="fixed top-0 w-full z-50 text-white mix-blend-difference">
-        <Nav />
+        <Navbar />
       </header>
       <main>
         <article>
@@ -28,7 +28,7 @@ export default async function HomePage() {
             <AvatarSection />
           </section>
           <section>
-            <ProjectAnimationSection projects={projects} />
+            <ProjectScrollSection projects={projects} />
             <ProjectSection projects={projects} />
           </section>
           <section>

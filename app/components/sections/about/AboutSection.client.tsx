@@ -1,33 +1,22 @@
 "use client";
 
 import { useRef } from "react";
-import gsap from "gsap";
+
 import { useGSAP } from "@gsap/react";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import TextClipPath from "@/app/components/ui/TextClipPath";
-import Avatar from "./AvatarSection";
+
 import TextMaskScroll from "@/app/components/ui/TextMaskScroll";
+import { initAboutAnimation } from "./about.animation";
 
-gsap.registerPlugin(useGSAP, ScrollTrigger);
-
-const AboutSection = () => {
+export default function AboutSectionClient() {
   const container = useRef<HTMLDivElement | null>(null);
   useGSAP(
-    (context) => {
-      const q = context.selector!;
-
-      ScrollTrigger.create({
-        trigger: container.current,
-        start: "top top",
-        end: "+=600%",
-        scrub: true,
-
-        pin: true,
-      });
+    () => {
+      if (!container.current) return;
+      return initAboutAnimation({ container: container.current });
     },
     { scope: container }
   );
-
   return (
     <div ref={container} className=" bg-[var(--black-color)] ">
       <div className="h-dvh">
@@ -57,5 +46,4 @@ const AboutSection = () => {
       </div>
     </div>
   );
-};
-export default AboutSection;
+}

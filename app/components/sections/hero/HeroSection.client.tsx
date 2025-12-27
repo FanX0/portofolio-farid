@@ -1,72 +1,25 @@
 "use client";
 
-import TextMask from "../ui/TextMask";
-import { useState, useRef } from "react";
-import type { Project } from "@/app/types/project";
+import { useRef, useState } from "react";
+import type { HeroSectionProps } from "./hero.types";
+
+import TextMask from "@/app/components/ui/TextMask";
+import LogoTransition from "@/app/components/common/LogoTransition";
 import Image from "next/image";
 
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useGSAP } from "@gsap/react";
-import { Flip } from "gsap/Flip";
-import LogoTransition from "@/app/components/common/LogoTransition";
+import { initHeroAnimation } from "./hero.animation";
 
 import { getImageUrl } from "@/app/lib/sanity/image";
+import { useGSAP } from "@/app/lib/gsap";
 
-gsap.registerPlugin(ScrollTrigger, Flip);
-
-type Props = {
-  projects: Project[];
-};
-
-const HeroSection = ({ projects }: Props) => {
+export default function HeroSectionClient({ projects }: HeroSectionProps) {
   const [imageReady, setImageReady] = useState(false);
-
   const container = useRef<HTMLDivElement>(null);
 
   useGSAP(
-    (context) => {
-      if (!imageReady) return;
-
-      const q = context.selector!;
-
-      const containerA = q("#container-a")[0];
-      const containerB = q("#container-b")[0];
-      const projectImage = q("#project-image")[0];
-
-      if (!containerA || !containerB || !projectImage) return;
-
-      const state = Flip.getState(projectImage as Element);
-      containerB.appendChild(projectImage);
-      const flipTween = Flip.from(state, {
-        duration: 1,
-        ease: "power3.inOut",
-        paused: true,
-      });
-
-      const mm = gsap.matchMedia();
-
-      mm.add("(min-width: 80rem)", () => {
-        ScrollTrigger.create({
-          trigger: containerA,
-          start: "center center",
-          end: "+=700",
-          scrub: true,
-
-          animation: flipTween,
-        });
-      });
-
-      mm.add("(max-width: 79.9rem)", () => {
-        ScrollTrigger.create({
-          trigger: containerA,
-          start: "center center",
-          end: "+=1000",
-          scrub: true,
-
-          animation: flipTween,
-        });
-      });
+    () => {
+      if (!container.current || !imageReady) return;
+      return initHeroAnimation({ container: container.current });
     },
     { scope: container, dependencies: [imageReady] }
   );
@@ -76,14 +29,8 @@ const HeroSection = ({ projects }: Props) => {
       <div className="bg-[var(--white-color)] h-dvh">
         <div className="container h-full flex items-start pt-[8rem] lg:items-end pb-[2rem]    ">
           <div className="w-full h-full lg:py-0 lg:h-[20rem]   flex flex-col  gap-[4rem] lg:gap-[1rem] lg:flex-row justify-center lg:justify-between  ">
-            <div
-              id="container-a"
-              className="flex  w-full h-[20rem] lg:h-full  lg:w-[50%] lg:order-2 "
-            >
-              <div
-                id="project-image"
-                className="flex w-full h-full  rounded-[2rem] overflow-hidden "
-              >
+            <div className="box-hero-image flex w-full h-[20rem] lg:h-full  lg:w-[50%] lg:order-2 ">
+              <div className="project-image flex w-full h-full  rounded-[2rem] overflow-hidden ">
                 {projects.slice(-1).map((project) => {
                   const imageUrl = getImageUrl(project.images?.[0]);
                   if (!imageUrl) return null;
@@ -152,7 +99,7 @@ const HeroSection = ({ projects }: Props) => {
             <p className="">Recent Project</p>
             <p className="">View all / {projects.length}</p>
           </div>
-          <div id="container-b" className="h-full w-full rounded-[2rem]"></div>
+          <div className="box-project-image h-full w-full rounded-[2rem]"></div>
         </div>
       </div>
       <div>
@@ -160,5 +107,4 @@ const HeroSection = ({ projects }: Props) => {
       </div>
     </div>
   );
-};
-export default HeroSection;
+}

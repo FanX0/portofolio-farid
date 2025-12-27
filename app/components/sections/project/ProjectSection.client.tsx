@@ -1,23 +1,19 @@
 "use client";
 
-import { useEffect, useState, useRef } from "react";
-import type { Project } from "@/app/types/project";
-import TextMaskScroll from "../ui/TextMaskScroll";
+import { useRef, useState } from "react";
+
+import TextMaskScroll from "@/app/components/ui/TextMaskScroll";
 import Image from "next/image";
-
-import gsap from "gsap";
-import { useGSAP } from "@gsap/react";
-import { Draggable } from "gsap/Draggable";
-
+import { useGSAP } from "@/app/lib/gsap";
+import { initProjectAnimation } from "./project.animation";
 import { getImageUrl } from "@/app/lib/sanity/image";
 
-gsap.registerPlugin(Draggable);
+import { ProjectSectionProps } from "./project.types";
+import { Project } from "@/app/types/project";
 
-type Props = {
-  projects: Project[];
-};
-
-const ProjectSection = ({ projects }: Props) => {
+export default function ProjectSectionClient({
+  projects = [],
+}: ProjectSectionProps) {
   const [activedList, setactivedList] = useState<boolean>(true);
   const [activeProject, setActiveProject] = useState<Project | null>(null);
   const [imageIndex, setImageIndex] = useState(0);
@@ -30,201 +26,13 @@ const ProjectSection = ({ projects }: Props) => {
 
   const modalImage = getImageUrl(activeProject?.images?.[imageIndex]);
 
-  useEffect(() => {
-    if (!activeProject) return;
-    setImageIndex(0);
-  }, [activeProject]);
-
-  useEffect(() => {
-    if (!activeProject || !activeProject.images?.length) return;
-
-    const interval = setInterval(() => {
-      setImageIndex((prev) => (prev + 1) % activeProject.images.length);
-    }, 1000);
-
-    return () => clearInterval(interval);
-  }, [activeProject]);
-
-  useEffect(() => {
-    if (!activeProject || !modalRef.current) return;
-
-    modalTl.current?.kill();
-    modalTl.current = null;
-
-    const backdrop = backdropRef.current;
-    modalTl.current = gsap.timeline({ paused: true });
-
-    if (backdrop) {
-      modalTl.current.fromTo(
-        backdrop,
-        { backdropFilter: "blur(0px)", opacity: 0 },
-        {
-          backdropFilter: "blur(8px)",
-          opacity: 1,
-          duration: 0.45,
-          ease: "power3.out",
-        },
-        0
-      );
-    }
-
-    modalTl.current.fromTo(
-      modalRef.current,
-      { yPercent: 100, opacity: 0 },
-      { yPercent: 0, opacity: 1, duration: 0.45, ease: "power3.out" },
-      0
-    );
-
-    modalTl.current.play();
-  }, [activeProject]);
-
-  useEffect(() => {
-    if (!modalTl.current) return;
-
-    if (activeProject) {
-      modalTl.current.play();
-    } else {
-      modalTl.current.reverse();
-    }
-  }, [activeProject]);
-
   useGSAP(
-    (context) => {
-      if (!container) return;
-
-      const q = context.selector;
-      if (!q) return;
-
-      const listWrapper = q("#list-wrapper")[0] as HTMLElement;
-      const listLine = q("#list-line")[0] as HTMLElement;
-      const listItems = q("#list-line > button");
-      const imageWrapper = q("#image-wrapper")[0] as HTMLElement;
-      const imageLine = q("#image-line")[0] as HTMLElement;
-      const imageItems = q("#image-line > button");
-
-      if (
-        !listWrapper ||
-        !listLine ||
-        !listItems.length ||
-        !imageWrapper ||
-        !imageLine ||
-        !imageItems.length
-      ) {
-        return;
+    () => {
+      if (!container.current) return;
+      const animation = initProjectAnimation({ container: container.current });
+      if (animation && animation.tl) {
+        tl.current = animation.tl;
       }
-
-      gsap.set(listWrapper, { pointerEvents: "auto" });
-      gsap.set(imageWrapper, { pointerEvents: "none" });
-
-      tl.current = gsap.timeline({
-        paused: true,
-
-        onStart: () => {
-          gsap.set(listWrapper, { pointerEvents: "none" });
-          gsap.set(imageWrapper, { pointerEvents: "auto" });
-        },
-
-        onReverseComplete: () => {
-          gsap.set(listWrapper, { pointerEvents: "auto" });
-          gsap.set(imageWrapper, { pointerEvents: "none" });
-        },
-      });
-
-      const minListY = Math.min(
-        0,
-        listWrapper.clientHeight - listLine.scrollHeight
-      );
-
-      Draggable.create(listLine, {
-        type: "y",
-        inertia: true,
-        edgeResistance: 0.9,
-
-        onRelease() {
-          const y = gsap.getProperty(listLine, "y") as number;
-
-          if (y > 0) {
-            gsap.to(listLine, { y: 0, duration: 0.8, ease: "expo.out" });
-          } else if (y < minListY) {
-            gsap.to(listLine, { y: minListY, duration: 0.8, ease: "expo.out" });
-          }
-        },
-      });
-
-      const minImageY = Math.min(
-        0,
-        imageWrapper.clientHeight - imageLine.scrollHeight
-      );
-
-      Draggable.create(imageLine, {
-        type: "y",
-        inertia: true,
-        edgeResistance: 0.9,
-
-        onRelease() {
-          const y = gsap.getProperty(imageLine, "y") as number;
-
-          if (y > 0) {
-            gsap.to(imageLine, { y: 0, duration: 0.8, ease: "expo.out" });
-          } else if (y < minImageY) {
-            gsap.to(imageLine, {
-              y: minImageY,
-              duration: 0.8,
-              ease: "expo.out",
-            });
-          }
-        },
-      });
-
-      tl.current.fromTo(
-        listItems,
-        { xPercent: 0 },
-        {
-          xPercent: -100,
-
-          duration: 2,
-          ease: "power4.inOut",
-          stagger: {
-            each: 0.2,
-            from: "start",
-          },
-        }
-      );
-
-      tl.current.fromTo(
-        imageItems,
-        { scale: 0, opacity: 0 },
-        {
-          scale: 1,
-          opacity: 1,
-
-          duration: 2,
-          ease: "power4.inOut",
-          stagger: {
-            each: 0.2,
-            from: "start",
-          },
-        }
-      );
-      const items = q(".project-item");
-
-      items.forEach((item) => {
-        const inner = item.querySelector(".project-text-inner");
-        if (!inner) return;
-
-        gsap.set(inner, {
-          y: "-8rem",
-          willChange: "transform",
-        });
-
-        item.addEventListener("mouseenter", () => {
-          gsap.to(inner, { y: "-4rem", duration: 0.45, ease: "power3.out" });
-        });
-
-        item.addEventListener("mouseleave", () => {
-          gsap.to(inner, { y: 0, duration: 0.45, ease: "power3.out" });
-        });
-      });
     },
     { scope: container, dependencies: [projects] }
   );
@@ -295,11 +103,8 @@ const ProjectSection = ({ projects }: Props) => {
           </div>
 
           <div className="relative h-full overflow-hidden">
-            <section
-              id="list-wrapper"
-              className=" h-full border-y border-gray-300 "
-            >
-              <div id="list-line" className="">
+            <section className="list-wrapper h-full border-y border-gray-300 ">
+              <div className="list-line">
                 {projects.map((project, index) => {
                   return (
                     <button
@@ -330,14 +135,8 @@ const ProjectSection = ({ projects }: Props) => {
                 })}
               </div>
             </section>
-            <section
-              id="image-wrapper"
-              className="absolute top-0 w-full h-full pointer-events-none"
-            >
-              <div
-                id="image-line"
-                className="grid grid-cols-1 lg:grid-cols-3 gap-[4rem] h-full w-full items-start mt-[4rem] "
-              >
+            <section className="image-wrapper absolute top-0 w-full h-full pointer-events-none">
+              <div className="image-line grid grid-cols-1 lg:grid-cols-3 gap-[4rem] h-full w-full items-start mt-[4rem] ">
                 {projects.map((project) => {
                   const imageUrl = getImageUrl(project.images?.[0]);
 
@@ -445,6 +244,4 @@ const ProjectSection = ({ projects }: Props) => {
       </div>
     </div>
   );
-};
-
-export default ProjectSection;
+}
