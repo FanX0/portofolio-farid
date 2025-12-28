@@ -253,7 +253,7 @@ const ProjectSectionClient = ({ projects }: Props) => {
                         <div className="">✕</div>
                       </button>
 
-                      <div className="lg:absolute flex flex-col gap-[1.5rem] px-[1rem] lg:bg-[var(--black-color)] lg:py-[2rem] ">
+                      <div className="lg:absolute flex flex-col gap-[1.5rem] px-[1rem] lg:bg-[var(--black-color)] lg:py-[2rem] lg:w-[30rem]">
                         <h2 className="text-3xl uppercase">
                           {activeProject.title}
                         </h2>
