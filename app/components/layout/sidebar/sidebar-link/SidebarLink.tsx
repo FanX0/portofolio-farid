@@ -5,9 +5,10 @@ import initSidebarLinkAnimation from "./SidebarLink.animation";
 
 type SidebarLinkProps = {
   label: string;
+  onClick?: () => void;
 };
 
-export default function SidebarLink({ label }: SidebarLinkProps) {
+export default function SidebarLink({ label, onClick }: SidebarLinkProps) {
   const container = useRef<HTMLButtonElement>(null);
   const arrow = useRef<SVGSVGElement>(null);
   const tlRef = useRef<gsap.core.Timeline | null>(null);
@@ -44,6 +45,7 @@ export default function SidebarLink({ label }: SidebarLinkProps) {
       className="flex justify-between items-center w-full py-[1rem] group"
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
+      onClick={onClick}
     >
       <div className="overflow-hidden">
         <p className="text-[1.5rem] sidebar-link-text">{label}</p>

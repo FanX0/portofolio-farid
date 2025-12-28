@@ -8,7 +8,16 @@ type NavbarClientProps = {
 };
 
 export default function NavbarClient({ onToggle, isOpen }: NavbarClientProps) {
-  const { container, toggleIconRef } = useNavbarAnimation({ isOpen });
+  const {
+    container,
+    toggleIconRef,
+    scrollToHome,
+    scrollToAbout,
+    scrollToProject,
+    scrollToContact,
+  } = useNavbarAnimation({
+    isOpen,
+  });
 
   const handleSidebarToggle = () => {
     onToggle();
@@ -21,9 +30,13 @@ export default function NavbarClient({ onToggle, isOpen }: NavbarClientProps) {
     >
       <ul className=" flex items-center lg:gap-[1.875rem] w-full  border-white lg:border-b-0  lg:py-0 ">
         <div className=" flex lg:flex-col items-center w-full ">
-          <div className="relative flex items-center h-[4.0625rem] lg:flex lg:w-full lg:border-white lg:py-[1.75rem]  lg:h-[5.875rem] ">
+          <button
+            type="button"
+            onClick={scrollToHome}
+            className="relative flex items-center h-[4.0625rem] lg:flex lg:w-full lg:border-white lg:py-[1.75rem]  lg:h-[5.875rem] text-left appearance-none"
+          >
             <p className="nav-name absolute ">farid</p>
-          </div>
+          </button>
           <div className="progressbar-track w-full h-[1px] bg-gray-300/10 hidden lg:block">
             <div className="progressbar-desktop-fill-name w-full h-[1px] bg-white origin-left scale-x-0"></div>
           </div>
@@ -79,25 +92,37 @@ export default function NavbarClient({ onToggle, isOpen }: NavbarClientProps) {
             </button>
           </li>
           <li className="flex lg:flex-col items-center w-full hidden lg:block">
-            <div className="relative flex h-[4.0625rem]  lg:flex lg:w-full lg:border-white lg:py-[1.75rem]  lg:h-[5.875rem] ">
-              <p className=" absolute">About</p>
-            </div>
+            <button
+              type="button"
+              onClick={scrollToAbout}
+              className="relative flex h-[4.0625rem] w-full lg:border-white lg:py-[1.75rem] lg:h-[5.875rem] text-left appearance-none"
+            >
+              <p className="absolute">About</p>
+            </button>
             <div className="progressbar-track w-full h-[1px] bg-gray-300/10 ">
               <div className="progressbar-desktop-fill-about w-full h-[1px] bg-white origin-left scale-x-0"></div>
             </div>
           </li>
           <li className="flex lg:flex-col items-center w-full hidden lg:block">
-            <div className="relative flex h-[4.0625rem] lg:flex lg:w-full lg:border-white lg:py-[1.75rem]  lg:h-[5.875rem] ">
-              <p className=" absolute">Project</p>
-            </div>
+            <button
+              type="button"
+              onClick={scrollToProject}
+              className="relative flex h-[4.0625rem] w-full lg:border-white lg:py-[1.75rem] lg:h-[5.875rem] text-left appearance-none"
+            >
+              <p className="absolute">Project</p>
+            </button>
             <div className="progressbar-track w-full h-[1px] bg-gray-300/10 ">
               <div className="progressbar-desktop-fill-project w-full h-[1px] bg-white origin-left scale-x-0"></div>
             </div>
           </li>
           <li className="flex lg:flex-col items-center w-full hidden lg:block">
-            <div className="relative flex h-[4.0625rem] lg:flex lg:w-full lg:border-white lg:py-[1.75rem]  lg:h-[5.875rem] ">
-              <p className=" absolute">Contact</p>
-            </div>
+            <button
+              type="button"
+              onClick={scrollToContact}
+              className="relative flex h-[4.0625rem] w-full lg:border-white lg:py-[1.75rem] lg:h-[5.875rem] text-left appearance-none"
+            >
+              <p className="absolute">Contact</p>
+            </button>
             <div className="progressbar-track w-full h-[1px] bg-gray-300/10 ">
               <div className="progressbar-desktop-fill-contact w-full h-[1px] bg-white origin-left scale-x-0"></div>
             </div>

@@ -5,12 +5,14 @@ import { useRef } from "react";
 import initSidebarAnimation from "./sidebar.animation";
 import SidebarLink from "./sidebar-link/SidebarLink";
 import Footer from "../Footer";
+import gsap from "@/app/lib/gsap";
 
 type SidebarClientProps = {
   isOpen: boolean;
+  onClose: () => void;
 };
 
-export default function SidebarClient({ isOpen }: SidebarClientProps) {
+export default function SidebarClient({ isOpen, onClose }: SidebarClientProps) {
   const container = useRef<HTMLDivElement>(null);
 
   useGSAP(
@@ -29,6 +31,16 @@ export default function SidebarClient({ isOpen }: SidebarClientProps) {
     { scope: container, dependencies: [isOpen] }
   );
 
+  const handleLinkClick = (scrollTo: number) => {
+    onClose();
+    gsap.to(window, {
+      scrollTo,
+      duration: 1,
+      ease: "power2.inOut",
+      delay: 0.5, // Optional: wait for sidebar close animation to start/finish
+    });
+  };
+
   return (
     <div
       ref={container}
@@ -38,16 +50,22 @@ export default function SidebarClient({ isOpen }: SidebarClientProps) {
       <div className="w-full px-[1rem]">
         <ul className="sidebar-list origin-top bg-white flex-col w-full rounded-[1rem] px-[1rem] divide-y-1">
           <li>
-            <SidebarLink label="Home" />
+            <SidebarLink label="Home" onClick={() => handleLinkClick(0)} />
           </li>
           <li>
-            <SidebarLink label="About" />
+            <SidebarLink label="About" onClick={() => handleLinkClick(2850)} />
           </li>
           <li>
-            <SidebarLink label="Project" />
+            <SidebarLink
+              label="Project"
+              onClick={() => handleLinkClick(16300)}
+            />
           </li>
           <li>
-            <SidebarLink label="Contact" />
+            <SidebarLink
+              label="Contact"
+              onClick={() => handleLinkClick(22150)}
+            />
           </li>
         </ul>
       </div>

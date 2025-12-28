@@ -7,6 +7,7 @@ import {
   DrawSVGPlugin,
   PixiPlugin,
   Draggable,
+  ScrollToPlugin,
 } from "gsap/all";
 
 gsap.registerPlugin(
@@ -15,7 +16,8 @@ gsap.registerPlugin(
   MotionPathPlugin,
   DrawSVGPlugin,
   PixiPlugin,
-  Draggable
+  Draggable,
+  ScrollToPlugin
 );
 
 export {
@@ -25,5 +27,6 @@ export {
   MotionPathPlugin,
   DrawSVGPlugin,
   Draggable,
+  ScrollToPlugin,
 };
 export default gsap;

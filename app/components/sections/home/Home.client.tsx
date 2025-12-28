@@ -25,11 +25,10 @@ export default function HomeClient({ projects }: HomeClientProps) {
 
   return (
     <>
-      {/* <RulerDev /> */}
       <header className="fixed top-0 w-full z-50 text-white mix-blend-difference">
         <Navbar onToggle={toggleSidebar} isOpen={isSidebarOpen} />
       </header>
-      <Sidebar isOpen={isSidebarOpen} />
+      <Sidebar isOpen={isSidebarOpen} onClose={toggleSidebar} />
       <main>
         <article>
           <section aria-label="Hero">

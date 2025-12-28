@@ -181,5 +181,44 @@ export function useNavbarAnimation({ isOpen }: UseNavbarAnimationParams) {
     { scope: container, dependencies: [isOpen] }
   );
 
-  return { container, toggleIconRef };
+  const scrollToHome = () => {
+    gsap.to(window, {
+      scrollTo: 0,
+      duration: 1,
+      ease: "power2.inOut",
+    });
+  };
+
+  const scrollToAbout = () => {
+    gsap.to(window, {
+      scrollTo: 2850,
+      duration: 1,
+      ease: "power2.inOut",
+    });
+  };
+
+  const scrollToProject = () => {
+    gsap.to(window, {
+      scrollTo: 16300,
+      duration: 1,
+      ease: "power2.inOut",
+    });
+  };
+
+  const scrollToContact = () => {
+    gsap.to(window, {
+      scrollTo: 22150,
+      duration: 1,
+      ease: "power2.inOut",
+    });
+  };
+
+  return {
+    container,
+    toggleIconRef,
+    scrollToHome,
+    scrollToAbout,
+    scrollToProject,
+    scrollToContact,
+  };
 }
