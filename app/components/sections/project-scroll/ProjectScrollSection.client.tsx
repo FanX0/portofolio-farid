@@ -23,7 +23,7 @@ export default function ProjectScrollClient({
 
   return (
     <div ref={container} className=" bg-[var(--white-color)] ">
-      <div className="h-dvh  ">
+      <div className="h-dvh flex justify-center items-center">
         <div className="relative h-full w-full flex items-center justify-center ">
           <div className="relative h-full w-full   ">
             <div className="container h-full flex items-center justify-between  gap-[2rem] lg:gap-[4rem]">

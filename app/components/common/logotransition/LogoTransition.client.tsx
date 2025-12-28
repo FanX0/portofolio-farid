@@ -17,9 +17,9 @@ export default function LogoTransitionClient() {
     <div
       ref={container}
       id="logo-transition"
-      className="mx-auto w-full  absolute flex items-center justify-center   z-10"
+      className="mx-auto w-full absolute flex items-center justify-center z-10"
     >
-      <div className="left-logo relative -top-1  bg-white h-screen w-[50%] flex justify-end">
+      <div className="left-logo  bg-white h-screen w-[50%] flex justify-end">
         <svg
           width="768"
           height="955"
@@ -44,7 +44,7 @@ export default function LogoTransitionClient() {
           </g>
         </svg>
       </div>
-      <div className="right-logo relative -top-1 bg-white h-screen w-[50%] flex justify-start">
+      <div className="right-logo  bg-white h-screen w-[50%] flex justify-start">
         <svg
           width="768"
           height="955"

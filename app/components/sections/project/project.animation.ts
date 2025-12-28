@@ -1,4 +1,4 @@
-import gsap, { Draggable, ScrollTrigger } from "@/app/lib/gsap";
+import gsap, { Draggable } from "@/app/lib/gsap";
 
 type ProjectAnimationParams = {
   container: HTMLElement;
@@ -6,13 +6,12 @@ type ProjectAnimationParams = {
 
 export function initProjectAnimation({ container }: ProjectAnimationParams) {
   const q = gsap.utils.selector(container);
-  const getDiv = (selector: string) => q(selector)[0] as HTMLDivElement;
 
-  const listWrapper = getDiv(".list-wrapper");
-  const listLine = getDiv(".list-line");
+  const listWrapper = q(".list-wrapper")[0] as HTMLElement;
+  const listLine = q(".list-line")[0] as HTMLElement;
   const listItems = q(".list-line > button");
-  const imageWrapper = getDiv(".image-wrapper");
-  const imageLine = getDiv(".image-line");
+  const imageWrapper = q(".image-wrapper")[0] as HTMLElement;
+  const imageLine = q(".image-line")[0] as HTMLElement;
   const imageItems = q(".image-line > button");
 
   if (
@@ -26,13 +25,7 @@ export function initProjectAnimation({ container }: ProjectAnimationParams) {
     return;
   }
 
-  ScrollTrigger.create({
-    trigger: container,
-    start: "center center",
-    end: "+=0",
-    pin: true,
-  });
-
+  // Initial state
   gsap.set(listWrapper, { pointerEvents: "auto" });
   gsap.set(imageWrapper, { pointerEvents: "none" });
 
@@ -50,27 +43,7 @@ export function initProjectAnimation({ container }: ProjectAnimationParams) {
     },
   });
 
-  const minListY = Math.min(
-    0,
-    listWrapper.clientHeight - listLine.scrollHeight
-  );
-
-  Draggable.create(listLine, {
-    type: "y",
-    inertia: true,
-    edgeResistance: 0.9,
-
-    onRelease() {
-      const y = gsap.getProperty(listLine, "y") as number;
-
-      if (y > 0) {
-        gsap.to(listLine, { y: 0, duration: 0.8, ease: "expo.out" });
-      } else if (y < minListY) {
-        gsap.to(listLine, { y: minListY, duration: 0.8, ease: "expo.out" });
-      }
-    },
-  });
-
+  // --- Image Draggable ---
   const minImageY = Math.min(
     0,
     imageWrapper.clientHeight - imageLine.scrollHeight
@@ -82,13 +55,18 @@ export function initProjectAnimation({ container }: ProjectAnimationParams) {
     edgeResistance: 0.9,
 
     onRelease() {
+      const currentMinImageY = Math.min(
+        0,
+        imageWrapper.clientHeight - imageLine.scrollHeight
+      );
+
       const y = gsap.getProperty(imageLine, "y") as number;
 
       if (y > 0) {
         gsap.to(imageLine, { y: 0, duration: 0.8, ease: "expo.out" });
-      } else if (y < minImageY) {
+      } else if (y < currentMinImageY) {
         gsap.to(imageLine, {
-          y: minImageY,
+          y: currentMinImageY,
           duration: 0.8,
           ease: "expo.out",
         });
@@ -126,6 +104,7 @@ export function initProjectAnimation({ container }: ProjectAnimationParams) {
       },
     }
   );
+
   const items = q(".project-item");
 
   items.forEach((item) => {

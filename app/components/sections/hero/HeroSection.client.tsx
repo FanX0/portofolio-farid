@@ -25,11 +25,11 @@ export default function HeroSectionClient({ projects }: HeroSectionProps) {
   );
 
   return (
-    <div ref={container}>
-      <div className="bg-[var(--white-color)] h-dvh">
-        <div className="container h-full flex items-start pt-[8rem] lg:items-end pb-[2rem]    ">
-          <div className="w-full h-full lg:py-0 lg:h-[20rem]   flex flex-col  gap-[4rem] lg:gap-[1rem] lg:flex-row justify-center lg:justify-between  ">
-            <div className="box-hero-image flex w-full h-[20rem] lg:h-full  lg:w-[50%] lg:order-2 ">
+    <div ref={container} className="hero-section">
+      <div className="bg-[var(--white-color)] h-dvh  flex justify-center items-center">
+        <div className="container  flex items-end  pb-[2rem] h-full max-h-[80rem]  ">
+          <div className="w-full  lg:py-0   flex flex-col  gap-[1rem]  lg:flex-row justify-between   ">
+            <div className="box-hero-image flex w-full h-[20rem] lg:h-[20rem] lg:w-[50%] lg:order-2 ">
               <div className="project-image flex w-full h-full  rounded-[2rem] overflow-hidden ">
                 {projects.slice(-1).map((project) => {
                   const imageUrl = getImageUrl(project.images?.[0]);
@@ -93,16 +93,16 @@ export default function HeroSectionClient({ projects }: HeroSectionProps) {
           </div>
         </div>
       </div>
-      <div className="bg-[var(--white-color)] h-dvh">
-        <div className="container h-full w-full flex flex-col gap-[2rem] items-center justify-between ">
+      <div className="h-[23rem] lg:h-dvh bg-[var(--white-color)] py-[2rem] ">
+        <div className="container  w-full flex flex-col gap-[2rem] items-center justify-between ">
           <div className="flex w-full justify-between items-center">
             <p className="">Recent Project</p>
             <p className="">View all / {projects.length}</p>
           </div>
-          <div className="box-project-image h-full w-full rounded-[2rem]"></div>
+          <div className="box-project-image h-full lg:h-[53rem] w-full rounded-[2rem]"></div>
         </div>
       </div>
-      <div>
+      <div className="relative">
         <LogoTransition />
       </div>
     </div>

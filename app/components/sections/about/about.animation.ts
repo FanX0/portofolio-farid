@@ -9,7 +9,6 @@ export function initAboutAnimation({ container }: AboutAnimationParams) {
     start: "top top",
     end: "+=600%",
     scrub: true,
-
     pin: true,
   });
 }

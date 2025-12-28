@@ -18,25 +18,27 @@ export default function AboutSectionClient() {
     { scope: container }
   );
   return (
-    <div ref={container} className=" bg-[var(--black-color)] ">
-      <div className="h-dvh">
+    <div ref={container} className=" bg-[var(--black-color)]  h-full">
+      <div className="h-dvh flex justify-center items-center">
         <div
           id="about-title"
-          className="container h-full flex flex-col lg:flex-row gap-[2rem] h-full items-center lg:items-end  pt-[10rem] lg:pt-0 lg:pb-[4rem]"
+          className="container h-full max-h-[80rem] flex flex-col items-end gap-[2rem] pt-[10rem] lg:pb-[4rem]"
         >
           <TextMaskScroll
-            startMobile={2250}
+            startDesktop="top+=800"
+            endDesktop="+=200"
+            startMobile="top+=800"
             endMobile="+=200"
-            className="text-[6rem]  font-bold text-white lg:hidden w-full"
+            className=" text-[clamp(6rem,10vw+1rem,10rem)]  font-bold text-white w-full"
           >
             About
           </TextMaskScroll>
           <TextClipPath
-            startDesktop="2950"
-            endDesktop="8000"
-            startMobile="2250"
-            endMobile="6500"
-            className=" leading-[2rem] lg:leading-[3rem] text-[1.5rem] lg:text-[3rem] text-left font-bold text-center "
+            startDesktop="top+=800"
+            endDesktop="+=4000"
+            startMobile="top+=800"
+            endMobile="+=4000"
+            className=" leading-[2rem] lg:leading-[4rem] text-[1.5rem] lg:text-[3rem] text-left font-bold text-center "
           >
             I translate ideas into compelling, user focused experiences that
             drive brand growth. creating unique and memorable work. and truly

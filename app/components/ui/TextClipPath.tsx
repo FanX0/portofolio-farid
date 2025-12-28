@@ -10,15 +10,15 @@ const TextClipPath = ({
   children,
   className,
   startDesktop,
-  endDesktop,
   startMobile,
+  endDesktop,
   endMobile,
 }: {
   children: ReactNode;
   className: string;
   startDesktop?: string;
-  endDesktop?: string;
   startMobile?: string;
+  endDesktop?: string;
   endMobile?: string;
 }) => {
   const container = useRef<HTMLParagraphElement>(null);

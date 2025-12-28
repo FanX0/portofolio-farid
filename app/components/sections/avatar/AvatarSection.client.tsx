@@ -16,7 +16,7 @@ export default function AvatarSectionClient() {
   );
 
   return (
-    <div ref={container} className=" h-dvh bg-[var(--black-color)]">
+    <div ref={container} className="h-dvh bg-[var(--black-color)]">
       <div className="h-full w-full flex items-end justify-center overflow-hidden">
         <svg
           className="avatar relative w-[20rem] lg:w-[35rem] h-auto  left-[2.5rem] "

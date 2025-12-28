@@ -1,22 +1,29 @@
 "use client";
 
-import { useRef, useState } from "react";
-
+import { useEffect, useState, useRef } from "react";
+import type { Project } from "@/app/types/project";
 import TextMaskScroll from "@/app/components/ui/TextMaskScroll";
 import Image from "next/image";
-import { useGSAP } from "@/app/lib/gsap";
+
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
+import { Draggable } from "gsap/Draggable";
 import { initProjectAnimation } from "./project.animation";
+
 import { getImageUrl } from "@/app/lib/sanity/image";
 
-import { ProjectSectionProps } from "./project.types";
-import { Project } from "@/app/types/project";
+gsap.registerPlugin(Draggable);
 
-export default function ProjectSectionClient({
-  projects = [],
-}: ProjectSectionProps) {
-  const [activedList, setactivedList] = useState<boolean>(true);
+type Props = {
+  projects: Project[];
+};
+
+const ProjectSectionClient = ({ projects }: Props) => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [activedList, setActivedList] = useState<boolean>(true);
   const [activeProject, setActiveProject] = useState<Project | null>(null);
   const [imageIndex, setImageIndex] = useState(0);
+  const [viewMode, setViewMode] = useState<"list" | "image">("list");
 
   const container = useRef<HTMLDivElement>(null);
   const modalRef = useRef<HTMLDivElement>(null);
@@ -25,6 +32,63 @@ export default function ProjectSectionClient({
   const tl = useRef<gsap.core.Timeline | null>(null);
 
   const modalImage = getImageUrl(activeProject?.images?.[imageIndex]);
+
+  useEffect(() => {
+    if (!activeProject) return;
+    setImageIndex(0);
+  }, [activeProject]);
+
+  useEffect(() => {
+    if (!activeProject || !activeProject.images?.length) return;
+
+    const interval = setInterval(() => {
+      setImageIndex((prev) => (prev + 1) % activeProject.images.length);
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [activeProject]);
+
+  useEffect(() => {
+    if (!activeProject || !modalRef.current) return;
+
+    if (modalTl.current) return;
+
+    const backdrop = backdropRef.current;
+    modalTl.current = gsap.timeline({ paused: true });
+
+    if (backdrop) {
+      modalTl.current.fromTo(
+        backdrop,
+        { backdropFilter: "blur(0px)", opacity: 0 },
+        {
+          backdropFilter: "blur(8px)",
+          opacity: 1,
+          duration: 0.45,
+          ease: "power3.out",
+        },
+        0
+      );
+    }
+
+    modalTl.current.fromTo(
+      modalRef.current,
+      { yPercent: 100, opacity: 0 },
+      { yPercent: 0, opacity: 1, duration: 0.45, ease: "power3.out" },
+      0
+    );
+
+    modalTl.current.play();
+  }, [activeProject]);
+
+  useEffect(() => {
+    if (!modalTl.current) return;
+
+    if (activeProject) {
+      modalTl.current.play();
+    } else {
+      modalTl.current.reverse();
+    }
+  }, [activeProject]);
 
   useGSAP(
     () => {
@@ -38,11 +102,13 @@ export default function ProjectSectionClient({
   );
 
   const handleClickImage = () => {
-    setactivedList(false);
+    setViewMode("image");
+    setActivedList(false);
     tl.current?.play();
   };
   const handleClickList = () => {
-    setactivedList(true);
+    setViewMode("list");
+    setActivedList(true);
     tl.current?.reverse();
   };
 
@@ -67,6 +133,9 @@ export default function ProjectSectionClient({
   const handleCloseProject = () => {
     modalTl.current?.reverse();
     setTimeout(() => {
+      // Don't kill the timeline here usually if you want to replay it, but following user logic
+      // Actually user logic was: modalTl.current?.kill(); modalTl.current = null;
+      // This forces re-creation on next open via useEffect, which is fine.
       modalTl.current?.kill();
       modalTl.current = null;
       setActiveProject(null);
@@ -82,20 +151,20 @@ export default function ProjectSectionClient({
             startDesktop="center center"
             endMobile="+=500"
             endDesktop="+=500"
-            className="text-[6rem] font-bold lg:text-[17.5rem]"
+            className="text-[clamp(6rem,10vw+1rem,10rem)] font-bold"
           >
             Project
           </TextMaskScroll>
 
           <div className="flex justify-between text-gray-300">
             <button
-              className={activedList ? "text-white" : ""}
+              className={viewMode === "list" ? "text-white" : ""}
               onClick={handleClickList}
             >
               List View
             </button>
             <button
-              className={!activedList ? "text-white" : ""}
+              className={viewMode === "image" ? "text-white" : ""}
               onClick={handleClickImage}
             >
               Image View
@@ -118,14 +187,14 @@ export default function ProjectSectionClient({
                             <h2 className="text-3xl">{project.title}</h2>
                           </div>
                           {/* hover */}
-                          <div className="flex justify-between bg-white text-black h-[4rem] px-4">
+                          <div className="flex items-center justify-between bg-white text-black h-[4rem] px-4">
                             <h2 className="text-3xl">{project.title}</h2>
                             <a className="text-sm" href={project.liveDemo}>
                               Live Website
                             </a>
                           </div>
                           {/* default */}
-                          <div className="flex justify-start h-[4rem] px-4">
+                          <div className="flex items-center justify-start h-[4rem] px-4">
                             <h2 className="text-3xl">{project.title}</h2>
                           </div>
                         </div>
@@ -244,4 +313,6 @@ export default function ProjectSectionClient({
       </div>
     </div>
   );
-}
+};
+
+export default ProjectSectionClient;
