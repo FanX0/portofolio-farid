@@ -36,7 +36,7 @@ export default function SidebarClient({ isOpen }: SidebarClientProps) {
     >
       <div></div>
       <div className="w-full px-[1rem]">
-        <ul className="bg-white flex-col w-full rounded-[1rem] px-[1rem] divide-y-1">
+        <ul className="sidebar-list origin-top bg-white flex-col w-full rounded-[1rem] px-[1rem] divide-y-1">
           <li>
             <SidebarLink label="Home" />
           </li>

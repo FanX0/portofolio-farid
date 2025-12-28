@@ -36,6 +36,20 @@ export default function initSidebarAnimation({
   );
 
   tlOpen.fromTo(
+    q(".sidebar-list"),
+    {
+      scaleY: 0,
+    },
+    {
+      scaleY: 1,
+      duration: 0.8,
+      ease: "power3.inOut",
+      stagger: 0.1,
+    },
+    1
+  );
+
+  tlOpen.fromTo(
     q(".sidebar-link-text"),
     {
       y: "100%",
@@ -46,7 +60,7 @@ export default function initSidebarAnimation({
       ease: "power3.out",
       stagger: 0.1,
     },
-    1
+    2
   );
 
   const tlClose = gsap.timeline({ paused: true });
