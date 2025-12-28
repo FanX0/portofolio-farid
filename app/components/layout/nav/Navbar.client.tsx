@@ -1,23 +1,14 @@
 "use client";
 
-import { useRef } from "react";
-import { useGSAP } from "@/app/lib/gsap";
-import initNavbarAnimation from "./navbar.animation";
+import { useNavbarAnimation } from "./navbar.animation";
 
 type NavbarClientProps = {
   onToggle: () => void;
+  isOpen: boolean;
 };
 
-export default function NavbarClient({ onToggle }: NavbarClientProps) {
-  const container = useRef<HTMLDivElement>(null);
-
-  useGSAP(
-    () => {
-      if (!container.current) return;
-      return initNavbarAnimation({ container: container.current });
-    },
-    { scope: container }
-  );
+export default function NavbarClient({ onToggle, isOpen }: NavbarClientProps) {
+  const { container, toggleIconRef } = useNavbarAnimation({ isOpen });
 
   const handleSidebarToggle = () => {
     onToggle();
@@ -41,6 +32,7 @@ export default function NavbarClient({ onToggle }: NavbarClientProps) {
           <li className="lg:hidden flex items-center h-[4.0625rem]">
             <button type="button" onClick={handleSidebarToggle}>
               <svg
+                ref={toggleIconRef}
                 width="40"
                 height="40"
                 viewBox="0 0 40 40"
@@ -48,6 +40,7 @@ export default function NavbarClient({ onToggle }: NavbarClientProps) {
                 xmlns="http://www.w3.org/2000/svg"
               >
                 <rect
+                  className="toggle-bg"
                   x="0.5"
                   y="0.5"
                   width="39"
@@ -55,9 +48,33 @@ export default function NavbarClient({ onToggle }: NavbarClientProps) {
                   rx="19.5"
                   stroke="#fff"
                 />
-                <rect x="11" y="18" width="4" height="4" rx="2" fill="#fff" />
-                <rect x="18" y="18" width="4" height="4" rx="2" fill="#fff" />
-                <rect x="25" y="18" width="4" height="4" rx="2" fill="#fff" />
+                <rect
+                  className="toggle-dot"
+                  x="11"
+                  y="18"
+                  width="4"
+                  height="4"
+                  rx="2"
+                  fill="#fff"
+                />
+                <rect
+                  className="toggle-dot"
+                  x="18"
+                  y="18"
+                  width="4"
+                  height="4"
+                  rx="2"
+                  fill="#fff"
+                />
+                <rect
+                  className="toggle-dot"
+                  x="25"
+                  y="18"
+                  width="4"
+                  height="4"
+                  rx="2"
+                  fill="#fff"
+                />
               </svg>
             </button>
           </li>

@@ -1,4 +1,5 @@
-import gsap, { ScrollTrigger } from "@/app/lib/gsap";
+import gsap, { ScrollTrigger, useGSAP } from "@/app/lib/gsap";
+import { useRef } from "react";
 
 type NavbarAnimationParams = {
   container: HTMLElement;
@@ -123,4 +124,62 @@ export default function initNavbarAnimation({
   requestAnimationFrame(() => {
     ScrollTrigger.refresh();
   });
+}
+
+type UseNavbarAnimationParams = {
+  isOpen: boolean;
+};
+
+export function useNavbarAnimation({ isOpen }: UseNavbarAnimationParams) {
+  const container = useRef<HTMLDivElement>(null);
+  const toggleIconRef = useRef<SVGSVGElement>(null);
+  const rotation = useRef(0);
+  const lastIsOpen = useRef(isOpen);
+
+  useGSAP(
+    () => {
+      if (!container.current) return;
+      initNavbarAnimation({ container: container.current });
+    },
+    { scope: container }
+  );
+
+  useGSAP(
+    () => {
+      if (!toggleIconRef.current) return;
+      if (isOpen === lastIsOpen.current) return;
+
+      if (isOpen) {
+        rotation.current += 90;
+      } else {
+        rotation.current += 90;
+      }
+
+      const q = gsap.utils.selector(toggleIconRef.current);
+
+      gsap.to(toggleIconRef.current, {
+        rotation: rotation.current,
+        duration: 0.3,
+        ease: "power2.inOut",
+      });
+
+      gsap.to(q(".toggle-bg"), {
+        fill: isOpen ? "#ffffff" : "transparent",
+        stroke: isOpen ? "#ffffff" : "#ffffff",
+        duration: 0.3,
+        ease: "power2.inOut",
+      });
+
+      gsap.to(q(".toggle-dot"), {
+        fill: isOpen ? "#000000" : "#ffffff",
+        duration: 0.3,
+        ease: "power2.inOut",
+      });
+
+      lastIsOpen.current = isOpen;
+    },
+    { scope: container, dependencies: [isOpen] }
+  );
+
+  return { container, toggleIconRef };
 }

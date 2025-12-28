@@ -27,7 +27,7 @@ export default function HomeClient({ projects }: HomeClientProps) {
     <>
       {/* <RulerDev /> */}
       <header className="fixed top-0 w-full z-50 text-white mix-blend-difference">
-        <Navbar onToggle={toggleSidebar} />
+        <Navbar onToggle={toggleSidebar} isOpen={isSidebarOpen} />
       </header>
       <Sidebar isOpen={isSidebarOpen} />
       <main>
