@@ -1,5 +1,9 @@
 import NavbarClient from "./Navbar.client";
 
-export default function Navbar() {
-  return <NavbarClient />;
+type NavbarProps = {
+  onToggle: () => void;
+};
+
+export default function Navbar({ onToggle }: NavbarProps) {
+  return <NavbarClient onToggle={onToggle} />;
 }

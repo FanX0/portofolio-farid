@@ -1,3 +1,5 @@
+"use client";
+
 import HeroSection from "@/app/components/sections/hero/HeroSection.server";
 import AboutSection from "@/app/components/sections/about/AboutSection.server";
 import AvatarSection from "@/app/components/sections/avatar/AvatarSection.server";
@@ -7,18 +9,27 @@ import Navbar from "@/app/components/layout/nav/Navbar.server";
 import ProjectSection from "@/app/components/sections/project/ProjectSection.server";
 import ProjectScrollSection from "@/app/components/sections/project-scroll/ProjectScrollSection.server";
 import type { Project } from "@/app/types/project";
+import Sidebar from "@/app/components/layout/sidebar/Sidebar.server";
+import { useState } from "react";
 
 type HomeClientProps = {
   projects: Project[];
 };
 
 export default function HomeClient({ projects }: HomeClientProps) {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
+
   return (
     <>
       {/* <RulerDev /> */}
       <header className="fixed top-0 w-full z-50 text-white mix-blend-difference">
-        <Navbar />
+        <Navbar onToggle={toggleSidebar} />
       </header>
+      <Sidebar isOpen={isSidebarOpen} />
       <main>
         <article>
           <section aria-label="Hero">
