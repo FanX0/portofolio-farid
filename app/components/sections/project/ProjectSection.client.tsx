@@ -158,13 +158,13 @@ const ProjectSectionClient = ({ projects }: Props) => {
 
           <div className="flex justify-between text-gray-300">
             <button
-              className={viewMode === "list" ? "text-white" : ""}
+              className={`list-view-button ${viewMode === "list" ? "text-white" : ""}`}
               onClick={handleClickList}
             >
               List View
             </button>
             <button
-              className={viewMode === "image" ? "text-white" : ""}
+              className={`image-view-button ${viewMode === "image" ? "text-white" : ""}`}
               onClick={handleClickImage}
             >
               Image View
@@ -172,7 +172,7 @@ const ProjectSectionClient = ({ projects }: Props) => {
           </div>
 
           <div className="relative h-full overflow-hidden">
-            <section className="list-wrapper h-full border-y border-gray-300 ">
+            <section className="list-wrapper h-full ">
               <div className="list-line">
                 {projects.map((project, index) => {
                   return (
@@ -204,8 +204,8 @@ const ProjectSectionClient = ({ projects }: Props) => {
                 })}
               </div>
             </section>
-            <section className="image-wrapper absolute top-0 w-full h-full pointer-events-none">
-              <div className="image-line grid grid-cols-1 lg:grid-cols-3 gap-[4rem] h-full w-full items-start mt-[4rem] ">
+            <section className="image-wrapper absolute top-0 w-full h-full pointer-events-none flex justify-center">
+              <div className="image-line grid grid-cols-1 justify-items-center lg:grid-cols-3 gap-[4rem] h-full w-full  mt-[4rem] ">
                 {projects.map((project) => {
                   const imageUrl = getImageUrl(project.images?.[0]);
 

@@ -84,6 +84,42 @@ export default function initCursorAnimation({
       });
       showText("Click");
     }
+    if (target.closest(".list-view-button")) {
+      gsap.to(cursor, {
+        scale: 9,
+        borderRadius: "50%",
+        backgroundColor: "purple",
+        duration: 0.3,
+      });
+      showText("Click");
+    }
+    if (target.closest(".image-view-button")) {
+      gsap.to(cursor, {
+        scale: 9,
+        borderRadius: "50%",
+        backgroundColor: "purple",
+        duration: 0.3,
+      });
+      showText("Click");
+    }
+    if (target.closest(".image-line")) {
+      gsap.to(cursor, {
+        scale: 9,
+        borderRadius: "50%",
+        backgroundColor: "purple",
+        duration: 0.3,
+      });
+      showText("Drag");
+    }
+    if (target.closest(".email-link")) {
+      gsap.to(cursor, {
+        scale: 9,
+        borderRadius: "50%",
+        backgroundColor: "purple",
+        duration: 0.3,
+      });
+      showText("Email me");
+    }
     if (target.closest(".about-link")) {
       gsap.to(cursor, {
         autoAlpha: 0,
@@ -140,14 +176,52 @@ export default function initCursorAnimation({
       });
       hideText();
     }
+    const imageLine = target.closest(".image-line");
+    if (imageLine && !imageLine.contains(e.relatedTarget as Node)) {
+      gsap.to(cursor, {
+        scale: 1,
+        backgroundColor: "", // Clear inline style to revert to CSS class
+        duration: 0.3,
+      });
+      hideText();
+    }
+    const listViewButton = target.closest(".list-view-button");
+    if (listViewButton && !listViewButton.contains(e.relatedTarget as Node)) {
+      gsap.to(cursor, {
+        scale: 1,
+        backgroundColor: "", // Clear inline style to revert to CSS class
+        duration: 0.3,
+      });
+      hideText();
+    }
+    const imageViewButton = target.closest(".image-view-button");
+    if (imageViewButton && !imageViewButton.contains(e.relatedTarget as Node)) {
+      gsap.to(cursor, {
+        scale: 1,
+        backgroundColor: "", // Clear inline style to revert to CSS class
+        duration: 0.3,
+      });
+      hideText();
+    }
+    const emailLink = target.closest(".email-link");
+    if (emailLink && !emailLink.contains(e.relatedTarget as Node)) {
+      gsap.to(cursor, {
+        scale: 1,
+        backgroundColor: "", // Clear inline style to revert to CSS class
+        duration: 0.3,
+      });
+      hideText();
+    }
     const sidebarToggle = target.closest(".sidebar-toggle");
     if (sidebarToggle && !sidebarToggle.contains(e.relatedTarget as Node)) {
       gsap.to(cursor, {
-        autoAlpha: 1,
+        scale: 1,
+        backgroundColor: "", // Clear inline style to revert to CSS class
         duration: 0.3,
-        overwrite: "auto",
       });
+      hideText();
     }
+
     const aboutLink = target.closest(".about-link");
     if (aboutLink && !aboutLink.contains(e.relatedTarget as Node)) {
       gsap.to(cursor, {
