@@ -16,7 +16,7 @@ export default function Cursor() {
   return (
     <div
       ref={container}
-      className="cursor flex justify-center items-center bg-purple-800 h-[0.7rem] w-[0.7rem] fixed top-0 left-0 pointer-events-none z-[9999]"
+      className="cursor hidden lg:flex justify-center items-center bg-purple-800 h-[0.7rem] w-[0.7rem] fixed top-0 left-0 pointer-events-none z-[9999]"
     >
       <span className="cursor-text whitespace-nowrap" />
     </div>
