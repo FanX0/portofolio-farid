@@ -116,7 +116,13 @@ export default function HeroSectionClient({ projects }: HeroSectionProps) {
     <div ref={container} className="hero-section">
       <div className="bg-[var(--white-color)] h-dvh  flex justify-center items-center">
         <div className="container  flex items-end  pb-[2rem] h-full max-h-[80rem]  ">
-          <div className="w-full  lg:py-0   flex flex-col  gap-[1rem]  lg:flex-row justify-between   ">
+          <div className="w-full  lg:py-0   flex flex-col  gap-[4rem]  lg:flex-row justify-between   ">
+            <TextMask
+              start=""
+              className="text-[clamp(6rem,10vw+1rem,10rem)]  font-bold lg:hidden"
+            >
+              farid
+            </TextMask>
             <div className="box-hero-image flex w-full h-[20rem] lg:h-[20rem] lg:w-[50%] lg:order-2 ">
               <div className="project-image relative flex w-full h-full  rounded-[2rem] overflow-hidden ">
                 {projectImages.map((image, index) => {

@@ -14,24 +14,6 @@ export default function initNavbarAnimation({
 
   mm.add("(max-width: 64rem)", () => {
     gsap.fromTo(
-      q(".nav-name"),
-      {
-        fontSize: "6rem",
-        fontWeight: 700,
-        y: 100,
-      },
-      {
-        y: 0,
-        fontSize: "1.5625rem",
-        fontWeight: 500,
-        scrollTrigger: {
-          start: 100,
-          end: 500,
-          scrub: true,
-        },
-      }
-    );
-    gsap.fromTo(
       q(".progressbar-mobile-fill"),
       { scaleX: 0 },
       {
