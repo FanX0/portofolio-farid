@@ -1,7 +1,8 @@
 import { client } from "./client";
 
 export async function getProjects() {
-  return client.fetch(`
+  return client.fetch(
+    `
     *[_type == "project"] | order(publishedAt desc) {
       _id,
       title,
@@ -15,5 +16,8 @@ export async function getProjects() {
         }
       }
     }
-  `);
+  `,
+    {},
+    { next: { revalidate: 60 } }
+  );
 }
