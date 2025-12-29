@@ -38,10 +38,10 @@ export default function initSidebarAnimation({
   tlOpen.fromTo(
     q(".sidebar-list"),
     {
-      scaleY: 0,
+      scaleX: 0,
     },
     {
-      scaleY: 1,
+      scaleX: 1,
       duration: 0.8,
       ease: "power3.inOut",
       stagger: 0.1,
@@ -50,7 +50,7 @@ export default function initSidebarAnimation({
   );
 
   tlOpen.fromTo(
-    q(".sidebar-link-text"),
+    q(".sidebar-link"),
     {
       y: "100%",
     },

@@ -48,7 +48,7 @@ export default function SidebarClient({ isOpen, onClose }: SidebarClientProps) {
     >
       <div></div>
       <div className="w-full px-[1rem]">
-        <ul className="sidebar-list origin-top bg-white flex-col w-full rounded-[1rem] px-[1rem] divide-y-1">
+        <ul className="sidebar-list origin-left bg-white flex-col w-full rounded-[1rem] px-[1rem] divide-y-1">
           <li>
             <SidebarLink label="Home" onClick={() => handleLinkClick(0)} />
           </li>
