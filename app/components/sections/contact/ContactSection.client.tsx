@@ -124,7 +124,12 @@ export default function ContactSectionClient() {
                   </button>
                   <div className="flex justify-between text-[0.8rem] lg:col-span-2">
                     <p>Prefer email?</p>
-                    <a href="">faridazhari111@gmail.com</a>
+                    <a
+                      className="email-link"
+                      href="mailto:faridazhari111@gmail.com"
+                    >
+                      faridazhari111@gmail.com
+                    </a>
                   </div>
                 </div>
                 <div className="relative w-[24rem] lg:w-[52rem] h-auto">
