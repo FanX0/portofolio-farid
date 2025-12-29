@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import type { HeroSectionProps } from "./hero.types";
 
 import TextMask from "@/app/components/ui/TextMask";
@@ -10,19 +10,92 @@ import Image from "next/image";
 import { initHeroAnimation } from "./hero.animation";
 
 import { getImageUrl } from "@/app/lib/sanity/image";
-import { useGSAP } from "@/app/lib/gsap";
+import gsap, { useGSAP } from "@/app/lib/gsap";
 
 export default function HeroSectionClient({ projects }: HeroSectionProps) {
   const [imageReady, setImageReady] = useState(false);
+  const [currentIndex, setCurrentIndex] = useState(0);
   const container = useRef<HTMLDivElement>(null);
+  const tlBoxHeroLinkRef = useRef<GSAPTimeline>(null);
+  const circleArrowRef = useRef<HTMLDivElement>(null);
+  const arrowRef = useRef<SVGSVGElement>(null);
+
+  const resetTweenRef = useRef<gsap.core.Tween | null>(null);
+  const loopTweenRef = useRef<gsap.core.Timeline | null>(null);
+
+  const latestProject = projects[0];
+  const projectImages = latestProject?.images || [];
 
   useGSAP(
     () => {
-      if (!container.current || !imageReady) return;
-      return initHeroAnimation({ container: container.current });
+      // Hero Image Animation
+      if (container.current && imageReady) {
+        initHeroAnimation({ container: container.current });
+      }
+
+      // Box Hero Link Animation Setup
+      if (circleArrowRef.current && arrowRef.current) {
+        // Initial state
+        gsap.set(circleArrowRef.current, { scale: 0 });
+
+        tlBoxHeroLinkRef.current = gsap
+          .timeline({ paused: true })
+          .to(circleArrowRef.current, {
+            scale: 1,
+            duration: 0.4,
+            ease: "back.out(1.7)",
+          });
+      }
     },
     { scope: container, dependencies: [imageReady] }
   );
+
+  useEffect(() => {
+    if (projectImages.length <= 1) return;
+
+    const interval = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % projectImages.length);
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [projectImages.length]);
+
+  const handleMouseEnterBoxHeroLink = () => {
+    resetTweenRef.current?.kill();
+    tlBoxHeroLinkRef.current?.play();
+
+    // Start Arrow Loop (Left to Right)
+    loopTweenRef.current?.kill();
+    if (arrowRef.current) {
+      loopTweenRef.current = gsap
+        .timeline({ repeat: -1 })
+        .fromTo(
+          arrowRef.current,
+          { x: -50, opacity: 0 },
+          { x: 0, opacity: 1, duration: 0.3, ease: "power2.out" }
+        )
+        .to(arrowRef.current, {
+          x: 50,
+          opacity: 0,
+          duration: 0.3,
+          ease: "power2.in",
+        });
+    }
+  };
+
+  const handleMouseLeaveBoxHeroLink = () => {
+    tlBoxHeroLinkRef.current?.reverse();
+    loopTweenRef.current?.kill();
+
+    if (arrowRef.current) {
+      resetTweenRef.current = gsap.to(arrowRef.current, {
+        x: 0,
+        opacity: 1,
+        duration: 0.2,
+        overwrite: true,
+      });
+    }
+  };
 
   return (
     <div ref={container} className="hero-section">
@@ -30,20 +103,25 @@ export default function HeroSectionClient({ projects }: HeroSectionProps) {
         <div className="container  flex items-end  pb-[2rem] h-full max-h-[80rem]  ">
           <div className="w-full  lg:py-0   flex flex-col  gap-[1rem]  lg:flex-row justify-between   ">
             <div className="box-hero-image flex w-full h-[20rem] lg:h-[20rem] lg:w-[50%] lg:order-2 ">
-              <div className="project-image flex w-full h-full  rounded-[2rem] overflow-hidden ">
-                {projects.slice(-1).map((project) => {
-                  const imageUrl = getImageUrl(project.images?.[0]);
+              <div className="project-image relative flex w-full h-full  rounded-[2rem] overflow-hidden ">
+                {projectImages.map((image, index) => {
+                  const imageUrl = getImageUrl(image);
                   if (!imageUrl) return null;
 
                   return (
                     <Image
                       width={1280}
                       height={1280}
-                      key={project._id}
+                      key={index}
                       src={imageUrl}
-                      alt={project.title}
-                      className="object-cover w-full h-full "
-                      onLoadingComplete={() => setImageReady(true)}
+                      alt={latestProject?.title || "Project Image"}
+                      className={`object-cover w-full h-full absolute inset-0   ${
+                        index === currentIndex ? "opacity-100" : "opacity-0"
+                      }`}
+                      onLoadingComplete={() => {
+                        if (index === 0) setImageReady(true);
+                      }}
+                      priority={index === 0}
                     />
                   );
                 })}
@@ -58,48 +136,57 @@ export default function HeroSectionClient({ projects }: HeroSectionProps) {
                   from Indonesia
                 </TextMask>
               </div>
-              <div className="flex items-center justify-between px-[3rem] lg:px-[3rem] bg-black w-[20rem] h-[7rem]  lg:w-[22.75rem] lg:h-[7.8125rem] rounded-full">
-                <TextMask
-                  start=""
-                  className="text-[1.5rem]  font-medium text-white"
-                >
-                  Scroll down
+              <div
+                className="box-hero-link flex items-center justify-between px-[2rem] lg:px-[3rem] bg-black w-[20rem] h-[6rem]  lg:w-[22.75rem] lg:h-[7.8125rem] rounded-full hover:bg-[var(--white-color)] text-white hover:text-black hover:outline-black hover:outline-[3px]"
+                onMouseEnter={handleMouseEnterBoxHeroLink}
+                onMouseLeave={handleMouseLeaveBoxHeroLink}
+              >
+                <TextMask start="" className="text-[1.2rem]  font-medium ">
+                  Get in touch
                 </TextMask>
 
-                <svg
-                  width="24"
-                  height="26"
-                  viewBox="0 0 24 26"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M11.5 1.5L11.5 21.5"
-                    stroke="#EEEEEE"
-                    strokeWidth="3"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
+                <div className="relative w-[4rem] h-[4rem] flex items-center justify-center">
+                  <div
+                    ref={circleArrowRef}
+                    className="absolute inset-0 bg-purple-800 rounded-full origin-right"
                   />
-                  <path
-                    d="M17.5 16.5L11.5 23.5L5.5 16.5"
-                    stroke="#EEEEEE"
-                    strokeWidth="3"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
+                  <svg
+                    ref={arrowRef}
+                    width="24"
+                    height="26"
+                    viewBox="0 0 24 26"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="arrow-down w-[1.4rem] h-[1.4rem] relative z-10 "
+                  >
+                    <path
+                      d="M11.5 1.5L11.5 21.5"
+                      stroke="#EEEEEE"
+                      strokeWidth="3"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                    <path
+                      d="M17.5 16.5L11.5 23.5L5.5 16.5"
+                      stroke="#EEEEEE"
+                      strokeWidth="3"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div className="h-[23rem] lg:h-dvh bg-[var(--white-color)] py-[2rem] ">
+      <div className="h-[26rem] lg:h-dvh bg-[var(--white-color)] py-[2rem] ">
         <div className="container  w-full flex flex-col gap-[2rem] items-center justify-between ">
           <div className="flex w-full justify-between items-center">
             <p className="">Recent Project</p>
             <p className="">View all / {projects.length}</p>
           </div>
-          <div className="box-project-image h-full lg:h-[53rem] w-full rounded-[2rem]"></div>
+          <div className="box-project-image h-[20rem] lg:h-[53rem] w-full rounded-[2rem]"></div>
         </div>
       </div>
       <div className="relative">
