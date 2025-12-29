@@ -29,7 +29,7 @@ export default function AboutSectionClient() {
             endDesktop="+=200"
             startMobile="top+=800"
             endMobile="+=200"
-            className=" text-[clamp(6rem,10vw+1rem,10rem)]  font-bold text-white w-full"
+            className=" text-[clamp(5rem,10vw+1rem,10rem)]  font-bold text-white w-full"
           >
             About
           </TextMaskScroll>

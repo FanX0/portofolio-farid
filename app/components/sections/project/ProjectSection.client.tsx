@@ -151,7 +151,7 @@ const ProjectSectionClient = ({ projects }: Props) => {
             startDesktop="center center"
             endMobile="+=500"
             endDesktop="+=500"
-            className="text-[clamp(6rem,10vw+1rem,10rem)] font-bold"
+            className="text-[clamp(5rem,10vw+1rem,10rem)] font-bold"
           >
             Project
           </TextMaskScroll>
