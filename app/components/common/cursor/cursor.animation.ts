@@ -75,6 +75,15 @@ export default function initCursorAnimation({
       });
       showText("Click");
     }
+    if (target.closest(".view-all-project")) {
+      gsap.to(cursor, {
+        scale: 9,
+        borderRadius: "50%",
+        backgroundColor: "purple",
+        duration: 0.3,
+      });
+      showText("Click");
+    }
     if (target.closest(".about-link")) {
       gsap.to(cursor, {
         autoAlpha: 0,
@@ -113,6 +122,17 @@ export default function initCursorAnimation({
     const navName = target.closest(".nav-name");
 
     if (navName && !navName.contains(e.relatedTarget as Node)) {
+      gsap.to(cursor, {
+        scale: 1,
+        backgroundColor: "", // Clear inline style to revert to CSS class
+        duration: 0.3,
+      });
+      hideText();
+    }
+
+    const viewAllProject = target.closest(".view-all-project");
+
+    if (viewAllProject && !viewAllProject.contains(e.relatedTarget as Node)) {
       gsap.to(cursor, {
         scale: 1,
         backgroundColor: "", // Clear inline style to revert to CSS class

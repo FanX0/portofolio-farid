@@ -200,7 +200,7 @@ export default function HeroSectionClient({ projects }: HeroSectionProps) {
         <div className="container  w-full flex flex-col gap-[2rem] items-center justify-between ">
           <div className="flex w-full justify-between items-center">
             <p className="">Recent Project</p>
-            <p onClick={handleScrollToProject} className="">
+            <p onClick={handleScrollToProject} className="view-all-project">
               View all / {projects.length}
             </p>
           </div>
