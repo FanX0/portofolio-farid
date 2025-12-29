@@ -1,7 +1,7 @@
 "use client";
 
 import { useNavbarAnimation } from "./navbar.animation";
-import useNavCircleHover from "@/app/hooks/animations/useNavCircleHover";
+import useNavCircleHover from "@/app/components/layout/nav/useNavCircleHover";
 type NavbarClientProps = {
   onToggle: () => void;
   isOpen: boolean;
@@ -149,16 +149,16 @@ export default function NavbarClient({ onToggle, isOpen }: NavbarClientProps) {
                   <path
                     d="M7.12959 20.2609L17.6449 8.85352"
                     stroke="black"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
                   />
                   <path
                     d="M11.5939 8.55068L18.6965 7.71271L18.4383 14.8599"
                     stroke="black"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
                   />
                 </svg>
               </div>
@@ -243,16 +243,16 @@ export default function NavbarClient({ onToggle, isOpen }: NavbarClientProps) {
                   <path
                     d="M7.12959 20.2609L17.6449 8.85352"
                     stroke="black"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
                   />
                   <path
                     d="M11.5939 8.55068L18.6965 7.71271L18.4383 14.8599"
                     stroke="black"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
                   />
                 </svg>
               </div>
