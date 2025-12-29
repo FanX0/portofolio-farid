@@ -35,7 +35,7 @@ export default function initNavbarAnimation({
       {
         fontSize: "17.5rem",
         fontWeight: 700,
-        y: 100,
+        y: 200,
       },
       {
         y: 0,
