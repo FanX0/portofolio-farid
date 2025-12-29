@@ -38,297 +38,309 @@ export function initAvatarAnimation({ container }: AboutAnimationParams) {
   const tailwindVector = getVector(".tailwind-vector");
   const tailwindLogo = q(".tailwind-logo")[0];
 
-  if (!htmlVector || !htmlLogo) return;
+  const mm = gsap.matchMedia();
 
-  ScrollTrigger.create({
-    trigger: container,
-    start: "center center",
-    end: "+=200%",
-    scrub: true,
-    pin: true,
-  });
+  const runAnimation = (scrollDuration: string, avatarScale: number) => {
+    if (!htmlVector || !htmlLogo) return;
 
-  gsap.to(".avatar", {
-    scale: 1.5,
-    scrollTrigger: {
+    ScrollTrigger.create({
       trigger: container,
-      start: "top top",
-      end: "+=50%",
+      start: "center center",
+      end: scrollDuration,
       scrub: true,
-    },
+      pin: true,
+    });
+
+    gsap.to(".avatar", {
+      scale: avatarScale,
+      scrollTrigger: {
+        trigger: container,
+        start: "top top",
+        end: "+=50%",
+        scrub: true,
+      },
+    });
+    gsap.to(".hair", {
+      y: -300,
+      scrollTrigger: {
+        trigger: container,
+        start: "top top",
+        end: "+=100%",
+        scrub: true,
+      },
+    });
+
+    gsap.set(htmlLogo, { scale: 0.8 });
+
+    gsap.set(
+      [
+        htmlVector,
+        vueVector,
+        reactVector,
+        jsVector,
+        nestjsVector,
+        cssVector,
+        expressVector,
+        nuxtVector,
+        phpVector,
+        laravelVector,
+        svelteVector,
+        nextjsVector,
+        tsVector,
+        tailwindVector,
+      ],
+      {
+        drawSVG: 0,
+      }
+    );
+
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: container,
+        start: "top top",
+        end: scrollDuration,
+        scrub: true,
+      },
+    });
+
+    tl.to(
+      [
+        htmlVector,
+        vueVector,
+        reactVector,
+        jsVector,
+        nestjsVector,
+        cssVector,
+        expressVector,
+        nuxtVector,
+        phpVector,
+        laravelVector,
+        svelteVector,
+        nextjsVector,
+        tsVector,
+        tailwindVector,
+      ],
+      {
+        duration: 5,
+        drawSVG: "100%",
+        ease: "power1.inOut",
+      }
+    );
+
+    tl.to(
+      [htmlLogo],
+      {
+        duration: 5,
+        ease: "power1.inOut",
+
+        motionPath: {
+          path: htmlVector,
+          align: htmlVector,
+          autoRotate: true,
+          alignOrigin: [0.5, 0.5],
+        },
+      },
+      0
+    );
+    tl.to(
+      [vueLogo],
+      {
+        duration: 5,
+        ease: "power1.inOut",
+        motionPath: {
+          path: vueVector,
+          align: vueVector,
+          autoRotate: true,
+          alignOrigin: [0.5, 0.5],
+        },
+      },
+      0
+    );
+    tl.to(
+      [reactLogo],
+      {
+        duration: 5,
+        ease: "power1.inOut",
+        motionPath: {
+          path: reactVector,
+          align: reactVector,
+          autoRotate: true,
+          alignOrigin: [0.5, 0.5],
+        },
+      },
+      0
+    );
+    tl.to(
+      [jsLogo],
+      {
+        duration: 5,
+        ease: "power1.inOut",
+        motionPath: {
+          path: jsVector,
+          align: jsVector,
+          autoRotate: true,
+          alignOrigin: [0.5, 0.5],
+        },
+      },
+      0
+    );
+    tl.to(
+      [nestjsLogo],
+      {
+        duration: 5,
+        ease: "power1.inOut",
+        motionPath: {
+          path: nestjsVector,
+          align: nestjsVector,
+          autoRotate: true,
+          alignOrigin: [0.5, 0.5],
+        },
+      },
+      0
+    );
+    tl.to(
+      [cssLogo],
+      {
+        duration: 5,
+        ease: "power1.inOut",
+        motionPath: {
+          path: cssVector,
+          align: cssVector,
+          autoRotate: true,
+          alignOrigin: [0.5, 0.5],
+        },
+      },
+      0
+    );
+    tl.to(
+      [expressLogo],
+      {
+        duration: 5,
+        ease: "power1.inOut",
+        motionPath: {
+          path: expressVector,
+          align: expressVector,
+          autoRotate: true,
+          alignOrigin: [0.5, 0.5],
+        },
+      },
+      0
+    );
+    tl.to(
+      [nuxtLogo],
+      {
+        duration: 5,
+        ease: "power1.inOut",
+        motionPath: {
+          path: nuxtVector,
+          align: nuxtVector,
+          autoRotate: true,
+          alignOrigin: [0.5, 0.5],
+        },
+      },
+      0
+    );
+    tl.to(
+      [phpLogo],
+      {
+        duration: 5,
+        ease: "power1.inOut",
+        motionPath: {
+          path: phpVector,
+          align: phpVector,
+          autoRotate: true,
+          alignOrigin: [0.5, 0.5],
+        },
+      },
+      0
+    );
+    tl.to(
+      [laravelLogo],
+      {
+        duration: 5,
+        ease: "power1.inOut",
+        motionPath: {
+          path: laravelVector,
+          align: laravelVector,
+          autoRotate: true,
+          alignOrigin: [0.5, 0.5],
+        },
+      },
+      0
+    );
+    tl.to(
+      [svelteLogo],
+      {
+        duration: 5,
+        ease: "power1.inOut",
+        motionPath: {
+          path: svelteVector,
+          align: svelteVector,
+          autoRotate: true,
+          alignOrigin: [0.5, 0.5],
+        },
+      },
+      0
+    );
+    tl.to(
+      [nextjsLogo],
+      {
+        duration: 5,
+        ease: "power1.inOut",
+        motionPath: {
+          path: nextjsVector,
+          align: nextjsVector,
+          autoRotate: true,
+          alignOrigin: [0.5, 0.5],
+        },
+      },
+      0
+    );
+    tl.to(
+      [tsLogo],
+      {
+        duration: 5,
+        ease: "power1.inOut",
+        motionPath: {
+          path: tsVector,
+          align: tsVector,
+          autoRotate: true,
+          alignOrigin: [0.5, 0.5],
+        },
+      },
+      0
+    );
+    tl.to(
+      [tailwindLogo],
+      {
+        duration: 5,
+        ease: "power1.inOut",
+        motionPath: {
+          path: tailwindVector,
+          align: tailwindVector,
+          autoRotate: true,
+          alignOrigin: [0.5, 0.5],
+        },
+      },
+      0
+    );
+
+    tl.fromTo(
+      ".avatar",
+      { filter: "blur(0px) saturate(100%)" },
+      {
+        duration: 2,
+        ease: "power1.inOut",
+        filter: "blur(5px) saturate(0%)",
+      }
+    );
+  };
+
+  mm.add("(min-width: 64rem)", () => {
+    runAnimation("+=200%", 1.5);
   });
-  gsap.to(".hair", {
-    y: -300,
-    scrollTrigger: {
-      trigger: container,
-      start: "top top",
-      end: "+=100%",
-      scrub: true,
-    },
+
+  mm.add("(max-width: 63.9rem)", () => {
+    runAnimation("+=100%", 1);
   });
-
-  gsap.set(htmlLogo, { scale: 0.8 });
-
-  gsap.set(
-    [
-      htmlVector,
-      vueVector,
-      reactVector,
-      jsVector,
-      nestjsVector,
-      cssVector,
-      expressVector,
-      nuxtVector,
-      phpVector,
-      laravelVector,
-      svelteVector,
-      nextjsVector,
-      tsVector,
-      tailwindVector,
-    ],
-    {
-      drawSVG: 0,
-    }
-  );
-
-  const tl = gsap.timeline({
-    scrollTrigger: {
-      trigger: container,
-      start: "top top",
-      end: "+=200%",
-      scrub: true,
-    },
-  });
-
-  tl.to(
-    [
-      htmlVector,
-      vueVector,
-      reactVector,
-      jsVector,
-      nestjsVector,
-      cssVector,
-      expressVector,
-      nuxtVector,
-      phpVector,
-      laravelVector,
-      svelteVector,
-      nextjsVector,
-      tsVector,
-      tailwindVector,
-    ],
-    {
-      duration: 5,
-      drawSVG: "100%",
-      ease: "power1.inOut",
-    }
-  );
-
-  tl.to(
-    [htmlLogo],
-    {
-      duration: 5,
-      ease: "power1.inOut",
-
-      motionPath: {
-        path: htmlVector,
-        align: htmlVector,
-        autoRotate: true,
-        alignOrigin: [0.5, 0.5],
-      },
-    },
-    0
-  );
-  tl.to(
-    [vueLogo],
-    {
-      duration: 5,
-      ease: "power1.inOut",
-      motionPath: {
-        path: vueVector,
-        align: vueVector,
-        autoRotate: true,
-        alignOrigin: [0.5, 0.5],
-      },
-    },
-    0
-  );
-  tl.to(
-    [reactLogo],
-    {
-      duration: 5,
-      ease: "power1.inOut",
-      motionPath: {
-        path: reactVector,
-        align: reactVector,
-        autoRotate: true,
-        alignOrigin: [0.5, 0.5],
-      },
-    },
-    0
-  );
-  tl.to(
-    [jsLogo],
-    {
-      duration: 5,
-      ease: "power1.inOut",
-      motionPath: {
-        path: jsVector,
-        align: jsVector,
-        autoRotate: true,
-        alignOrigin: [0.5, 0.5],
-      },
-    },
-    0
-  );
-  tl.to(
-    [nestjsLogo],
-    {
-      duration: 5,
-      ease: "power1.inOut",
-      motionPath: {
-        path: nestjsVector,
-        align: nestjsVector,
-        autoRotate: true,
-        alignOrigin: [0.5, 0.5],
-      },
-    },
-    0
-  );
-  tl.to(
-    [cssLogo],
-    {
-      duration: 5,
-      ease: "power1.inOut",
-      motionPath: {
-        path: cssVector,
-        align: cssVector,
-        autoRotate: true,
-        alignOrigin: [0.5, 0.5],
-      },
-    },
-    0
-  );
-  tl.to(
-    [expressLogo],
-    {
-      duration: 5,
-      ease: "power1.inOut",
-      motionPath: {
-        path: expressVector,
-        align: expressVector,
-        autoRotate: true,
-        alignOrigin: [0.5, 0.5],
-      },
-    },
-    0
-  );
-  tl.to(
-    [nuxtLogo],
-    {
-      duration: 5,
-      ease: "power1.inOut",
-      motionPath: {
-        path: nuxtVector,
-        align: nuxtVector,
-        autoRotate: true,
-        alignOrigin: [0.5, 0.5],
-      },
-    },
-    0
-  );
-  tl.to(
-    [phpLogo],
-    {
-      duration: 5,
-      ease: "power1.inOut",
-      motionPath: {
-        path: phpVector,
-        align: phpVector,
-        autoRotate: true,
-        alignOrigin: [0.5, 0.5],
-      },
-    },
-    0
-  );
-  tl.to(
-    [laravelLogo],
-    {
-      duration: 5,
-      ease: "power1.inOut",
-      motionPath: {
-        path: laravelVector,
-        align: laravelVector,
-        autoRotate: true,
-        alignOrigin: [0.5, 0.5],
-      },
-    },
-    0
-  );
-  tl.to(
-    [svelteLogo],
-    {
-      duration: 5,
-      ease: "power1.inOut",
-      motionPath: {
-        path: svelteVector,
-        align: svelteVector,
-        autoRotate: true,
-        alignOrigin: [0.5, 0.5],
-      },
-    },
-    0
-  );
-  tl.to(
-    [nextjsLogo],
-    {
-      duration: 5,
-      ease: "power1.inOut",
-      motionPath: {
-        path: nextjsVector,
-        align: nextjsVector,
-        autoRotate: true,
-        alignOrigin: [0.5, 0.5],
-      },
-    },
-    0
-  );
-  tl.to(
-    [tsLogo],
-    {
-      duration: 5,
-      ease: "power1.inOut",
-      motionPath: {
-        path: tsVector,
-        align: tsVector,
-        autoRotate: true,
-        alignOrigin: [0.5, 0.5],
-      },
-    },
-    0
-  );
-  tl.to(
-    [tailwindLogo],
-    {
-      duration: 5,
-      ease: "power1.inOut",
-      motionPath: {
-        path: tailwindVector,
-        align: tailwindVector,
-        autoRotate: true,
-        alignOrigin: [0.5, 0.5],
-      },
-    },
-    0
-  );
-
-  tl.fromTo(
-    ".avatar",
-    { filter: "blur(0px) saturate(100%)" },
-    {
-      duration: 2,
-      ease: "power1.inOut",
-      filter: "blur(5px) saturate(0%)",
-    }
-  );
 }
