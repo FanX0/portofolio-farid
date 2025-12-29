@@ -51,9 +51,9 @@ export default function NavbarClient({ onToggle, isOpen }: NavbarClientProps) {
   return (
     <nav
       ref={container}
-      className="container flex flex-col justify-between  w-screen text-[1rem] z-20 "
+      className="container flex flex-col justify-between w-screen text-[1rem] z-20 "
     >
-      <ul className=" flex items-center lg:gap-[1.875rem] w-full  border-white lg:border-b-0  lg:py-0 ">
+      <ul className=" flex items-center lg:gap-[1.875rem] w-full">
         <div className=" flex lg:flex-col items-center w-full ">
           <button
             type="button"
