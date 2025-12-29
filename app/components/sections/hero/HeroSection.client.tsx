@@ -20,9 +20,6 @@ export default function HeroSectionClient({ projects }: HeroSectionProps) {
   const { circleArrowRef, arrowRef, onMouseEnter, onMouseLeave } =
     useBoxHeroAnimation();
 
-  const resetTweenRef = useRef<gsap.core.Tween | null>(null);
-  const loopTweenRef = useRef<gsap.core.Timeline | null>(null);
-
   const latestProject = projects[0];
   const projectImages = latestProject?.images || [];
 
@@ -39,11 +36,18 @@ export default function HeroSectionClient({ projects }: HeroSectionProps) {
   useEffect(() => {
     if (projectImages.length <= 1) return;
 
-    const interval = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % projectImages.length);
-    }, 1000);
+    let timer: gsap.core.Tween;
 
-    return () => clearInterval(interval);
+    const nextSlide = () => {
+      setCurrentIndex((prev) => (prev + 1) % projectImages.length);
+      timer = gsap.delayedCall(1, nextSlide);
+    };
+
+    timer = gsap.delayedCall(1, nextSlide);
+
+    return () => {
+      timer?.kill();
+    };
   }, [projectImages.length]);
 
   const handleScrollToContact = () => {
