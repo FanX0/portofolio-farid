@@ -8,6 +8,7 @@ import LogoTransition from "@/app/components/common/logotransition/LogoTransitio
 import Image from "next/image";
 
 import { initHeroAnimation } from "./hero.animation";
+import { useBoxHeroAnimation } from "./useBoxHeroAnimation";
 
 import { getImageUrl } from "@/app/lib/sanity/image";
 import gsap, { useGSAP } from "@/app/lib/gsap";
@@ -16,9 +17,8 @@ export default function HeroSectionClient({ projects }: HeroSectionProps) {
   const [imageReady, setImageReady] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
   const container = useRef<HTMLDivElement>(null);
-  const tlBoxHeroLinkRef = useRef<GSAPTimeline>(null);
-  const circleArrowRef = useRef<HTMLDivElement>(null);
-  const arrowRef = useRef<SVGSVGElement>(null);
+  const { circleArrowRef, arrowRef, onMouseEnter, onMouseLeave } =
+    useBoxHeroAnimation();
 
   const resetTweenRef = useRef<gsap.core.Tween | null>(null);
   const loopTweenRef = useRef<gsap.core.Timeline | null>(null);
@@ -31,20 +31,6 @@ export default function HeroSectionClient({ projects }: HeroSectionProps) {
       // Hero Image Animation
       if (container.current && imageReady) {
         initHeroAnimation({ container: container.current });
-      }
-
-      // Box Hero Link Animation Setup
-      if (circleArrowRef.current && arrowRef.current) {
-        // Initial state
-        gsap.set(circleArrowRef.current, { scale: 0 });
-
-        tlBoxHeroLinkRef.current = gsap
-          .timeline({ paused: true })
-          .to(circleArrowRef.current, {
-            scale: 1,
-            duration: 0.4,
-            ease: "back.out(1.7)",
-          });
       }
     },
     { scope: container, dependencies: [imageReady] }
@@ -59,43 +45,6 @@ export default function HeroSectionClient({ projects }: HeroSectionProps) {
 
     return () => clearInterval(interval);
   }, [projectImages.length]);
-
-  const handleMouseEnterBoxHeroLink = () => {
-    resetTweenRef.current?.kill();
-    tlBoxHeroLinkRef.current?.play();
-
-    // Start Arrow Loop (Left to Right)
-    loopTweenRef.current?.kill();
-    if (arrowRef.current) {
-      loopTweenRef.current = gsap
-        .timeline({ repeat: -1 })
-        .fromTo(
-          arrowRef.current,
-          { y: -50, opacity: 0 },
-          { y: 0, opacity: 1, duration: 0.3, ease: "power2.out" }
-        )
-        .to(arrowRef.current, {
-          y: 50,
-          opacity: 0,
-          duration: 0.3,
-          ease: "power2.in",
-        });
-    }
-  };
-
-  const handleMouseLeaveBoxHeroLink = () => {
-    tlBoxHeroLinkRef.current?.reverse();
-    loopTweenRef.current?.kill();
-
-    if (arrowRef.current) {
-      resetTweenRef.current = gsap.to(arrowRef.current, {
-        y: 0,
-        opacity: 1,
-        duration: 0.2,
-        overwrite: true,
-      });
-    }
-  };
 
   const handleScrollToContact = () => {
     gsap.to(window, {
@@ -154,8 +103,8 @@ export default function HeroSectionClient({ projects }: HeroSectionProps) {
               <div
                 onClick={handleScrollToContact}
                 className="box-hero-link cursor-pointer flex items-center justify-between px-[2rem] lg:px-[3rem] bg-black w-[20rem] h-[6rem]  lg:w-[22.75rem] lg:h-[7.8125rem] rounded-full hover:bg-[var(--white-color)] text-white hover:text-black hover:outline-black hover:outline-[3px]"
-                onMouseEnter={handleMouseEnterBoxHeroLink}
-                onMouseLeave={handleMouseLeaveBoxHeroLink}
+                onMouseEnter={onMouseEnter}
+                onMouseLeave={onMouseLeave}
               >
                 <TextMask start="" className=" text-[1.2rem]  font-medium ">
                   Get in touch
@@ -164,7 +113,7 @@ export default function HeroSectionClient({ projects }: HeroSectionProps) {
                 <div className="relative w-[4rem] h-[4rem] flex items-center justify-center">
                   <div
                     ref={circleArrowRef}
-                    className="absolute inset-0 bg-purple-800 rounded-full origin-right"
+                    className="absolute inset-0 bg-white rounded-full origin-right "
                   />
                   <svg
                     ref={arrowRef}
@@ -177,14 +126,14 @@ export default function HeroSectionClient({ projects }: HeroSectionProps) {
                   >
                     <path
                       d="M11.5 1.5L11.5 21.5"
-                      stroke="#EEEEEE"
+                      stroke="white"
                       strokeWidth="3"
                       strokeLinecap="round"
                       strokeLinejoin="round"
                     />
                     <path
                       d="M17.5 16.5L11.5 23.5L5.5 16.5"
-                      stroke="#EEEEEE"
+                      stroke="white"
                       strokeWidth="3"
                       strokeLinecap="round"
                       strokeLinejoin="round"
