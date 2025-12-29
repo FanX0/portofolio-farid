@@ -42,7 +42,7 @@ export default function ProjectScrollClient({
                   return (
                     <div
                       key={project._id}
-                      className=" w-[20rem] h-[12rem] lg:w-[30rem] lg:h-[18rem] rounded-[2rem] overflow-hidden"
+                      className=" w-[20rem] h-[12rem] lg:w-[20rem] lg:h-[12rem] rounded-[2rem] overflow-hidden"
                     >
                       {project.images?.[0]?.asset && (
                         <Image
@@ -62,7 +62,7 @@ export default function ProjectScrollClient({
                   return (
                     <div
                       key={project._id}
-                      className=" w-[20rem] h-[12rem] lg:w-[30rem] lg:h-[18rem] rounded-[2rem] overflow-hidden"
+                      className=" w-[20rem] h-[12rem] lg:w-[20rem] lg:h-[12rem] rounded-[2rem] overflow-hidden"
                     >
                       {project.images?.[0]?.asset && (
                         <Image
@@ -82,7 +82,7 @@ export default function ProjectScrollClient({
                   return (
                     <div
                       key={project._id}
-                      className=" w-[20rem] h-[12rem] lg:w-[30rem] lg:h-[18rem] rounded-[2rem] overflow-hidden"
+                      className=" w-[20rem] h-[12rem] lg:w-[20rem] lg:h-[12rem] rounded-[2rem] overflow-hidden"
                     >
                       {project.images?.[0]?.asset && (
                         <Image
