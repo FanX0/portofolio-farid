@@ -61,7 +61,7 @@ export default function initCursorAnimation({
       gsap.to(cursor, {
         scale: 9,
         borderRadius: "50%",
-        backgroundColor: "purple",
+        backgroundColor: "white",
         duration: 0.3,
       });
       showText("That's me!");
@@ -70,7 +70,7 @@ export default function initCursorAnimation({
       gsap.to(cursor, {
         scale: 9,
         borderRadius: "50%",
-        backgroundColor: "purple",
+        backgroundColor: "white",
         duration: 0.3,
       });
       showText("Click");
@@ -79,7 +79,7 @@ export default function initCursorAnimation({
       gsap.to(cursor, {
         scale: 9,
         borderRadius: "50%",
-        backgroundColor: "purple",
+        backgroundColor: "white",
         duration: 0.3,
       });
       showText("Click");
@@ -88,7 +88,7 @@ export default function initCursorAnimation({
       gsap.to(cursor, {
         scale: 9,
         borderRadius: "50%",
-        backgroundColor: "purple",
+        backgroundColor: "white",
         duration: 0.3,
       });
       showText("Click");
@@ -97,7 +97,7 @@ export default function initCursorAnimation({
       gsap.to(cursor, {
         scale: 9,
         borderRadius: "50%",
-        backgroundColor: "purple",
+        backgroundColor: "white",
         duration: 0.3,
       });
       showText("Click");
@@ -106,7 +106,7 @@ export default function initCursorAnimation({
       gsap.to(cursor, {
         scale: 9,
         borderRadius: "50%",
-        backgroundColor: "purple",
+        backgroundColor: "white",
         duration: 0.3,
       });
       showText("Drag");
@@ -115,7 +115,7 @@ export default function initCursorAnimation({
       gsap.to(cursor, {
         scale: 9,
         borderRadius: "50%",
-        backgroundColor: "purple",
+        backgroundColor: "white",
         duration: 0.3,
       });
       showText("Email me");
