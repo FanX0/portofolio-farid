@@ -117,7 +117,7 @@ export default function HeroSectionClient({ projects }: HeroSectionProps) {
       <div className="bg-[var(--white-color)] h-dvh  flex justify-center items-center">
         <div className="container  flex items-end  pb-[2rem] h-full max-h-[80rem]  ">
           <div className="w-full  lg:py-0   flex flex-col  gap-[4rem]  lg:flex-row justify-between   ">
-            <div className="box-hero-image flex w-full h-[12rem] lg:h-[20rem] lg:w-[50%] lg:order-2 ">
+            <div className="box-hero-image flex w-full h-[15rem] lg:h-[20rem] lg:w-[50%] lg:order-2 ">
               <div className="project-image relative flex w-full h-full  rounded-[2rem] overflow-hidden ">
                 {projectImages.map((image, index) => {
                   const imageUrl = getImageUrl(image);
@@ -204,7 +204,7 @@ export default function HeroSectionClient({ projects }: HeroSectionProps) {
               View all / {projects.length}
             </p>
           </div>
-          <div className="box-project-image h-[20rem] lg:h-[53rem] w-full rounded-[2rem]"></div>
+          <div className="box-project-image h-[15rem] lg:h-[53rem] w-full rounded-[2rem]"></div>
         </div>
       </div>
       <div className="relative">
