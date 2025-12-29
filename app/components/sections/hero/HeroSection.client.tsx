@@ -71,11 +71,11 @@ export default function HeroSectionClient({ projects }: HeroSectionProps) {
         .timeline({ repeat: -1 })
         .fromTo(
           arrowRef.current,
-          { x: -50, opacity: 0 },
-          { x: 0, opacity: 1, duration: 0.3, ease: "power2.out" }
+          { y: -50, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.3, ease: "power2.out" }
         )
         .to(arrowRef.current, {
-          x: 50,
+          y: 50,
           opacity: 0,
           duration: 0.3,
           ease: "power2.in",
@@ -89,12 +89,27 @@ export default function HeroSectionClient({ projects }: HeroSectionProps) {
 
     if (arrowRef.current) {
       resetTweenRef.current = gsap.to(arrowRef.current, {
-        x: 0,
+        y: 0,
         opacity: 1,
         duration: 0.2,
         overwrite: true,
       });
     }
+  };
+
+  const handleScrollToContact = () => {
+    gsap.to(window, {
+      scrollTo: 22150,
+      duration: 2,
+      ease: "power2.out",
+    });
+  };
+  const handleScrollToProject = () => {
+    gsap.to(window, {
+      scrollTo: 16300,
+      duration: 2,
+      ease: "power2.out",
+    });
   };
 
   return (
@@ -137,11 +152,12 @@ export default function HeroSectionClient({ projects }: HeroSectionProps) {
                 </TextMask>
               </div>
               <div
-                className="box-hero-link flex items-center justify-between px-[2rem] lg:px-[3rem] bg-black w-[20rem] h-[6rem]  lg:w-[22.75rem] lg:h-[7.8125rem] rounded-full hover:bg-[var(--white-color)] text-white hover:text-black hover:outline-black hover:outline-[3px]"
+                onClick={handleScrollToContact}
+                className="box-hero-link cursor-pointer flex items-center justify-between px-[2rem] lg:px-[3rem] bg-black w-[20rem] h-[6rem]  lg:w-[22.75rem] lg:h-[7.8125rem] rounded-full hover:bg-[var(--white-color)] text-white hover:text-black hover:outline-black hover:outline-[3px]"
                 onMouseEnter={handleMouseEnterBoxHeroLink}
                 onMouseLeave={handleMouseLeaveBoxHeroLink}
               >
-                <TextMask start="" className="text-[1.2rem]  font-medium ">
+                <TextMask start="" className=" text-[1.2rem]  font-medium ">
                   Get in touch
                 </TextMask>
 
@@ -184,7 +200,9 @@ export default function HeroSectionClient({ projects }: HeroSectionProps) {
         <div className="container  w-full flex flex-col gap-[2rem] items-center justify-between ">
           <div className="flex w-full justify-between items-center">
             <p className="">Recent Project</p>
-            <p className="">View all / {projects.length}</p>
+            <p onClick={handleScrollToProject} className="">
+              View all / {projects.length}
+            </p>
           </div>
           <div className="box-project-image h-[20rem] lg:h-[53rem] w-full rounded-[2rem]"></div>
         </div>
