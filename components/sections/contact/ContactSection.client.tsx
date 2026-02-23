@@ -5,7 +5,7 @@ import { useGSAP } from "@/lib/gsap";
 import initContactAnimation from "./contact.animation";
 import stamp from "@/public/images/f-stamp.png";
 import Image from "next/image";
-import { sendEmail } from "@/actions/sendEmail/sendEmail";
+import { sendEmail } from "@/features/contact/actions/sendEmail/sendEmail";
 import type { EmailState } from "@/types/email";
 
 export default function ContactSectionClient() {
@@ -35,7 +35,7 @@ export default function ContactSectionClient() {
         tlClick.current = animation.tlClick;
       }
     },
-    { scope: container }
+    { scope: container },
   );
 
   return (
