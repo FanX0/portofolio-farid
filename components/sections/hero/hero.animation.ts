@@ -1,4 +1,4 @@
-import gsap, { ScrollTrigger, Flip } from "@/lib/gsap";
+import gsap, { ScrollTrigger, Flip } from "@/shared/lib/gsap";
 
 type HeroAnimationParams = {
   container: HTMLElement;

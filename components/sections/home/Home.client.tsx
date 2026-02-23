@@ -8,7 +8,7 @@ import Footer from "@/components/layout/Footer";
 import Navbar from "@/components/layout/nav/Navbar.server";
 import ProjectSection from "@/components/sections/project/ProjectSection.server";
 import ProjectScrollSection from "@/components/sections/project-scroll/ProjectScrollSection.server";
-import type { Project } from "@/types/project";
+import type { Project } from "@/shared/types/project";
 import Sidebar from "@/components/layout/sidebar/Sidebar.server";
 import { useState } from "react";
 

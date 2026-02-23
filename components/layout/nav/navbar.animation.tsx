@@ -1,4 +1,4 @@
-import gsap, { ScrollTrigger, useGSAP } from "@/lib/gsap";
+import gsap, { ScrollTrigger, useGSAP } from "@/shared/lib/gsap";
 import { useRef } from "react";
 
 type NavbarAnimationParams = {

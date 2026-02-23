@@ -1,4 +1,4 @@
-import { getProjects } from "@/lib/sanity/queries";
+import { getProjects } from "@/shared/lib/sanity/queries";
 import HomeClient from "@/components/sections/home/Home.client";
 
 export default async function HomePage() {

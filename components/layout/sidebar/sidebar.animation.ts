@@ -1,4 +1,4 @@
-import gsap from "@/lib/gsap";
+import gsap from "@/shared/lib/gsap";
 
 type SidebarAnimationParams = {
   container: HTMLElement;

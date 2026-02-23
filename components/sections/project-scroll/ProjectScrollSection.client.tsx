@@ -2,10 +2,10 @@
 
 import { useRef } from "react";
 import { ProjectScrollSectionProps } from "./projectScroll.types";
-import { useGSAP } from "@/lib/gsap";
+import { useGSAP } from "@/shared/lib/gsap";
 import initProjectScroll from "./projectScroll.animation";
 import Image from "next/image";
-import { urlFor } from "@/lib/sanity/image";
+import { urlFor } from "@/shared/lib/sanity/image";
 
 export default function ProjectScrollClient({
   projects = [],

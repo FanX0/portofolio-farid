@@ -1,4 +1,4 @@
-import { useGSAP } from "@/lib/gsap";
+import { useGSAP } from "@/shared/lib/gsap";
 import { useRef } from "react";
 import gsap from "gsap";
 import initSidebarLinkAnimation from "./SidebarLink.animation";

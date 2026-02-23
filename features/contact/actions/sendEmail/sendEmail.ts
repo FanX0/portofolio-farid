@@ -1,7 +1,7 @@
 "use server";
 
-import { resend } from "@/lib/resend";
-import type { EmailState } from "@/types/email";
+import { resend } from "@/shared/lib/resend";
+import type { EmailState } from "@/shared/types/email";
 
 export async function sendEmail(
   prevState: EmailState,

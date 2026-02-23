@@ -1,4 +1,4 @@
-import gsap, { Draggable } from "@/lib/gsap";
+import gsap, { Draggable } from "@/shared/lib/gsap";
 
 type ProjectAnimationParams = {
   container: HTMLElement;

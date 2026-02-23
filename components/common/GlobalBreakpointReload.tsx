@@ -1,5 +1,5 @@
 "use client";
-import { useBreakpointReload } from "@/hooks/useBreakpointReload";
+import { useBreakpointReload } from "@/shared/hooks/useBreakpointReload";
 
 export default function GlobalBreakpointReload() {
   useBreakpointReload("(min-width: 80rem)");

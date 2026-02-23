@@ -1,11 +1,11 @@
 "use client";
 
-import { useGSAP } from "@/lib/gsap";
+import { useGSAP } from "@/shared/lib/gsap";
 import { useRef } from "react";
 import initSidebarAnimation from "./sidebar.animation";
 import SidebarLink from "./sidebar-link/SidebarLink";
 import Footer from "../Footer";
-import gsap from "@/lib/gsap";
+import gsap from "@/shared/lib/gsap";
 
 type SidebarClientProps = {
   isOpen: boolean;

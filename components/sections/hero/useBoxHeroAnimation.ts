@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import gsap, { useGSAP } from "@/lib/gsap";
+import gsap, { useGSAP } from "@/shared/lib/gsap";
 
 export function useBoxHeroAnimation() {
   const circleArrowRef = useRef<HTMLDivElement>(null);

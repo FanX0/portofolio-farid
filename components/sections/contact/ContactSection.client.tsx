@@ -1,12 +1,12 @@
 "use client";
 
 import { useRef, useEffect, useState, useActionState } from "react";
-import { useGSAP } from "@/lib/gsap";
+import { useGSAP } from "@/shared/lib/gsap";
 import initContactAnimation from "./contact.animation";
 import stamp from "@/public/images/f-stamp.png";
 import Image from "next/image";
 import { sendEmail } from "@/features/contact/actions/sendEmail/sendEmail";
-import type { EmailState } from "@/types/email";
+import type { EmailState } from "@/shared/types/email";
 
 export default function ContactSectionClient() {
   const container = useRef<HTMLDivElement>(null);

@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import { useGSAP } from "@/lib/gsap";
+import { useGSAP } from "@/shared/lib/gsap";
 import initLogoTransitionAnimation from "./logoTransition.animation";
 import Image from "next/image";
 import logoLeft from "@/public/images/f-left.png";

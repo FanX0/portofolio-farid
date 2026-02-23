@@ -1,4 +1,4 @@
-import { ScrollTrigger } from "@/lib/gsap";
+import { ScrollTrigger } from "@/shared/lib/gsap";
 type AboutAnimationParams = {
   container: HTMLElement;
 };

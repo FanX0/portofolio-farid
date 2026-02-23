@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState, useRef } from "react";
-import type { Project } from "@/types/project";
+import type { Project } from "@/shared/types/project";
 import TextMaskScroll from "@/components/ui/TextMaskScroll";
 import Image from "next/image";
 
@@ -10,7 +10,7 @@ import { useGSAP } from "@gsap/react";
 import { Draggable } from "gsap/all";
 import { initProjectAnimation } from "./project.animation";
 
-import { getImageUrl } from "@/lib/sanity/image";
+import { getImageUrl } from "@/shared/lib/sanity/image";
 
 gsap.registerPlugin(Draggable);
 

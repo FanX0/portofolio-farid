@@ -10,8 +10,8 @@ import Image from "next/image";
 import { initHeroAnimation } from "./hero.animation";
 import { useBoxHeroAnimation } from "./useBoxHeroAnimation";
 
-import { getImageUrl } from "@/lib/sanity/image";
-import gsap, { useGSAP } from "@/lib/gsap";
+import { getImageUrl } from "@/shared/lib/sanity/image";
+import gsap, { useGSAP } from "@/shared/lib/gsap";
 
 export default function HeroSectionClient({ projects }: HeroSectionProps) {
   const [imageReady, setImageReady] = useState(false);

@@ -1,6 +1,6 @@
 "use client";
 
-import { useGSAP } from "@/lib/gsap";
+import { useGSAP } from "@/shared/lib/gsap";
 import { useRef } from "react";
 import { initAvatarAnimation } from "./avatar.animation";
 
