@@ -3,9 +3,9 @@
 import { useRef } from "react";
 
 import { useGSAP } from "@gsap/react";
-import TextClipPath from "@/app/components/ui/TextClipPath";
+import TextClipPath from "@/components/ui/TextClipPath";
 
-import TextMaskScroll from "@/app/components/ui/TextMaskScroll";
+import TextMaskScroll from "@/components/ui/TextMaskScroll";
 import { initAboutAnimation } from "./about.animation";
 
 export default function AboutSectionClient() {
@@ -15,7 +15,7 @@ export default function AboutSectionClient() {
       if (!container.current) return;
       return initAboutAnimation({ container: container.current });
     },
-    { scope: container }
+    { scope: container },
   );
   return (
     <div ref={container} className=" bg-[var(--black-color)]  h-full">

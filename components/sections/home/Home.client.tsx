@@ -1,15 +1,15 @@
 "use client";
 
-import HeroSection from "@/app/components/sections/hero/HeroSection.server";
-import AboutSection from "@/app/components/sections/about/AboutSection.server";
-import AvatarSection from "@/app/components/sections/avatar/AvatarSection.server";
-import ContactSection from "@/app/components/sections/contact/ContactSection.server";
-import Footer from "@/app/components/layout/Footer";
-import Navbar from "@/app/components/layout/nav/Navbar.server";
-import ProjectSection from "@/app/components/sections/project/ProjectSection.server";
-import ProjectScrollSection from "@/app/components/sections/project-scroll/ProjectScrollSection.server";
+import HeroSection from "@/components/sections/hero/HeroSection.server";
+import AboutSection from "@/components/sections/about/AboutSection.server";
+import AvatarSection from "@/components/sections/avatar/AvatarSection.server";
+import ContactSection from "@/components/sections/contact/ContactSection.server";
+import Footer from "@/components/layout/Footer";
+import Navbar from "@/components/layout/nav/Navbar.server";
+import ProjectSection from "@/components/sections/project/ProjectSection.server";
+import ProjectScrollSection from "@/components/sections/project-scroll/ProjectScrollSection.server";
 import type { Project } from "@/app/types/project";
-import Sidebar from "@/app/components/layout/sidebar/Sidebar.server";
+import Sidebar from "@/components/layout/sidebar/Sidebar.server";
 import { useState } from "react";
 
 type HomeClientProps = {

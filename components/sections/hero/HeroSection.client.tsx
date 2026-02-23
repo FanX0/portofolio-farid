@@ -3,8 +3,8 @@
 import { useRef, useState, useEffect } from "react";
 import type { HeroSectionProps } from "./hero.types";
 
-import TextMask from "@/app/components/ui/TextMask";
-import LogoTransition from "@/app/components/common/logotransition/LogoTransition.server";
+import TextMask from "@/components/ui/TextMask";
+import LogoTransition from "@/components/common/logotransition/LogoTransition.server";
 import Image from "next/image";
 
 import { initHeroAnimation } from "./hero.animation";
@@ -30,7 +30,7 @@ export default function HeroSectionClient({ projects }: HeroSectionProps) {
         initHeroAnimation({ container: container.current });
       }
     },
-    { scope: container, dependencies: [imageReady] }
+    { scope: container, dependencies: [imageReady] },
   );
 
   useEffect(() => {

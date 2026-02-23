@@ -2,12 +2,12 @@
 
 import { useEffect, useState, useRef } from "react";
 import type { Project } from "@/app/types/project";
-import TextMaskScroll from "@/app/components/ui/TextMaskScroll";
+import TextMaskScroll from "@/components/ui/TextMaskScroll";
 import Image from "next/image";
 
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
-import { Draggable } from "gsap/Draggable";
+import { Draggable } from "gsap/all";
 import { initProjectAnimation } from "./project.animation";
 
 import { getImageUrl } from "@/app/lib/sanity/image";
@@ -66,7 +66,7 @@ const ProjectSectionClient = ({ projects }: Props) => {
           duration: 0.45,
           ease: "power3.out",
         },
-        0
+        0,
       );
     }
 
@@ -74,7 +74,7 @@ const ProjectSectionClient = ({ projects }: Props) => {
       modalRef.current,
       { yPercent: 100, opacity: 0 },
       { yPercent: 0, opacity: 1, duration: 0.45, ease: "power3.out" },
-      0
+      0,
     );
 
     modalTl.current.play();
@@ -98,7 +98,7 @@ const ProjectSectionClient = ({ projects }: Props) => {
         tl.current = animation.tl;
       }
     },
-    { scope: container, dependencies: [projects] }
+    { scope: container, dependencies: [projects] },
   );
 
   const handleClickImage = () => {
