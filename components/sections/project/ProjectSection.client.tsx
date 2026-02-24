@@ -232,7 +232,7 @@ const ProjectSectionClient = ({ projects }: Props) => {
             </section>
             <section
               aria-label="project-modal"
-              className="fixed left-0 bottom-0 w-full  z-50 pointer-events-none"
+              className="fixed left-0 bottom-0 w-full z-[9999] pointer-events-none"
             >
               {activeProject && (
                 <>

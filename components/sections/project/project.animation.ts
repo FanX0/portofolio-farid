@@ -46,18 +46,19 @@ export function initProjectAnimation({ container }: ProjectAnimationParams) {
   // --- Image Draggable ---
   const minImageY = Math.min(
     0,
-    imageWrapper.clientHeight - imageLine.scrollHeight
+    imageWrapper.clientHeight - imageLine.scrollHeight,
   );
 
   Draggable.create(imageLine, {
     type: "y",
     inertia: true,
     edgeResistance: 0.9,
+    zIndexBoost: false,
 
     onRelease() {
       const currentMinImageY = Math.min(
         0,
-        imageWrapper.clientHeight - imageLine.scrollHeight
+        imageWrapper.clientHeight - imageLine.scrollHeight,
       );
 
       const y = gsap.getProperty(imageLine, "y") as number;
@@ -86,7 +87,7 @@ export function initProjectAnimation({ container }: ProjectAnimationParams) {
         each: 0.2,
         from: "start",
       },
-    }
+    },
   );
 
   tl.fromTo(
@@ -102,7 +103,7 @@ export function initProjectAnimation({ container }: ProjectAnimationParams) {
         each: 0.2,
         from: "start",
       },
-    }
+    },
   );
 
   const items = q(".project-item");
