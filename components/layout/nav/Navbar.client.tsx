@@ -57,7 +57,7 @@ export default function NavbarClient({ onToggle, isOpen }: NavbarClientProps) {
             <button
               type="button"
               onClick={scrollToHome}
-              className="relative flex items-center h-[4.0625rem] lg:flex lg:w-full lg:border-white lg:py-[1.75rem]  lg:h-[5.875rem] text-left appearance-none"
+              className="relative flex items-center h-[4.0625rem] lg:flex lg:w-full lg:border-white lg:py-[1.75rem]  lg:h-[5.875rem] text-left appearance-none cursor-pointer"
             >
               <p className="nav-name absolute ">farid</p>
             </button>
@@ -68,7 +68,7 @@ export default function NavbarClient({ onToggle, isOpen }: NavbarClientProps) {
           <div className="flex  lg:w-full  lg:gap-[1.875rem]">
             <li className="lg:hidden flex items-center h-[4.0625rem]">
               <button
-                className="sidebar-toggle"
+                className="sidebar-toggle cursor-pointer"
                 type="button"
                 onClick={handleSidebarToggle}
               >
@@ -126,7 +126,7 @@ export default function NavbarClient({ onToggle, isOpen }: NavbarClientProps) {
                 onClick={scrollToAbout}
                 onMouseEnter={onEnterAbout}
                 onMouseLeave={onLeaveAbout}
-                className="about-link flex items-center gap-[1rem] h-[4.0625rem] w-full g:py-[1.75rem] lg:h-[5.875rem] "
+                className="about-link flex items-center gap-[1rem] h-[4.0625rem] w-full g:py-[1.75rem] lg:h-[5.875rem] cursor-pointer"
               >
                 <div
                   ref={navDotAbout}
@@ -151,7 +151,7 @@ export default function NavbarClient({ onToggle, isOpen }: NavbarClientProps) {
                 onMouseEnter={onEnterProject}
                 onMouseLeave={onLeaveProject}
                 onClick={scrollToProject}
-                className="project-link flex items-center gap-[1rem] h-[4.0625rem] w-full g:py-[1.75rem] lg:h-[5.875rem] "
+                className="project-link flex items-center gap-[1rem] h-[4.0625rem] w-full g:py-[1.75rem] lg:h-[5.875rem] cursor-pointer"
               >
                 <div
                   ref={navDotProject}
@@ -176,7 +176,7 @@ export default function NavbarClient({ onToggle, isOpen }: NavbarClientProps) {
                 onMouseEnter={onEnterContact}
                 onMouseLeave={onLeaveContact}
                 onClick={scrollToContact}
-                className="contact-link flex items-center gap-[1rem] h-[4.0625rem] w-full g:py-[1.75rem] lg:h-[5.875rem] "
+                className="contact-link flex items-center gap-[1rem] h-[4.0625rem] w-full g:py-[1.75rem] lg:h-[5.875rem] cursor-pointer"
               >
                 <div
                   ref={navDotContact}
