@@ -123,8 +123,9 @@ export function initProjectAnimation({ container }: ProjectAnimationParams) {
       const relativeY = mouseEvent.clientY - rect.top;
       const isFromTop = relativeY < rect.height / 2;
 
-      // Hard-set starting position based on enter direction
-      gsap.set(inner, { y: isFromTop ? 0 : "-8rem" });
+      // Entering from top -> Slide DOWN (reveal middle by coming from -8rem)
+      // Entering from bottom -> Slide UP (reveal middle by coming from 0)
+      gsap.set(inner, { y: isFromTop ? "-8rem" : 0 });
       // Animate to center (hover state)
       gsap.to(inner, {
         y: "-4rem",
@@ -140,9 +141,10 @@ export function initProjectAnimation({ container }: ProjectAnimationParams) {
       const relativeY = mouseEvent.clientY - rect.top;
       const isToTop = relativeY < rect.height / 2;
 
-      // Animate to exit direction (top child or bottom child)
+      // Leaving to top -> Slide UP (exit to -8rem)
+      // Leaving to bottom -> Slide DOWN (exit to 0)
       gsap.to(inner, {
-        y: isToTop ? 0 : "-8rem",
+        y: isToTop ? "-8rem" : 0,
         duration: 0.45,
         ease: "power3.out",
         overwrite: "auto",

@@ -80,8 +80,9 @@ export default function initProjectScroll({ container }: projectScrollParams) {
     tl.to(
       ".line-1",
       {
-        x: "-300%",
+        x: "-400%",
         duration: 1,
+        opacity: 0,
         ease: slowMiddleEase,
       },
       2,
@@ -98,7 +99,8 @@ export default function initProjectScroll({ container }: projectScrollParams) {
     tl.to(
       ".line-3",
       {
-        x: "300%",
+        x: "400%",
+        opacity: 0,
         duration: 1,
         ease: slowMiddleEase,
       },
