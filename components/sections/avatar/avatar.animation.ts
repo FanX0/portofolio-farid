@@ -1,5 +1,7 @@
 import gsap, { ScrollTrigger } from "@/shared/lib/gsap";
 
+const heavyEaseIn = (x: number) => x ** 5;
+
 type AboutAnimationParams = {
   container: HTMLElement;
 };
@@ -57,8 +59,9 @@ export function initAvatarAnimation({ container }: AboutAnimationParams) {
         trigger: container,
         start: "top top",
         end: "+=50%",
-        scrub: true,
+        scrub: 1.5,
       },
+      ease: heavyEaseIn,
     });
     gsap.to(".hair", {
       y: -300,
@@ -66,8 +69,9 @@ export function initAvatarAnimation({ container }: AboutAnimationParams) {
         trigger: container,
         start: "top top",
         end: "+=100%",
-        scrub: true,
+        scrub: 1.5,
       },
+      ease: heavyEaseIn,
     });
 
     gsap.set(htmlLogo, { scale: 0.8 });
@@ -91,7 +95,7 @@ export function initAvatarAnimation({ container }: AboutAnimationParams) {
       ],
       {
         drawSVG: 0,
-      }
+      },
     );
 
     const tl = gsap.timeline({
@@ -99,7 +103,7 @@ export function initAvatarAnimation({ container }: AboutAnimationParams) {
         trigger: container,
         start: "top top",
         end: scrollDuration,
-        scrub: true,
+        scrub: 1.5,
       },
     });
 
@@ -123,15 +127,15 @@ export function initAvatarAnimation({ container }: AboutAnimationParams) {
       {
         duration: 5,
         drawSVG: "100%",
-        ease: "power1.inOut",
-      }
+        ease: heavyEaseIn,
+      },
     );
 
     tl.to(
       [htmlLogo],
       {
         duration: 5,
-        ease: "power1.inOut",
+        ease: heavyEaseIn,
 
         motionPath: {
           path: htmlVector,
@@ -140,13 +144,13 @@ export function initAvatarAnimation({ container }: AboutAnimationParams) {
           alignOrigin: [0.5, 0.5],
         },
       },
-      0
+      0,
     );
     tl.to(
       [vueLogo],
       {
         duration: 5,
-        ease: "power1.inOut",
+        ease: heavyEaseIn,
         motionPath: {
           path: vueVector,
           align: vueVector,
@@ -154,13 +158,13 @@ export function initAvatarAnimation({ container }: AboutAnimationParams) {
           alignOrigin: [0.5, 0.5],
         },
       },
-      0
+      0,
     );
     tl.to(
       [reactLogo],
       {
         duration: 5,
-        ease: "power1.inOut",
+        ease: heavyEaseIn,
         motionPath: {
           path: reactVector,
           align: reactVector,
@@ -168,13 +172,13 @@ export function initAvatarAnimation({ container }: AboutAnimationParams) {
           alignOrigin: [0.5, 0.5],
         },
       },
-      0
+      0,
     );
     tl.to(
       [jsLogo],
       {
         duration: 5,
-        ease: "power1.inOut",
+        ease: heavyEaseIn,
         motionPath: {
           path: jsVector,
           align: jsVector,
@@ -182,13 +186,13 @@ export function initAvatarAnimation({ container }: AboutAnimationParams) {
           alignOrigin: [0.5, 0.5],
         },
       },
-      0
+      0,
     );
     tl.to(
       [nestjsLogo],
       {
         duration: 5,
-        ease: "power1.inOut",
+        ease: heavyEaseIn,
         motionPath: {
           path: nestjsVector,
           align: nestjsVector,
@@ -196,13 +200,13 @@ export function initAvatarAnimation({ container }: AboutAnimationParams) {
           alignOrigin: [0.5, 0.5],
         },
       },
-      0
+      0,
     );
     tl.to(
       [cssLogo],
       {
         duration: 5,
-        ease: "power1.inOut",
+        ease: heavyEaseIn,
         motionPath: {
           path: cssVector,
           align: cssVector,
@@ -210,13 +214,13 @@ export function initAvatarAnimation({ container }: AboutAnimationParams) {
           alignOrigin: [0.5, 0.5],
         },
       },
-      0
+      0,
     );
     tl.to(
       [expressLogo],
       {
         duration: 5,
-        ease: "power1.inOut",
+        ease: heavyEaseIn,
         motionPath: {
           path: expressVector,
           align: expressVector,
@@ -224,13 +228,13 @@ export function initAvatarAnimation({ container }: AboutAnimationParams) {
           alignOrigin: [0.5, 0.5],
         },
       },
-      0
+      0,
     );
     tl.to(
       [nuxtLogo],
       {
         duration: 5,
-        ease: "power1.inOut",
+        ease: heavyEaseIn,
         motionPath: {
           path: nuxtVector,
           align: nuxtVector,
@@ -238,13 +242,13 @@ export function initAvatarAnimation({ container }: AboutAnimationParams) {
           alignOrigin: [0.5, 0.5],
         },
       },
-      0
+      0,
     );
     tl.to(
       [phpLogo],
       {
         duration: 5,
-        ease: "power1.inOut",
+        ease: heavyEaseIn,
         motionPath: {
           path: phpVector,
           align: phpVector,
@@ -252,13 +256,13 @@ export function initAvatarAnimation({ container }: AboutAnimationParams) {
           alignOrigin: [0.5, 0.5],
         },
       },
-      0
+      0,
     );
     tl.to(
       [laravelLogo],
       {
         duration: 5,
-        ease: "power1.inOut",
+        ease: heavyEaseIn,
         motionPath: {
           path: laravelVector,
           align: laravelVector,
@@ -266,13 +270,13 @@ export function initAvatarAnimation({ container }: AboutAnimationParams) {
           alignOrigin: [0.5, 0.5],
         },
       },
-      0
+      0,
     );
     tl.to(
       [svelteLogo],
       {
         duration: 5,
-        ease: "power1.inOut",
+        ease: heavyEaseIn,
         motionPath: {
           path: svelteVector,
           align: svelteVector,
@@ -280,13 +284,13 @@ export function initAvatarAnimation({ container }: AboutAnimationParams) {
           alignOrigin: [0.5, 0.5],
         },
       },
-      0
+      0,
     );
     tl.to(
       [nextjsLogo],
       {
         duration: 5,
-        ease: "power1.inOut",
+        ease: heavyEaseIn,
         motionPath: {
           path: nextjsVector,
           align: nextjsVector,
@@ -294,13 +298,13 @@ export function initAvatarAnimation({ container }: AboutAnimationParams) {
           alignOrigin: [0.5, 0.5],
         },
       },
-      0
+      0,
     );
     tl.to(
       [tsLogo],
       {
         duration: 5,
-        ease: "power1.inOut",
+        ease: heavyEaseIn,
         motionPath: {
           path: tsVector,
           align: tsVector,
@@ -308,13 +312,13 @@ export function initAvatarAnimation({ container }: AboutAnimationParams) {
           alignOrigin: [0.5, 0.5],
         },
       },
-      0
+      0,
     );
     tl.to(
       [tailwindLogo],
       {
         duration: 5,
-        ease: "power1.inOut",
+        ease: heavyEaseIn,
         motionPath: {
           path: tailwindVector,
           align: tailwindVector,
@@ -322,7 +326,7 @@ export function initAvatarAnimation({ container }: AboutAnimationParams) {
           alignOrigin: [0.5, 0.5],
         },
       },
-      0
+      0,
     );
 
     tl.fromTo(
@@ -330,9 +334,9 @@ export function initAvatarAnimation({ container }: AboutAnimationParams) {
       { filter: "blur(0px) saturate(100%)" },
       {
         duration: 2,
-        ease: "power1.inOut",
+        ease: heavyEaseIn,
         filter: "blur(5px) saturate(0%)",
-      }
+      },
     );
   };
 
