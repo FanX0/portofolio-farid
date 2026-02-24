@@ -3,7 +3,6 @@ import { Poppins } from "next/font/google";
 import "./globals.css";
 import GlobalBreakpointReload from "@/components/common/GlobalBreakpointReload";
 import Cursor from "@/components/common/cursor/Cursor";
-import SmoothScroll from "@/components/common/SmoothScroll.client";
 
 const poppins = Poppins({
   variable: "--font-poppins",
@@ -26,7 +25,7 @@ export default function RootLayout({
       <body className={`${poppins.variable} antialiased`}>
         <GlobalBreakpointReload />
         <Cursor />
-        <SmoothScroll>{children}</SmoothScroll>
+        {children}
       </body>
     </html>
   );
