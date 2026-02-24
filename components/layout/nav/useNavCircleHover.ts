@@ -15,7 +15,7 @@ export default function useNavCircleHover() {
       if (!navCircle.current) {
         return;
       }
-      gsap.set(navCircle.current, { scale: 0 });
+      gsap.set(navCircle.current, { scale: 0, autoAlpha: 0 });
 
       // Build a looping arrow timeline (same as mobile sidebar)
       if (navArrow.current) {
@@ -61,6 +61,7 @@ export default function useNavCircleHover() {
     // Show circle
     gsap.to(navCircle.current, {
       scale: 1,
+      autoAlpha: 1,
       duration: 0.3,
       ease: "power3.out",
     });
@@ -98,6 +99,7 @@ export default function useNavCircleHover() {
     // Hide circle
     gsap.to(navCircle.current, {
       scale: 0,
+      autoAlpha: 0,
       duration: 0.3,
       ease: "power3.out",
     });

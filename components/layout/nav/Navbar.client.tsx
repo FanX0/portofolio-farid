@@ -135,7 +135,7 @@ export default function NavbarClient({ onToggle, isOpen }: NavbarClientProps) {
                 <p>About</p>
                 <div
                   ref={navCircleAbout}
-                  className=" w-[3rem] h-[3rem] bg-white rounded-full flex justify-center items-center"
+                  className="opacity-0 w-[3rem] h-[3rem] bg-white rounded-full flex justify-center items-center"
                 >
                   <NavArrowIcon ref={navArrowAbout} />
                 </div>
@@ -160,7 +160,7 @@ export default function NavbarClient({ onToggle, isOpen }: NavbarClientProps) {
                 <p>Project</p>
                 <div
                   ref={navCircleProject}
-                  className="nav-arrow w-[3rem] h-[3rem] bg-white rounded-full flex justify-center items-center"
+                  className="nav-arrow opacity-0 w-[3rem] h-[3rem] bg-white rounded-full flex justify-center items-center"
                 >
                   <NavArrowIcon ref={navArrowProject} />
                 </div>
@@ -185,7 +185,7 @@ export default function NavbarClient({ onToggle, isOpen }: NavbarClientProps) {
                 <p>Contact</p>
                 <div
                   ref={navCircleContact}
-                  className="nav-arrow w-[3rem] h-[3rem] bg-white rounded-full flex justify-center items-center"
+                  className="nav-arrow opacity-0 w-[3rem] h-[3rem] bg-white rounded-full flex justify-center items-center"
                 >
                   <NavArrowIcon ref={navArrowContact} />
                 </div>
