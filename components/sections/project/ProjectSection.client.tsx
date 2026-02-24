@@ -233,13 +233,13 @@ const ProjectSectionClient = ({ projects }: Props) => {
             </section>
             <section
               aria-label="project-modal"
-              className="fixed left-0 bottom-0 w-full z-[9999] pointer-events-none flex  justify-center "
+              className="fixed inset-0 w-full z-9999 pointer-events-none flex items-center justify-center p-4 lg:p-8"
             >
               {activeProject && (
                 <>
                   <div
                     ref={backdropRef}
-                    className="fixed inset-0 bg-black/80 pointer-events-auto"
+                    className="fixed inset-0 bg-black/80 backdrop-blur-md pointer-events-auto"
                     onClick={handleCloseProject}
                   />
 
@@ -256,7 +256,7 @@ const ProjectSectionClient = ({ projects }: Props) => {
                     </button>
 
                     {/* Scrollable Content Container */}
-                    <div className="flex-1 overflow-y-auto scrollbar-hide">
+                    <div className="flex-1 overflow-y-auto custom-scrollbar">
                       {/* Top Image */}
                       <div className="w-full aspect-[16/10] bg-[#111] overflow-hidden">
                         {modalImage && (
@@ -274,7 +274,7 @@ const ProjectSectionClient = ({ projects }: Props) => {
                       <div className="p-6 lg:p-8 flex flex-col gap-8 pb-56">
                         <div className="flex flex-col gap-4">
                           <div className="flex items-center gap-2">
-                            <span className="px-3 py-1 text-[var(--black-color)] text-[0.7rem] uppercase tracking-widest rounded-full border border-[var(--primary-color)] font-medium">
+                            <span className="px-3 py-1 bg-[#bbf771] text-black text-[0.7rem] uppercase tracking-widest rounded-full border border-[#bbf771] font-medium">
                               Project Case
                             </span>
                           </div>
@@ -304,7 +304,7 @@ const ProjectSectionClient = ({ projects }: Props) => {
                         </div>
 
                         {/* Description */}
-                        <div className="flex flex-col gap-4">
+                        <div className="flex flex-col gap-4 pb-20">
                           <div className="flex items-center gap-2">
                             <div className="w-1 h-4 bg-[var(--color-white)] rounded-full" />
                             <h3 className="text-xs font-bold text-white tracking-widest uppercase opacity-60">
