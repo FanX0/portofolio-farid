@@ -44,11 +44,11 @@ export default function SidebarClient({ isOpen, onClose }: SidebarClientProps) {
   return (
     <div
       ref={container}
-      className="hidden fixed h-dvh w-full bg-[var(--white-color)] z-40 flex flex-col items-center justify-between  "
+      className="hidden fixed h-dvh w-full bg-(--white-color) z-40 flex flex-col items-center justify-between  "
     >
       <div></div>
-      <div className="w-full px-[1rem]">
-        <ul className="sidebar-list origin-left bg-white flex-col w-full rounded-[1rem] px-[1rem] divide-y-1">
+      <div className="w-full px-4">
+        <ul className="sidebar-list origin-left bg-white flex-col w-full rounded-2xl px-4 divide-y">
           <li>
             <SidebarLink label="Home" onClick={() => handleLinkClick(0)} />
           </li>
@@ -70,8 +70,8 @@ export default function SidebarClient({ isOpen, onClose }: SidebarClientProps) {
         </ul>
       </div>
       <div className="w-full">
-        <div className="px-[1rem]">
-          <div className="footer-line w-full h-[2px] bg-[var(--black-color)] origin-left" />
+        <div className="px-4">
+          <div className="footer-line w-full h-[2px] bg-(--black-color) origin-left" />
         </div>
         <Footer />
       </div>
