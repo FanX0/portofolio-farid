@@ -233,19 +233,19 @@ const ProjectSectionClient = ({ projects }: Props) => {
             </section>
             <section
               aria-label="project-modal"
-              className="fixed inset-0 w-full z-[9999] pointer-events-none flex items-center justify-center p-4 lg:p-8"
+              className="fixed left-0 bottom-0 w-full z-[9999] pointer-events-none flex  justify-center "
             >
               {activeProject && (
                 <>
                   <div
                     ref={backdropRef}
-                    className="fixed inset-0 bg-black/80 backdrop-blur-md pointer-events-auto"
+                    className="fixed inset-0 bg-black/80 pointer-events-auto"
                     onClick={handleCloseProject}
                   />
 
                   <div
                     ref={modalRef}
-                    className="relative w-full max-w-[30rem] lg:max-w-[40rem] bg-[#0a0a0a] rounded-[1.5rem] lg:rounded-[2rem] overflow-hidden flex flex-col pointer-events-auto shadow-2xl border border-white/5 max-h-[90vh]"
+                    className="relative w-full max-w-[30rem] lg:max-w-[40rem] bg-[#0a0a0a] rounded-t-[2rem] overflow-hidden flex flex-col pointer-events-auto shadow-2xl border border-white/5 max-h-[90vh]"
                   >
                     {/* Header Controls */}
                     <button
@@ -271,10 +271,10 @@ const ProjectSectionClient = ({ projects }: Props) => {
                       </div>
 
                       {/* Project Details */}
-                      <div className="p-6 lg:p-8 flex flex-col gap-8 pb-32">
+                      <div className="p-6 lg:p-8 flex flex-col gap-8 pb-56">
                         <div className="flex flex-col gap-4">
                           <div className="flex items-center gap-2">
-                            <span className="px-3 py-1 bg-[#bbf771]/10 text-[#bbf771] text-[0.7rem] uppercase tracking-widest rounded-full border border-[#bbf771]/20 font-medium">
+                            <span className="px-3 py-1 text-[var(--black-color)] text-[0.7rem] uppercase tracking-widest rounded-full border border-[var(--primary-color)] font-medium">
                               Project Case
                             </span>
                           </div>
@@ -286,7 +286,7 @@ const ProjectSectionClient = ({ projects }: Props) => {
                         {/* Technologies */}
                         <div className="flex flex-col gap-4">
                           <div className="flex items-center gap-2">
-                            <div className="w-1 h-4 bg-[#bbf771] rounded-full" />
+                            <div className="w-1 h-4 bg-[var(--color-white)] rounded-full" />
                             <h3 className="text-xs font-bold text-white tracking-widest uppercase opacity-60">
                               Technologies Used
                             </h3>
@@ -306,7 +306,7 @@ const ProjectSectionClient = ({ projects }: Props) => {
                         {/* Description */}
                         <div className="flex flex-col gap-4">
                           <div className="flex items-center gap-2">
-                            <div className="w-1 h-4 bg-[#bbf771] rounded-full" />
+                            <div className="w-1 h-4 bg-[var(--color-white)] rounded-full" />
                             <h3 className="text-xs font-bold text-white tracking-widest uppercase opacity-60">
                               About Project
                             </h3>
@@ -323,7 +323,7 @@ const ProjectSectionClient = ({ projects }: Props) => {
                       <a
                         href={activeProject.liveDemo}
                         target="_blank"
-                        className="w-full bg-[#bbf771] hover:bg-[#aae660] text-black py-4 rounded-xl font-bold flex items-center justify-center gap-2 transition-all group cursor-pointer"
+                        className="w-full bg-[var(--white-color)] text-black py-4 rounded-xl font-bold flex items-center justify-center gap-2 transition-all group cursor-pointer"
                       >
                         <span>Live Demo</span>
                         <svg
