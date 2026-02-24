@@ -105,37 +105,37 @@ export default function initProjectScroll({ container }: projectScrollParams) {
   mm.add("(max-width: 80rem)", () => {
     tl.fromTo(
       ".line-1",
+      { x: "100%" },
       {
-        x: "100%",
-      },
-      {
-        x: "-100%",
-        duration: 1,
-        ease: "power1.inOut",
+        keyframes: [
+          { x: "10%", duration: 0.4, ease: "power2.out" },
+          { x: "-10%", duration: 0.2, ease: "none" },
+          { x: "-100%", duration: 0.4, ease: "power2.in" },
+        ],
       },
       1,
     );
     tl.fromTo(
       ".line-2",
+      { x: "-100%" },
       {
-        x: "-100%",
-      },
-      {
-        x: "10%",
-        duration: 1,
-        ease: "power1.inOut",
+        keyframes: [
+          { x: "-30%", duration: 0.4, ease: "power2.out" },
+          { x: "-10%", duration: 0.2, ease: "none" },
+          { x: "10%", duration: 0.4, ease: "power2.in" },
+        ],
       },
       1,
     );
     tl.fromTo(
       ".line-3",
+      { x: "100%" },
       {
-        x: "100%",
-      },
-      {
-        x: "-51%",
-        duration: 1,
-        ease: "power1.inOut",
+        keyframes: [
+          { x: "10%", duration: 0.4, ease: "power2.out" },
+          { x: "-10%", duration: 0.2, ease: "none" },
+          { x: "-51%", duration: 0.4, ease: "power2.in" },
+        ],
       },
       1,
     );
