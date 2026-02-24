@@ -12,14 +12,14 @@ export default function AvatarSectionClient() {
       if (!container.current) return;
       return initAvatarAnimation({ container: container.current });
     },
-    { scope: container }
+    { scope: container },
   );
 
   return (
     <div ref={container} className="h-dvh bg-[var(--black-color)]">
       <div className="h-full w-full flex items-end justify-center overflow-hidden">
         <svg
-          className="avatar relative w-[20rem] lg:w-[35rem] h-auto  left-[2.5rem] "
+          className="avatar relative w-[20rem] lg:w-[35rem] h-auto left-0 left-2  lg:left-[2.5rem] "
           width="660"
           height="955"
           viewBox="0 0 660 955"

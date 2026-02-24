@@ -97,7 +97,7 @@ export default function HeroSectionClient({ projects }: HeroSectionProps) {
             </div>
             <div className="flex flex-col gap-[3rem] lg:justify-between lg:order-1 ">
               <div className="flex flex-col gap-[0.5rem]">
-                <TextMask start="" className="heading  font-medium">
+                <TextMask start="" className="heading   font-medium">
                   Creative Developer
                 </TextMask>
                 <TextMask start="" className="heading ">
@@ -119,30 +119,32 @@ export default function HeroSectionClient({ projects }: HeroSectionProps) {
                     ref={circleArrowRef}
                     className="absolute inset-0 bg-white rounded-full origin-right "
                   />
-                  <svg
-                    ref={arrowRef}
-                    width="24"
-                    height="26"
-                    viewBox="0 0 24 26"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="arrow-down w-[1.4rem] h-[1.4rem] relative z-10 "
-                  >
-                    <path
-                      d="M11.5 1.5L11.5 21.5"
-                      stroke="white"
-                      strokeWidth="3"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                    <path
-                      d="M17.5 16.5L11.5 23.5L5.5 16.5"
-                      stroke="white"
-                      strokeWidth="3"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
+                  <div className="z-10 w-[4rem] h-[4rem] flex items-center justify-center rounded-full">
+                    <svg
+                      ref={arrowRef}
+                      width="24"
+                      height="26"
+                      viewBox="0 0 24 26"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="arrow-down w-[1.4rem] h-[1.4rem] relative"
+                    >
+                      <path
+                        d="M11.5 1.5L11.5 21.5"
+                        stroke="currentColor"
+                        strokeWidth="3"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                      <path
+                        d="M17.5 16.5L11.5 23.5L5.5 16.5"
+                        stroke="currentColor"
+                        strokeWidth="3"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  </div>
                 </div>
               </div>
             </div>

@@ -19,18 +19,9 @@ export function useBoxHeroAnimation() {
           scale: 1,
           duration: 0.4,
           ease: "back.out(1.7)",
-        })
-        .to(
-          arrowRef.current.querySelectorAll("path"),
-          {
-            stroke: "#000000",
-            duration: 0.4,
-            ease: "power2.out",
-          },
-          0
-        );
+        });
     },
-    { scope: circleArrowRef } // Expanding scope if needed, or keeping tight
+    { scope: circleArrowRef }, // Expanding scope if needed, or keeping tight
   );
 
   const onMouseEnter = () => {
@@ -44,7 +35,7 @@ export function useBoxHeroAnimation() {
         .fromTo(
           arrowRef.current,
           { y: -50, opacity: 0 },
-          { y: 0, opacity: 1, duration: 0.3, ease: "power2.out" }
+          { y: 0, opacity: 1, duration: 0.3, ease: "power2.out" },
         )
         .to(arrowRef.current, {
           y: 50,

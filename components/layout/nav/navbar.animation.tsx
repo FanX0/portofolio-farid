@@ -32,11 +32,11 @@ export default function initNavbarAnimation({
       {
         fontSize: "8rem",
         fontWeight: 700,
-        y: 150,
+        y: 120,
       },
       {
         y: 0,
-        fontSize: "1.5625rem",
+        fontSize: "1.2rem",
         fontWeight: 500,
         scrollTrigger: {
           start: 100,

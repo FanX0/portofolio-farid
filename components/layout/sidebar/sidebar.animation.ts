@@ -11,16 +11,18 @@ export default function initSidebarAnimation({
 
   const tlOpen = gsap.timeline({ paused: true });
 
+  tlOpen.set(container, { display: "flex" });
+
   tlOpen.fromTo(
     container,
     {
-      y: "-100%",
+      x: "-100%",
     },
     {
-      y: "0%",
+      x: "0%",
       duration: 0.8,
       ease: "power3.inOut",
-    }
+    },
   );
   tlOpen.fromTo(
     q(".footer-line"),
@@ -32,7 +34,7 @@ export default function initSidebarAnimation({
       duration: 0.8,
       ease: "power3.inOut",
     },
-    1
+    1,
   );
 
   tlOpen.fromTo(
@@ -46,7 +48,7 @@ export default function initSidebarAnimation({
       ease: "power3.inOut",
       stagger: 0.1,
     },
-    1
+    1,
   );
 
   tlOpen.fromTo(
@@ -60,7 +62,7 @@ export default function initSidebarAnimation({
       ease: "power3.out",
       stagger: 0.1,
     },
-    2
+    2,
   );
 
   const tlClose = gsap.timeline({ paused: true });
@@ -68,27 +70,27 @@ export default function initSidebarAnimation({
   tlClose.fromTo(
     container,
     {
-      y: "0%",
+      x: "0%",
     },
     {
-      y: "100%",
+      x: "-100%",
       duration: 0.8,
       ease: "power3.inOut",
-    }
+    },
   );
   tlClose.set(
     q(".footer-line"),
     {
       scaleX: 1,
     },
-    0
+    0,
   );
   tlClose.set(
     q(".sidebar-link-text"),
     {
       y: 0,
     },
-    0
+    0,
   );
 
   return { tlOpen, tlClose };

@@ -7,23 +7,48 @@ export default function useNavCircleHover() {
   const navCircle = useRef<HTMLDivElement>(null);
   const navArrow = useRef<SVGSVGElement>(null);
 
-  const tlRef = useRef<gsap.core.Timeline | null>(null);
+  const arrowTlRef = useRef<gsap.core.Timeline | null>(null);
+  const resetTweenRef = useRef<gsap.core.Tween | null>(null);
 
   useGSAP(
     () => {
-      if (navCircle.current) {
-        gsap.set(navCircle.current, { scale: 0 });
+      if (!navCircle.current) {
+        return;
+      }
+      gsap.set(navCircle.current, { scale: 0 });
+
+      // Build a looping arrow timeline (same as mobile sidebar)
+      if (navArrow.current) {
+        const tl = gsap.timeline({ paused: true, repeat: -1 });
+
+        tl.to(navArrow.current, {
+          yPercent: -150,
+          xPercent: 150,
+          duration: 0.3,
+          ease: "power2.in",
+        })
+          .set(navArrow.current, { yPercent: 150, xPercent: -150 })
+          .to(navArrow.current, {
+            yPercent: 0,
+            xPercent: 0,
+            duration: 0.3,
+            ease: "power2.out",
+          })
+          .to({}, { duration: 0.1 });
+
+        arrowTlRef.current = tl;
       }
     },
-    { scope: navRef }
+    { scope: navRef },
   );
 
   const onEnter = () => {
     if (!navRef.current || !navDot.current || !navCircle.current) return;
 
-    // Kill any ongoing animation
-    tlRef.current?.kill();
+    // Kill any reset tween
+    resetTweenRef.current?.kill();
 
+    // Hide dot
     gsap.to(navDot.current, {
       scale: 0,
       width: 0,
@@ -33,33 +58,34 @@ export default function useNavCircleHover() {
       overwrite: true,
     });
 
-    tlRef.current = gsap.timeline();
-
-    tlRef.current.to(navCircle.current, {
+    // Show circle
+    gsap.to(navCircle.current, {
       scale: 1,
       duration: 0.3,
       ease: "power3.out",
     });
-    tlRef.current.fromTo(
-      navArrow.current,
-      { xPercent: -150, yPercent: 150 },
-      {
-        xPercent: 0,
-        yPercent: 0,
-        duration: 0.3,
-        ease: "power3.out",
-      },
-      "<"
-    );
+
+    // Start looping arrow animation
+    arrowTlRef.current?.restart();
   };
 
   const onLeave = () => {
     if (!navRef.current || !navDot.current || !navCircle.current) return;
 
-    // Kill ongoing animation immediately
-    tlRef.current?.kill();
-    gsap.killTweensOf([navDot.current, navCircle.current, navArrow.current]);
+    // Pause the looping arrow animation
+    arrowTlRef.current?.pause();
 
+    // Smoothly reset arrow to center
+    if (navArrow.current) {
+      resetTweenRef.current = gsap.to(navArrow.current, {
+        yPercent: 0,
+        xPercent: 0,
+        duration: 0.2,
+        overwrite: false,
+      });
+    }
+
+    // Show dot
     gsap.to(navDot.current, {
       scale: 1,
       width: "0.5rem",
@@ -69,25 +95,12 @@ export default function useNavCircleHover() {
       overwrite: true,
     });
 
-    const tlCircle = gsap.timeline();
-
-    tlCircle.to(navArrow.current, {
-      xPercent: 150,
-      yPercent: -150,
-      duration: 0.3,
-      ease: "power3.out",
-    });
-    tlCircle.to(navCircle.current, {
+    // Hide circle
+    gsap.to(navCircle.current, {
       scale: 0,
       duration: 0.3,
       ease: "power3.out",
     });
-
-    // Reset arrow position immediately (or maybe just keep it hidden/reset?)
-    // User said "reset animation like kill animation".
-    // Usually means stopping the movement.
-    // We will reset the arrow to center or initial state so it's ready for next hover.
-    gsap.set(navArrow.current, { xPercent: 0, yPercent: 0 });
   };
 
   return {

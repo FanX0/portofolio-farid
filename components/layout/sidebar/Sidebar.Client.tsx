@@ -28,7 +28,7 @@ export default function SidebarClient({ isOpen, onClose }: SidebarClientProps) {
         tlClose.play();
       }
     },
-    { scope: container, dependencies: [isOpen] }
+    { scope: container, dependencies: [isOpen] },
   );
 
   const handleLinkClick = (scrollTo: number) => {
@@ -44,7 +44,7 @@ export default function SidebarClient({ isOpen, onClose }: SidebarClientProps) {
   return (
     <div
       ref={container}
-      className="fixed h-dvh w-full bg-[var(--white-color)] z-40 flex flex-col items-center justify-between  "
+      className="hidden fixed h-dvh w-full bg-[var(--white-color)] z-40 flex flex-col items-center justify-between  "
     >
       <div></div>
       <div className="w-full px-[1rem]">
