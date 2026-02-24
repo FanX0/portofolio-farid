@@ -394,7 +394,7 @@ export default function AvatarSectionClient() {
               </g>
             </g>
           </g>
-          <g id="body" transform="translate(0, -2)">
+          <g id="body">
             <rect y="445" width="660" height="510" fill="url(#body-pattern)" />
           </g>
           <g className="hair">
@@ -415,7 +415,7 @@ export default function AvatarSectionClient() {
             >
               <use
                 href="#image-body"
-                transform="matrix(0.00151515 0 0 0.00196078 -0.663636 0)"
+                transform="matrix(0.00151515 0 0 0.00196078 -0.663636 -0.00588)"
               />
             </pattern>
             <pattern
