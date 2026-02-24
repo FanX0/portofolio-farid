@@ -29,7 +29,7 @@ export function initHeroAnimation({ container }: HeroAnimationParams) {
       trigger: boxHeroImage,
       start: "center center",
       end: "+=700",
-      scrub: true,
+      scrub: 1.5, // Changed to 1.5 for smoother scroll interpolation
       animation: flipTween,
     });
   });
@@ -39,7 +39,7 @@ export function initHeroAnimation({ container }: HeroAnimationParams) {
       trigger: boxHeroImage,
       start: "center center",
       end: "+=1000",
-      scrub: true,
+      scrub: 1.5, // Changed to 1.5 for smoother scroll interpolation
       animation: flipTween,
     });
   });

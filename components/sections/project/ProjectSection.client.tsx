@@ -173,17 +173,17 @@ const ProjectSectionClient = ({ projects }: Props) => {
 
           <div className="relative h-full overflow-hidden">
             <section className="list-wrapper h-full ">
-              <div className="list-line">
+              <div className="list-line flex flex-col">
                 {projects.map((project, index) => {
                   return (
                     <button
                       key={project._id}
                       onClick={() => handleOpenProject(project)}
-                      className="project-item  border-b border-gray-500 w-full"
+                      className="project-item border-b border-gray-500 w-full"
                     >
                       <div className="project-text overflow-hidden h-[4rem]">
                         <div className=" project-text-inner flex flex-col ">
-                          <div className="flex justify-start h-[4rem] px-4">
+                          <div className="flex  items-center justify-start h-[4rem] px-4">
                             <h2 className="text-3xl">{project.title}</h2>
                           </div>
                           {/* hover */}

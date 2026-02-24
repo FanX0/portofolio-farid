@@ -12,38 +12,35 @@ export default function initLogoTransitionAnimation({
   const leftLogo = q(".left-logo");
   const rightLogo = q(".right-logo");
 
+  const heavyEaseIn = (x: number) => x ** 5; // Even slower start, feels significantly "heavier" to open
+
   ScrollTrigger.create({
     trigger: container,
     start: "top top",
     end: "+=250%",
     pin: true,
-    scrub: true,
+    scrub: 1.5,
   });
 
-  const tl = gsap.timeline({});
-
-  tl.to(leftLogo, {
-    x: "-110%",
-    ease: "none",
+  const tl = gsap.timeline({
     scrollTrigger: {
       trigger: container,
       start: "top top",
       end: "+=100%",
-      scrub: true,
+      scrub: 1.5,
     },
+  });
+
+  tl.to(leftLogo, {
+    x: "-110%",
+    ease: heavyEaseIn,
   });
   tl.to(
     rightLogo,
     {
       x: "110%",
-      ease: "none",
-      scrollTrigger: {
-        trigger: container,
-        start: "top top",
-        end: "+=100%",
-        scrub: true,
-      },
+      ease: heavyEaseIn,
     },
-    0
+    0,
   );
 }

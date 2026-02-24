@@ -39,7 +39,7 @@ export function useBoxHeroAnimation() {
         )
         .to(arrowRef.current, {
           y: 50,
-          opacity: 0,
+
           duration: 0.3,
           ease: "power2.in",
         });

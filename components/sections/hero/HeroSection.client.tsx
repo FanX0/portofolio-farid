@@ -122,7 +122,7 @@ export default function HeroSectionClient({ projects }: HeroSectionProps) {
                     ref={circleArrowRef}
                     className="absolute inset-0 bg-white rounded-full origin-right "
                   />
-                  <div className="z-10 w-[4rem] h-[4rem] flex items-center justify-center rounded-full">
+                  <div className="z-10 w-[4rem] h-[4rem] flex items-center justify-center rounded-full overflow-hidden">
                     <svg
                       ref={arrowRef}
                       width="24"
@@ -158,9 +158,13 @@ export default function HeroSectionClient({ projects }: HeroSectionProps) {
         <div className="container  w-full flex flex-col gap-[2rem] items-center justify-between ">
           <div className="flex w-full justify-between items-center">
             <p className="">Recent Project</p>
-            <p onClick={handleScrollToProject} className="view-all-project">
+            <button
+              type="button"
+              onClick={handleScrollToProject}
+              className="view-all-project cursor-pointer"
+            >
               View all / {projects.length}
-            </p>
+            </button>
           </div>
           <div className="box-project-image h-[15rem] lg:h-[53rem] w-full rounded-[2rem]"></div>
         </div>

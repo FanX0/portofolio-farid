@@ -5,7 +5,7 @@ import { ProjectScrollSectionProps } from "./projectScroll.types";
 import { useGSAP } from "@/shared/lib/gsap";
 import initProjectScroll from "./projectScroll.animation";
 import Image from "next/image";
-import { urlFor } from "@/shared/lib/sanity/image";
+import { urlFor, getImageUrl } from "@/shared/lib/sanity/image";
 
 export default function ProjectScrollClient({
   projects = [],
@@ -18,7 +18,7 @@ export default function ProjectScrollClient({
       if (!container.current) return;
       return initProjectScroll({ container: container.current });
     },
-    { scope: container }
+    { scope: container },
   );
 
   return (
@@ -37,60 +37,63 @@ export default function ProjectScrollClient({
           </div>
           <div className="absolute w-full h-full  flex items-center justify-center  ">
             <div className=" grid grid-rows-3 lg:flex lg:justify-center  w-full h-full py-[3rem]  gap-[2rem] lg:gap-[10rem] overflow-hidden">
-              <div className="line-1 h-full   flex flex-row lg:flex-col gap-[10rem] ">
-                {latestProjects.slice(0, 2).map((project) => {
+              <div className="line-1 h-full   flex flex-row lg:flex-col gap-[4rem]   ">
+                {latestProjects.slice(0, 3).map((project) => {
+                  const imageUrl = getImageUrl(project.images?.[0]);
                   return (
                     <div
                       key={project._id}
-                      className=" w-[20rem] h-[12rem] lg:w-[20rem] lg:h-[12rem] rounded-[2rem] overflow-hidden"
+                      className=" w-[20rem] h-[12rem] xl:w-[17rem] xl:h-[10rem] 2xl:w-[20rem] 2xl:h-[12rem]  rounded-[2rem] overflow-hidden"
                     >
-                      {project.images?.[0]?.asset && (
+                      {imageUrl && (
                         <Image
                           width={1280}
                           height={1280}
-                          src={urlFor(project.images[0]).url()}
+                          src={imageUrl}
                           alt={project.title}
-                          className="w-full h-full"
+                          className="w-full h-full object-cover"
                         />
                       )}
                     </div>
                   );
                 })}
               </div>
-              <div className="line-2 h-full flex flex-row lg:flex-col gap-[10rem] ">
-                {latestProjects.slice(3, 5).map((project) => {
+              <div className="line-2 h-full flex flex-row lg:flex-col gap-[4rem] ">
+                {latestProjects.slice(3, 6).map((project) => {
+                  const imageUrl = getImageUrl(project.images?.[0]);
                   return (
                     <div
                       key={project._id}
-                      className=" w-[20rem] h-[12rem] lg:w-[20rem] lg:h-[12rem] rounded-[2rem] overflow-hidden"
+                      className=" w-[20rem] h-[12rem] xl:w-[17rem] xl:h-[10rem] 2xl:w-[20rem] 2xl:h-[12rem] rounded-[2rem] overflow-hidden"
                     >
-                      {project.images?.[0]?.asset && (
+                      {imageUrl && (
                         <Image
                           width={1280}
                           height={1280}
-                          src={urlFor(project.images[0]).url()}
+                          src={imageUrl}
                           alt={project.title}
-                          className="w-full h-full"
+                          className="w-full h-full object-cover"
                         />
                       )}
                     </div>
                   );
                 })}
               </div>
-              <div className="line-3 h-full flex flex-row lg:flex-col gap-[10rem] ">
-                {latestProjects.slice(6, 8).map((project) => {
+              <div className="line-3 h-full flex flex-row lg:flex-col gap-[4rem] ">
+                {latestProjects.slice(6, 9).map((project) => {
+                  const imageUrl = getImageUrl(project.images?.[0]);
                   return (
                     <div
                       key={project._id}
-                      className=" w-[20rem] h-[12rem] lg:w-[20rem] lg:h-[12rem] rounded-[2rem] overflow-hidden"
+                      className=" w-[20rem] h-[12rem] xl:w-[17rem] xl:h-[10rem] 2xl:w-[20rem] 2xl:h-[12rem] rounded-[2rem] overflow-hidden"
                     >
-                      {project.images?.[0]?.asset && (
+                      {imageUrl && (
                         <Image
                           width={1280}
                           height={1280}
-                          src={urlFor(project.images[0]).url()}
+                          src={imageUrl}
                           alt={project.title}
-                          className="w-full h-full"
+                          className="w-full h-full object-cover"
                         />
                       )}
                     </div>

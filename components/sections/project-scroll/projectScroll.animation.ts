@@ -81,8 +81,8 @@ export default function initProjectScroll({ container }: projectScrollParams) {
       ".line-1",
       {
         x: "-400%",
-        duration: 1,
         opacity: 0,
+        duration: 1,
         ease: slowMiddleEase,
       },
       2,
@@ -114,7 +114,7 @@ export default function initProjectScroll({ container }: projectScrollParams) {
       {
         x: "-100%",
         duration: 1,
-        ease: slowMiddleEase,
+        ease: "power1.inOut",
       },
       1,
     );
@@ -122,9 +122,9 @@ export default function initProjectScroll({ container }: projectScrollParams) {
       ".line-2",
       { x: "-100%" },
       {
-        x: "10%",
+        x: "100%",
         duration: 1,
-        ease: slowMiddleEase,
+        ease: "power1.inOut",
       },
       1,
     );
@@ -132,9 +132,9 @@ export default function initProjectScroll({ container }: projectScrollParams) {
       ".line-3",
       { x: "100%" },
       {
-        x: "-51%",
+        x: "-100%",
         duration: 1,
-        ease: slowMiddleEase,
+        ease: "power1.inOut",
       },
       1,
     );
