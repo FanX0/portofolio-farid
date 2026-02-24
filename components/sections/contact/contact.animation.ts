@@ -4,8 +4,6 @@ type ContactAnimationParams = {
   container: HTMLElement;
 };
 
-const heavyEaseIn = (x: number) => x ** 5;
-
 export default function initContactAnimation({
   container,
 }: ContactAnimationParams) {
@@ -22,11 +20,7 @@ export default function initContactAnimation({
     },
   });
 
-  tlScroll.fromTo(
-    getElement(".text-running"),
-    { x: "110%" },
-    { x: "-110%", ease: heavyEaseIn },
-  );
+  tlScroll.fromTo(getElement(".text-running"), { x: "110%" }, { x: "-110%" });
 
   gsap.set(getElement(".mail-stamp"), { opacity: 0, scale: 2, rotate: 2 });
   gsap.set(getElement(".mail-message"), { opacity: 0, scale: 2 });

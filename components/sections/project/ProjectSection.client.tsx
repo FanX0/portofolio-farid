@@ -233,72 +233,123 @@ const ProjectSectionClient = ({ projects }: Props) => {
             </section>
             <section
               aria-label="project-modal"
-              className="fixed left-0 bottom-0 w-full z-[9999] pointer-events-none"
+              className="fixed inset-0 w-full z-[9999] pointer-events-none flex items-center justify-center p-4 lg:p-8"
             >
               {activeProject && (
                 <>
                   <div
                     ref={backdropRef}
-                    className="fixed inset-0 bg-black/5  pointer-events-auto"
+                    className="fixed inset-0 bg-black/80 backdrop-blur-md pointer-events-auto"
                     onClick={handleCloseProject}
                   />
+
                   <div
                     ref={modalRef}
-                    className="w-full h-full   flex items-center justify-center pointer-events-auto "
+                    className="relative w-full max-w-[30rem] lg:max-w-[40rem] bg-[#0a0a0a] rounded-[1.5rem] lg:rounded-[2rem] overflow-hidden flex flex-col pointer-events-auto shadow-2xl border border-white/5 max-h-[90vh]"
                   >
-                    <div className="flex flex-col gap-[1rem] bg-[var(--black-color)] rounded-t-[0.5rem] max-w-[80rem] py-[1rem] lg:py-0 w-full relative lg:rounded-t-[2rem] lg:overflow-hidden">
-                      <button
-                        className="absolute flex w-full justify-end pr-[1rem] lg:pr-[2.5rem] pt-[1rem] text-[2rem] text-white cursor-pointer"
-                        onClick={handleCloseProject}
-                      >
-                        <div className="">✕</div>
-                      </button>
+                    {/* Header Controls */}
+                    <button
+                      className="absolute top-4 right-4 z-10 w-10 h-10 bg-black/20 backdrop-blur-md rounded-full flex items-center justify-center border border-white/10 text-white cursor-pointer hover:bg-black/40 transition-colors"
+                      onClick={handleCloseProject}
+                    >
+                      <span>✕</span>
+                    </button>
 
-                      <div className="lg:absolute flex flex-col gap-[1.5rem] px-[1rem] lg:bg-[var(--black-color)] lg:py-[2rem] lg:w-[30rem]">
-                        <h2 className="text-3xl uppercase">
-                          {activeProject.title}
-                        </h2>
-                        <p className="font-light">
-                          {activeProject.description}
-                        </p>
-                        <div className="flex flex-wrap gap-2">
-                          {activeProject.technologies.map((tech, index) => (
-                            <p
-                              key={index}
-                              className="bg-[var(--white-color)] font-extralight px-2 py-1 rounded text-black"
-                            >
-                              {tech}
-                            </p>
-                          ))}
-                        </div>
-                        <a
-                          className="font-extralight"
-                          href={activeProject.liveDemo}
-                        >
-                          Visit Live Website
-                        </a>
-                      </div>
-
-                      <div className="w-full h-[15rem] lg:h-[40rem] ">
+                    {/* Scrollable Content Container */}
+                    <div className="flex-1 overflow-y-auto scrollbar-hide">
+                      {/* Top Image */}
+                      <div className="w-full aspect-[16/10] bg-[#111] overflow-hidden">
                         {modalImage && (
                           <Image
                             src={modalImage}
                             alt={activeProject.title}
                             width={1280}
-                            height={720}
+                            height={800}
                             className="w-full h-full object-cover"
                           />
                         )}
                       </div>
-                      <div className="flex justify-between px-[1rem] lg:absolute bottom-0 lg:w-full lg:pb-[1rem]">
+
+                      {/* Project Details */}
+                      <div className="p-6 lg:p-8 flex flex-col gap-8 pb-32">
+                        <div className="flex flex-col gap-4">
+                          <div className="flex items-center gap-2">
+                            <span className="px-3 py-1 bg-[#bbf771]/10 text-[#bbf771] text-[0.7rem] uppercase tracking-widest rounded-full border border-[#bbf771]/20 font-medium">
+                              Project Case
+                            </span>
+                          </div>
+                          <h2 className="text-4xl lg:text-5xl font-bold text-white tracking-tight">
+                            {activeProject.title}
+                          </h2>
+                        </div>
+
+                        {/* Technologies */}
+                        <div className="flex flex-col gap-4">
+                          <div className="flex items-center gap-2">
+                            <div className="w-1 h-4 bg-[#bbf771] rounded-full" />
+                            <h3 className="text-xs font-bold text-white tracking-widest uppercase opacity-60">
+                              Technologies Used
+                            </h3>
+                          </div>
+                          <div className="flex flex-wrap gap-2">
+                            {activeProject.technologies.map((tech, index) => (
+                              <p
+                                key={index}
+                                className="bg-white/5 border border-white/10 font-light px-3 py-1.5 rounded-lg text-sm text-gray-300"
+                              >
+                                {tech}
+                              </p>
+                            ))}
+                          </div>
+                        </div>
+
+                        {/* Description */}
+                        <div className="flex flex-col gap-4">
+                          <div className="flex items-center gap-2">
+                            <div className="w-1 h-4 bg-[#bbf771] rounded-full" />
+                            <h3 className="text-xs font-bold text-white tracking-widest uppercase opacity-60">
+                              About Project
+                            </h3>
+                          </div>
+                          <p className="text-gray-400 font-light leading-relaxed text-lg">
+                            {activeProject.description}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Fixed Footer controls */}
+                    <div className="absolute bottom-0 left-0 w-full p-6 lg:p-8 bg-gradient-to-t from-[#0a0a0a] via-[#0a0a0a]/90 to-transparent flex flex-col gap-4 pt-12">
+                      <a
+                        href={activeProject.liveDemo}
+                        target="_blank"
+                        className="w-full bg-[#bbf771] hover:bg-[#aae660] text-black py-4 rounded-xl font-bold flex items-center justify-center gap-2 transition-all group cursor-pointer"
+                      >
+                        <span>Live Demo</span>
+                        <svg
+                          className="w-5 h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                          />
+                        </svg>
+                      </a>
+
+                      <div className="flex items-center justify-between text-[0.7rem] font-bold tracking-widest text-white/40 uppercase px-1">
                         <button
-                          className="lg:bg-[var(--black-color)] lg:px-[1rem] lg:py-[0.5rem] lg:rounded-[2rem] cursor-pointer"
+                          className="hover:text-white transition-colors cursor-pointer"
                           onClick={handlePrevious}
                         >
                           PREVIOUS
                         </button>
                         <button
-                          className="lg:bg-[var(--black-color)] lg:px-[1rem] lg:py-[0.5rem] lg:rounded-[2rem] cursor-pointer"
+                          className="hover:text-white transition-colors cursor-pointer"
                           onClick={handleNext}
                         >
                           NEXT
