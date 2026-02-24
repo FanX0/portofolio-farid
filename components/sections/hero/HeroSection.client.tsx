@@ -67,7 +67,7 @@ export default function HeroSectionClient({ projects }: HeroSectionProps) {
 
   return (
     <div ref={container} className="hero-section">
-      <div className="bg-[var(--white-color)] h-dvh  flex justify-center items-center">
+      <div className="bg-[var(--white-color)] h-dvh lg:max-h-[80rem]  flex justify-center items-center">
         <div className="container  flex items-end  pb-[2rem] h-full max-h-[80rem]  ">
           <div className="w-full  lg:py-0   flex flex-col  gap-[4rem]  lg:flex-row justify-between   ">
             <div className="box-hero-image flex w-full h-[15rem] lg:h-[20rem] lg:w-[50%] lg:order-2 ">
