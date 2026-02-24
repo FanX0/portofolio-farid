@@ -69,8 +69,11 @@ export default function HeroSectionClient({ projects }: HeroSectionProps) {
     <div ref={container} className="hero-section">
       <div className="bg-[var(--white-color)] h-dvh lg:max-h-[80rem]  flex justify-center items-center">
         <div className="container  flex items-end  pb-[2rem] h-full max-h-[80rem]  ">
-          <div className="w-full  lg:py-0   flex flex-col  gap-[4rem]  lg:flex-row justify-between   ">
-            <div className="box-hero-image flex w-full h-[15rem] lg:h-[20rem] lg:w-[50%] lg:order-2 ">
+          <div className="w-full  lg:py-0   flex flex-col  gap-[4rem]  lg:flex-row justify-between h-[43rem] lg:h-[25rem]">
+            <TextMask className="text-[8rem] font-semibold lg:hidden   h-[21rem]">
+              farid
+            </TextMask>
+            <div className="box-hero-image flex w-full h-full lg:w-[50%] lg:order-2 ">
               <div className="project-image relative flex w-full h-full  rounded-[2rem] overflow-hidden ">
                 {projectImages.map((image, index) => {
                   const imageUrl = getImageUrl(image);
@@ -97,10 +100,10 @@ export default function HeroSectionClient({ projects }: HeroSectionProps) {
             </div>
             <div className="flex flex-col gap-[3rem] lg:justify-between lg:order-1 ">
               <div className="flex flex-col gap-[0.5rem]">
-                <TextMask start="" className="heading   font-medium">
+                <TextMask start="" className="heading font-regular">
                   Creative Developer
                 </TextMask>
-                <TextMask start="" className="heading ">
+                <TextMask start="" className="heading font-medium">
                   from Indonesia
                 </TextMask>
               </div>

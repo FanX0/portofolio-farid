@@ -21,27 +21,10 @@ export default function initNavbarAnimation({
         ease: "none",
         scrollTrigger: {
           trigger: document.documentElement,
-          start: 0,
+          start: "top top",
           end: "max",
-          scrub: true,
-        },
-      },
-    );
-    gsap.fromTo(
-      q(".nav-name"),
-      {
-        fontSize: "8rem",
-        fontWeight: 700,
-        y: 120,
-      },
-      {
-        y: 0,
-        fontSize: "1.2rem",
-        fontWeight: 500,
-        scrollTrigger: {
-          start: 100,
-          end: 500,
-          scrub: true,
+
+          scrub: 1,
         },
       },
     );

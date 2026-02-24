@@ -9,7 +9,7 @@ export default function initProjectScroll({ container }: projectScrollParams) {
       trigger: container,
       start: "top top",
       end: "+=400%",
-      scrub: true,
+      scrub: 1, // Changed from true to 1 for silky smooth interpolation
       pin: true,
     },
   });
@@ -35,6 +35,9 @@ export default function initProjectScroll({ container }: projectScrollParams) {
     duration: 1,
     ease: "power1.inOut",
   });
+
+  const slowMiddleEase = (x: number) =>
+    0.7 * (4 * Math.pow(x - 0.5, 3) + 0.5) + 0.3 * x;
 
   const mm = gsap.matchMedia();
   mm.add("(min-width: 80rem)", () => {
@@ -79,7 +82,7 @@ export default function initProjectScroll({ container }: projectScrollParams) {
       {
         x: "-300%",
         duration: 1,
-        ease: "power1.inOut",
+        ease: slowMiddleEase,
       },
       2,
     );
@@ -97,7 +100,7 @@ export default function initProjectScroll({ container }: projectScrollParams) {
       {
         x: "300%",
         duration: 1,
-        ease: "power1.inOut",
+        ease: slowMiddleEase,
       },
       2,
     );
@@ -107,11 +110,9 @@ export default function initProjectScroll({ container }: projectScrollParams) {
       ".line-1",
       { x: "100%" },
       {
-        keyframes: [
-          { x: "10%", duration: 0.4, ease: "power2.out" },
-          { x: "-10%", duration: 0.2, ease: "none" },
-          { x: "-100%", duration: 0.4, ease: "power2.in" },
-        ],
+        x: "-100%",
+        duration: 1,
+        ease: slowMiddleEase,
       },
       1,
     );
@@ -119,11 +120,9 @@ export default function initProjectScroll({ container }: projectScrollParams) {
       ".line-2",
       { x: "-100%" },
       {
-        keyframes: [
-          { x: "-30%", duration: 0.4, ease: "power2.out" },
-          { x: "-10%", duration: 0.2, ease: "none" },
-          { x: "10%", duration: 0.4, ease: "power2.in" },
-        ],
+        x: "10%",
+        duration: 1,
+        ease: slowMiddleEase,
       },
       1,
     );
@@ -131,11 +130,9 @@ export default function initProjectScroll({ container }: projectScrollParams) {
       ".line-3",
       { x: "100%" },
       {
-        keyframes: [
-          { x: "10%", duration: 0.4, ease: "power2.out" },
-          { x: "-10%", duration: 0.2, ease: "none" },
-          { x: "-51%", duration: 0.4, ease: "power2.in" },
-        ],
+        x: "-51%",
+        duration: 1,
+        ease: slowMiddleEase,
       },
       1,
     );
