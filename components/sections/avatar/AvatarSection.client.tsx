@@ -394,7 +394,7 @@ export default function AvatarSectionClient() {
               </g>
             </g>
           </g>
-          <g id="body">
+          <g id="body" transform="translate(0, -2)">
             <rect y="445" width="660" height="510" fill="url(#body-pattern)" />
           </g>
           <g className="hair">

@@ -28,7 +28,7 @@ export default function initProjectScroll({ container }: projectScrollParams) {
       duration: 1,
       ease: "power1.inOut",
     },
-    0
+    0,
   );
   tl.to(container, {
     backgroundColor: "var(--black-color)",
@@ -48,7 +48,7 @@ export default function initProjectScroll({ container }: projectScrollParams) {
         duration: 1,
         ease: "power1.inOut",
       },
-      1
+      1,
     );
     tl.fromTo(
       ".line-2",
@@ -60,7 +60,7 @@ export default function initProjectScroll({ container }: projectScrollParams) {
         duration: 1,
         ease: "power1.inOut",
       },
-      1
+      1,
     );
     tl.fromTo(
       ".line-3",
@@ -72,7 +72,7 @@ export default function initProjectScroll({ container }: projectScrollParams) {
         duration: 1,
         ease: "power1.inOut",
       },
-      1
+      1,
     );
     tl.to(
       ".line-1",
@@ -81,7 +81,7 @@ export default function initProjectScroll({ container }: projectScrollParams) {
         duration: 1,
         ease: "power1.inOut",
       },
-      2
+      2,
     );
     tl.to(
       ".line-2",
@@ -90,7 +90,7 @@ export default function initProjectScroll({ container }: projectScrollParams) {
         duration: 1,
         ease: "power1.inOut",
       },
-      2
+      2,
     );
     tl.to(
       ".line-3",
@@ -99,7 +99,7 @@ export default function initProjectScroll({ container }: projectScrollParams) {
         duration: 1,
         ease: "power1.inOut",
       },
-      2
+      2,
     );
   });
   mm.add("(max-width: 80rem)", () => {
@@ -109,11 +109,11 @@ export default function initProjectScroll({ container }: projectScrollParams) {
         x: "100%",
       },
       {
-        x: "-51%",
+        x: "-100%",
         duration: 1,
         ease: "power1.inOut",
       },
-      1
+      1,
     );
     tl.fromTo(
       ".line-2",
@@ -125,7 +125,7 @@ export default function initProjectScroll({ container }: projectScrollParams) {
         duration: 1,
         ease: "power1.inOut",
       },
-      1
+      1,
     );
     tl.fromTo(
       ".line-3",
@@ -137,7 +137,7 @@ export default function initProjectScroll({ container }: projectScrollParams) {
         duration: 1,
         ease: "power1.inOut",
       },
-      1
+      1,
     );
     tl.to(
       ".line-1",
@@ -147,7 +147,7 @@ export default function initProjectScroll({ container }: projectScrollParams) {
         ease: "power1.inOut",
         opacity: 0,
       },
-      2
+      2,
     );
     tl.to(
       ".line-2",
@@ -156,7 +156,7 @@ export default function initProjectScroll({ container }: projectScrollParams) {
         duration: 1,
         ease: "power1.inOut",
       },
-      2
+      2,
     );
     tl.to(
       ".line-3",
@@ -166,7 +166,7 @@ export default function initProjectScroll({ container }: projectScrollParams) {
         ease: "power1.inOut",
         opacity: 0,
       },
-      2
+      2,
     );
   });
 }
