@@ -158,13 +158,13 @@ const ProjectSectionClient = ({ projects }: Props) => {
 
           <div className="flex justify-between text-gray-300">
             <button
-              className={`list-view-button ${viewMode === "list" ? "text-white" : ""}`}
+              className={`list-view-button cursor-pointer ${viewMode === "list" ? "text-white" : ""}`}
               onClick={handleClickList}
             >
               List View
             </button>
             <button
-              className={`image-view-button ${viewMode === "image" ? "text-white" : ""}`}
+              className={`image-view-button cursor-pointer ${viewMode === "image" ? "text-white" : ""}`}
               onClick={handleClickImage}
             >
               Image View
@@ -179,7 +179,7 @@ const ProjectSectionClient = ({ projects }: Props) => {
                     <button
                       key={project._id}
                       onClick={() => handleOpenProject(project)}
-                      className="project-item border-b border-gray-500 w-full"
+                      className="project-item border-b border-gray-500 w-full cursor-pointer"
                     >
                       <div className="project-text overflow-hidden h-[4rem]">
                         <div className=" project-text-inner flex flex-col ">
@@ -213,6 +213,7 @@ const ProjectSectionClient = ({ projects }: Props) => {
                     <button
                       key={project._id}
                       onClick={() => handleOpenProject(project)}
+                      className="cursor-pointer"
                     >
                       <div className=" w-[25rem] h-[15rem] rounded-[2rem] overflow-hidden">
                         {imageUrl && (
@@ -247,7 +248,7 @@ const ProjectSectionClient = ({ projects }: Props) => {
                   >
                     <div className="flex flex-col gap-[1rem] bg-[var(--black-color)] rounded-t-[0.5rem] max-w-[80rem] py-[1rem] lg:py-0 w-full relative lg:rounded-t-[2rem] lg:overflow-hidden">
                       <button
-                        className="absolute flex w-full justify-end pr-[1rem] lg:pr-[2.5rem] pt-[1rem] text-[2rem] text-white"
+                        className="absolute flex w-full justify-end pr-[1rem] lg:pr-[2.5rem] pt-[1rem] text-[2rem] text-white cursor-pointer"
                         onClick={handleCloseProject}
                       >
                         <div className="">✕</div>
@@ -291,13 +292,13 @@ const ProjectSectionClient = ({ projects }: Props) => {
                       </div>
                       <div className="flex justify-between px-[1rem] lg:absolute bottom-0 lg:w-full lg:pb-[1rem]">
                         <button
-                          className="lg:bg-[var(--black-color)] lg:px-[1rem] lg:py-[0.5rem] lg:rounded-[2rem]"
+                          className="lg:bg-[var(--black-color)] lg:px-[1rem] lg:py-[0.5rem] lg:rounded-[2rem] cursor-pointer"
                           onClick={handlePrevious}
                         >
                           PREVIOUS
                         </button>
                         <button
-                          className="lg:bg-[var(--black-color)] lg:px-[1rem] lg:py-[0.5rem] lg:rounded-[2rem]"
+                          className="lg:bg-[var(--black-color)] lg:px-[1rem] lg:py-[0.5rem] lg:rounded-[2rem] cursor-pointer"
                           onClick={handleNext}
                         >
                           NEXT
