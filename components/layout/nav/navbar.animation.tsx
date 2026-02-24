@@ -25,7 +25,25 @@ export default function initNavbarAnimation({
           end: "max",
           scrub: true,
         },
-      }
+      },
+    );
+    gsap.fromTo(
+      q(".nav-name"),
+      {
+        fontSize: "8rem",
+        fontWeight: 700,
+        y: 150,
+      },
+      {
+        y: 0,
+        fontSize: "1.5625rem",
+        fontWeight: 500,
+        scrollTrigger: {
+          start: 100,
+          end: 500,
+          scrub: true,
+        },
+      },
     );
   });
 
@@ -46,7 +64,7 @@ export default function initNavbarAnimation({
           end: 500,
           scrub: true,
         },
-      }
+      },
     );
   });
 
@@ -61,7 +79,7 @@ export default function initNavbarAnimation({
         end: 2850,
         scrub: true,
       },
-    }
+    },
   );
   gsap.fromTo(
     q(".progressbar-desktop-fill-about"),
@@ -74,7 +92,7 @@ export default function initNavbarAnimation({
         end: 11600,
         scrub: true,
       },
-    }
+    },
   );
   gsap.fromTo(
     q(".progressbar-desktop-fill-project"),
@@ -87,7 +105,7 @@ export default function initNavbarAnimation({
         end: 17500,
         scrub: true,
       },
-    }
+    },
   );
   gsap.fromTo(
     q(".progressbar-desktop-fill-contact"),
@@ -100,7 +118,7 @@ export default function initNavbarAnimation({
         end: 22550,
         scrub: true,
       },
-    }
+    },
   );
 
   requestAnimationFrame(() => {
@@ -123,7 +141,7 @@ export function useNavbarAnimation({ isOpen }: UseNavbarAnimationParams) {
       if (!container.current) return;
       initNavbarAnimation({ container: container.current });
     },
-    { scope: container }
+    { scope: container },
   );
 
   useGSAP(
@@ -160,7 +178,7 @@ export function useNavbarAnimation({ isOpen }: UseNavbarAnimationParams) {
 
       lastIsOpen.current = isOpen;
     },
-    { scope: container, dependencies: [isOpen] }
+    { scope: container, dependencies: [isOpen] },
   );
 
   const scrollToHome = () => {
