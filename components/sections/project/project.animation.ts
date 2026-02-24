@@ -117,13 +117,37 @@ export function initProjectAnimation({ container }: ProjectAnimationParams) {
       willChange: "transform",
     });
 
-    item.addEventListener("mouseenter", () => {
-      gsap.to(inner, { y: "-4rem", duration: 0.45, ease: "power3.out" });
-    });
+    item.addEventListener("mouseenter", ((e: Event) => {
+      const mouseEvent = e as MouseEvent;
+      const rect = item.getBoundingClientRect();
+      const relativeY = mouseEvent.clientY - rect.top;
+      const isFromTop = relativeY < rect.height / 2;
 
-    item.addEventListener("mouseleave", () => {
-      gsap.to(inner, { y: 0, duration: 0.45, ease: "power3.out" });
-    });
+      // Hard-set starting position based on enter direction
+      gsap.set(inner, { y: isFromTop ? 0 : "-8rem" });
+      // Animate to center (hover state)
+      gsap.to(inner, {
+        y: "-4rem",
+        duration: 0.45,
+        ease: "power3.out",
+        overwrite: "auto",
+      });
+    }) as EventListener);
+
+    item.addEventListener("mouseleave", ((e: Event) => {
+      const mouseEvent = e as MouseEvent;
+      const rect = item.getBoundingClientRect();
+      const relativeY = mouseEvent.clientY - rect.top;
+      const isToTop = relativeY < rect.height / 2;
+
+      // Animate to exit direction (top child or bottom child)
+      gsap.to(inner, {
+        y: isToTop ? 0 : "-8rem",
+        duration: 0.45,
+        ease: "power3.out",
+        overwrite: "auto",
+      });
+    }) as EventListener);
   });
 
   return { tl };
