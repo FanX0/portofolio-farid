@@ -101,10 +101,16 @@ export default function HeroSectionClient({ projects }: HeroSectionProps) {
             <div className="flex flex-col gap-[3rem] lg:justify-between lg:order-1 ">
               <div className="flex flex-col gap-[0.5rem]">
                 <TextMask start="" className="heading font-regular">
-                  Creative Developer
+                  A frontend-focused developer
                 </TextMask>
                 <TextMask start="" className="heading font-medium">
-                  from Indonesia
+                  specializing in animation, performance,
+                </TextMask>
+                <TextMask start="" className="heading font-medium">
+                  and modern web technologies
+                </TextMask>
+                <TextMask start="" className="heading font-medium">
+                  for standout digital products.
                 </TextMask>
               </div>
               <div
