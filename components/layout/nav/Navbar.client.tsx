@@ -21,6 +21,14 @@ export default function NavbarClient({ onToggle, isOpen }: NavbarClientProps) {
   });
 
   const {
+    navRef: navRefHome,
+    navDot: navDotHome,
+    navCircle: navCircleHome,
+    navArrow: navArrowHome,
+    onEnter: onEnterHome,
+    onLeave: onLeaveHome,
+  } = useNavCircleHover();
+  const {
     navRef: navRefAbout,
     navDot: navDotAbout,
     navCircle: navCircleAbout,
@@ -55,11 +63,24 @@ export default function NavbarClient({ onToggle, isOpen }: NavbarClientProps) {
         <ul className="flex items-center lg:gap-[1.875rem] w-full ">
           <div className=" flex lg:flex-col items-center w-full ">
             <button
+              ref={navRefHome}
               type="button"
               onClick={scrollToHome}
-              className="relative flex items-center h-[4.0625rem] lg:flex lg:w-full lg:border-white lg:py-[1.75rem]  lg:h-[5.875rem] text-left appearance-none cursor-pointer"
+              onMouseEnter={onEnterHome}
+              onMouseLeave={onLeaveHome}
+              className="home-link flex items-center gap-[1rem] h-[4.0625rem] lg:flex lg:w-full lg:py-[1.75rem] lg:h-[5.875rem] text-left appearance-none cursor-pointer"
             >
-              <p className="nav-name absolute ">farid</p>
+              <div
+                ref={navDotHome}
+                className="nav-dot w-[0.5rem] h-[0.5rem] outline outline-white rounded-full hidden lg:block"
+              />
+              <p>farid</p>
+              <div
+                ref={navCircleHome}
+                className="nav-circle opacity-0 w-[3rem] h-[3rem] bg-white rounded-full hidden lg:flex justify-center items-center"
+              >
+                <NavArrowIcon ref={navArrowHome} />
+              </div>
             </button>
             <div className="progressbar-track w-full h-[1px] bg-gray-300/10 hidden lg:block">
               <div className="progressbar-desktop-fill-name w-full h-[1px] bg-white origin-left scale-x-0"></div>
@@ -126,16 +147,16 @@ export default function NavbarClient({ onToggle, isOpen }: NavbarClientProps) {
                 onClick={scrollToAbout}
                 onMouseEnter={onEnterAbout}
                 onMouseLeave={onLeaveAbout}
-                className="about-link flex items-center gap-[1rem] h-[4.0625rem] w-full g:py-[1.75rem] lg:h-[5.875rem] cursor-pointer"
+                className="about-link flex items-center gap-[1rem] h-[4.0625rem] w-full lg:py-[1.75rem] lg:h-[5.875rem] cursor-pointer"
               >
                 <div
                   ref={navDotAbout}
-                  className=" w-[0.5rem] h-[0.5rem] outline outline-white rounded-full"
+                  className="nav-dot w-[0.5rem] h-[0.5rem] outline outline-white rounded-full"
                 />
                 <p>About</p>
                 <div
                   ref={navCircleAbout}
-                  className="opacity-0 w-[3rem] h-[3rem] bg-white rounded-full flex justify-center items-center"
+                  className="nav-circle opacity-0 w-[3rem] h-[3rem] bg-white rounded-full flex justify-center items-center"
                 >
                   <NavArrowIcon ref={navArrowAbout} />
                 </div>
@@ -151,7 +172,7 @@ export default function NavbarClient({ onToggle, isOpen }: NavbarClientProps) {
                 onMouseEnter={onEnterProject}
                 onMouseLeave={onLeaveProject}
                 onClick={scrollToProject}
-                className="project-link flex items-center gap-[1rem] h-[4.0625rem] w-full g:py-[1.75rem] lg:h-[5.875rem] cursor-pointer"
+                className="project-link flex items-center gap-[1rem] h-[4.0625rem] w-full lg:py-[1.75rem] lg:h-[5.875rem] cursor-pointer"
               >
                 <div
                   ref={navDotProject}
@@ -160,7 +181,7 @@ export default function NavbarClient({ onToggle, isOpen }: NavbarClientProps) {
                 <p>Project</p>
                 <div
                   ref={navCircleProject}
-                  className="nav-arrow opacity-0 w-[3rem] h-[3rem] bg-white rounded-full flex justify-center items-center"
+                  className="nav-circle opacity-0 w-[3rem] h-[3rem] bg-white rounded-full flex justify-center items-center"
                 >
                   <NavArrowIcon ref={navArrowProject} />
                 </div>
@@ -176,7 +197,7 @@ export default function NavbarClient({ onToggle, isOpen }: NavbarClientProps) {
                 onMouseEnter={onEnterContact}
                 onMouseLeave={onLeaveContact}
                 onClick={scrollToContact}
-                className="contact-link flex items-center gap-[1rem] h-[4.0625rem] w-full g:py-[1.75rem] lg:h-[5.875rem] cursor-pointer"
+                className="contact-link flex items-center gap-[1rem] h-[4.0625rem] w-full lg:py-[1.75rem] lg:h-[5.875rem] cursor-pointer"
               >
                 <div
                   ref={navDotContact}
@@ -185,7 +206,7 @@ export default function NavbarClient({ onToggle, isOpen }: NavbarClientProps) {
                 <p>Contact</p>
                 <div
                   ref={navCircleContact}
-                  className="nav-arrow opacity-0 w-[3rem] h-[3rem] bg-white rounded-full flex justify-center items-center"
+                  className="nav-circle opacity-0 w-[3rem] h-[3rem] bg-white rounded-full flex justify-center items-center"
                 >
                   <NavArrowIcon ref={navArrowContact} />
                 </div>

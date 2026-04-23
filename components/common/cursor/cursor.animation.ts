@@ -57,14 +57,12 @@ export default function initCursorAnimation({
         overwrite: "auto",
       });
     }
-    if (target.closest(".nav-name")) {
+    if (target.closest(".home-link")) {
       gsap.to(cursor, {
-        scale: 9,
-        borderRadius: "50%",
-        backgroundColor: "white",
+        autoAlpha: 0,
         duration: 0.3,
+        overwrite: "auto",
       });
-      showText("That's me!");
     }
     if (target.closest(".sidebar-toggle")) {
       gsap.to(cursor, {
@@ -155,15 +153,13 @@ export default function initCursorAnimation({
       });
     }
 
-    const navName = target.closest(".nav-name");
-
-    if (navName && !navName.contains(e.relatedTarget as Node)) {
+    const homeLink = target.closest(".home-link");
+    if (homeLink && !homeLink.contains(e.relatedTarget as Node)) {
       gsap.to(cursor, {
-        scale: 1,
-        backgroundColor: "", // Clear inline style to revert to CSS class
+        autoAlpha: 1,
         duration: 0.3,
+        overwrite: "auto",
       });
-      hideText();
     }
 
     const viewAllProject = target.closest(".view-all-project");
