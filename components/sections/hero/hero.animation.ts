@@ -341,9 +341,8 @@ export function useHeroAnimation({ sectionRefs, onIntroComplete }: UseHeroAnimat
   );
 
   const scrollToContact = () => {
-    if (!sectionRefs?.contactRef.current) return;
     gsap.to(window, {
-      scrollTo: sectionRefs.contactRef.current,
+      scrollTo: "#contact-form",
       duration: 2,
       ease: "power2.out",
     });
