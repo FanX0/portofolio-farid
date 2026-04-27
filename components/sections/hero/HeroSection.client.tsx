@@ -200,14 +200,14 @@ export default function HeroSectionClient({
               </div>
               <div
                 onClick={scrollToContact}
-                className="box-hero-link cursor-pointer flex items-center justify-between px-[1.2rem] lg:px-[2rem] mt-[0rem] lg:mt-[0.8rem] bg-black w-[10rem] h-[3rem] lg:w-[15rem] lg:h-[4rem] rounded-full text-white"
+                className="box-hero-link cursor-pointer flex items-center justify-between gap-x-2 px-[1.2rem] lg:px-[2rem] mt-[0rem] lg:mt-[0.8rem] bg-black w-[10rem] h-[3rem] lg:w-[15rem] lg:h-[4rem] rounded-full text-white"
                 onMouseEnter={onMouseEnter}
                 onMouseLeave={onMouseLeave}
                 onMouseMove={onMouseMove}
               >
                 <TextMask
                   start=""
-                  className=" text-[0.8rem] lg:text-[1rem] font-medium "
+                  className="text-[0.8rem] lg:text-[1rem] font-medium pr-2"
                 >
                   Get in touch
                 </TextMask>
