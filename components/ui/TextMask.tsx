@@ -32,6 +32,7 @@ const TextMask = ({
       const split = new SplitText(container, {
         type: "lines, words",
         linesClass: "overflow-hidden",
+        wordsClass: "mr-[0.3em] last:mr-0 inline-block",
       });
 
       gsap.from(split.words, {
