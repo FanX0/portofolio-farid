@@ -1,6 +1,6 @@
 "use client";
 
-import type { ReactNode } from "react";
+import type { ReactNode, ElementType } from "react";
 import { useRef } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
@@ -13,37 +13,49 @@ const TextMask = ({
   children,
   className,
   start,
+  as: Component = "p",
 }: {
   children: ReactNode;
-  className: string;
+  className?: string;
   start?: string;
+  as?: ElementType;
 }) => {
-  const containerRef = useRef<HTMLParagraphElement>(null);
+  const containerRef = useRef<any>(null);
 
   useGSAP(
     () => {
       const container = containerRef.current;
       if (!container) return;
 
-      const splitText = new SplitText(container, { type: "chars" });
+      // Split by lines first, then words
+      // We wrap lines to create a "mask" for each line
+      const split = new SplitText(container, {
+        type: "lines, words",
+        linesClass: "overflow-hidden",
+      });
 
-      gsap.from(splitText.chars, {
-        y: "100%",
-        stagger: 0.05,
-        duration: 0.5,
-        ease: "power2.out",
+      gsap.from(split.words, {
+        y: "110%",
+        stagger: 0.02,
+        duration: 0.8,
+        ease: "power3.out",
         scrollTrigger: {
           trigger: container,
+          start: start || "top 90%",
         },
       });
+
+      return () => {
+        split.revert();
+      };
     },
     { scope: containerRef }
   );
 
   return (
-    <p ref={containerRef} className={`${className} overflow-hidden`}>
+    <Component ref={containerRef} className={`${className || ""}`}>
       {children}
-    </p>
+    </Component>
   );
 };
 export default TextMask;

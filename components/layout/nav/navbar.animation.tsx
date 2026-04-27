@@ -1,123 +1,146 @@
 import gsap, { ScrollTrigger, useGSAP } from "@/shared/lib/gsap";
-import { useRef } from "react";
+import { useRef, type RefObject } from "react";
 
-type NavbarAnimationParams = {
-  container: HTMLElement;
+export type SectionRefs = {
+  heroRef: RefObject<HTMLElement | null>;
+  aboutRef: RefObject<HTMLElement | null>;
+  projectRef: RefObject<HTMLElement | null>;
+  contactRef: RefObject<HTMLElement | null>;
 };
-
-export default function initNavbarAnimation({
-  container,
-}: NavbarAnimationParams) {
-  const q = gsap.utils.selector(container);
-
-  const mm = gsap.matchMedia();
-
-  mm.add("(max-width: 64rem)", () => {
-    gsap.fromTo(
-      q(".progressbar-mobile-fill"),
-      { scaleX: 0 },
-      {
-        scaleX: 1,
-        ease: "none",
-        scrollTrigger: {
-          trigger: document.documentElement,
-          start: "top top",
-          end: "max",
-
-          scrub: 1,
-        },
-      },
-    );
-  });
-
-  mm.add("(min-width: 64rem)", () => {});
-
-  gsap.fromTo(
-    q(".progressbar-desktop-fill-name"),
-    { scaleX: 0 },
-    {
-      scaleX: 1,
-      ease: "none",
-      scrollTrigger: {
-        start: 0,
-        end: 2850,
-        scrub: true,
-      },
-    },
-  );
-  gsap.fromTo(
-    q(".progressbar-desktop-fill-about"),
-    { scaleX: 0 },
-    {
-      scaleX: 1,
-      ease: "none",
-      scrollTrigger: {
-        start: 2850,
-        end: 11600,
-        scrub: true,
-      },
-    },
-  );
-  gsap.fromTo(
-    q(".progressbar-desktop-fill-project"),
-    { scaleX: 0 },
-    {
-      scaleX: 1,
-      ease: "none",
-      scrollTrigger: {
-        start: 11600,
-        end: 17500,
-        scrub: true,
-      },
-    },
-  );
-  gsap.fromTo(
-    q(".progressbar-desktop-fill-contact"),
-    { scaleX: 0 },
-    {
-      scaleX: 1,
-      ease: "none",
-      scrollTrigger: {
-        start: 17500,
-        end: 22550,
-        scrub: true,
-      },
-    },
-  );
-
-  requestAnimationFrame(() => {
-    ScrollTrigger.refresh();
-  });
-}
 
 type UseNavbarAnimationParams = {
   isOpen: boolean;
+  isLoading: boolean;
+  sectionRefs: SectionRefs;
 };
 
-export function useNavbarAnimation({ isOpen }: UseNavbarAnimationParams) {
+export function useNavbarAnimation({
+  isOpen,
+  isLoading,
+  sectionRefs,
+}: UseNavbarAnimationParams) {
   const container = useRef<HTMLDivElement>(null);
   const toggleIconRef = useRef<SVGSVGElement>(null);
   const rotation = useRef(0);
   const lastIsOpen = useRef(isOpen);
 
+  // ─── Progress Bars ──────────────────────────────────────────────────────────
+  // Runs once when isLoading → false. By that time all section useGSAP hooks
+  // have run and all pins (About, Avatar, ProjectScroll) are fully registered.
+  // Using dependencies:[isLoading] is the only reliable way to guarantee
+  // correct scroll positions without a race condition.
   useGSAP(
     () => {
+      if (isLoading) return;
       if (!container.current) return;
-      initNavbarAnimation({ container: container.current });
+
+      const { heroRef, aboutRef, projectRef, contactRef } = sectionRefs;
+      if (
+        !heroRef.current ||
+        !aboutRef.current ||
+        !projectRef.current ||
+        !contactRef.current
+      )
+        return;
+
+      const q = gsap.utils.selector(container.current);
+      const mm = gsap.matchMedia();
+
+      mm.add("(max-width: 64rem)", () => {
+        gsap.fromTo(
+          q(".progressbar-mobile-fill"),
+          { scaleX: 0 },
+          {
+            scaleX: 1,
+            ease: "none",
+            scrollTrigger: {
+              trigger: document.documentElement,
+              start: "top top",
+              end: "max",
+              scrub: 1,
+            },
+          },
+        );
+      });
+
+      mm.add("(min-width: 64rem)", () => {
+        gsap.fromTo(
+          q(".progressbar-desktop-fill-name"),
+          { scaleX: 0 },
+          {
+            scaleX: 1,
+            ease: "none",
+            scrollTrigger: {
+              trigger: heroRef.current,
+              start: "top top",
+              endTrigger: aboutRef.current,
+              end: "top top",
+              scrub: true,
+            },
+          },
+        );
+
+        gsap.fromTo(
+          q(".progressbar-desktop-fill-about"),
+          { scaleX: 0 },
+          {
+            scaleX: 1,
+            ease: "none",
+            scrollTrigger: {
+              trigger: aboutRef.current,
+              start: "top top",
+              endTrigger: projectRef.current,
+              end: "top top",
+              scrub: true,
+            },
+          },
+        );
+
+        gsap.fromTo(
+          q(".progressbar-desktop-fill-project"),
+          { scaleX: 0 },
+          {
+            scaleX: 1,
+            ease: "none",
+            scrollTrigger: {
+              trigger: projectRef.current,
+              start: "top top",
+              endTrigger: contactRef.current,
+              end: "top top",
+              scrub: true,
+            },
+          },
+        );
+
+        gsap.fromTo(
+          q(".progressbar-desktop-fill-contact"),
+          { scaleX: 0 },
+          {
+            scaleX: 1,
+            ease: "none",
+            scrollTrigger: {
+              trigger: contactRef.current,
+              start: "top top",
+              end: "max",
+              scrub: true,
+            },
+          },
+        );
+
+        // Refresh so the newly-created triggers use accurate pinned positions.
+        ScrollTrigger.refresh();
+      });
     },
-    { scope: container },
+    { scope: container, dependencies: [isLoading] },
   );
 
+  // ─── Toggle Icon ─────────────────────────────────────────────────────────────
   useGSAP(
     () => {
       if (!toggleIconRef.current) return;
       if (isOpen === lastIsOpen.current) return;
 
-      if (isOpen) {
-        rotation.current += 90;
-      } else {
-        rotation.current += 90;
-      }
+      rotation.current += 90;
 
       const q = gsap.utils.selector(toggleIconRef.current);
 
@@ -145,33 +168,38 @@ export function useNavbarAnimation({ isOpen }: UseNavbarAnimationParams) {
     { scope: container, dependencies: [isOpen] },
   );
 
+  // ─── Scroll helpers ───────────────────────────────────────────────────────────
   const scrollToHome = () => {
+    if (!sectionRefs.heroRef.current) return;
     gsap.to(window, {
-      scrollTo: 0,
+      scrollTo: sectionRefs.heroRef.current,
       duration: 1,
       ease: "power2.inOut",
     });
   };
 
   const scrollToAbout = () => {
+    if (!sectionRefs.aboutRef.current) return;
     gsap.to(window, {
-      scrollTo: 2850,
+      scrollTo: sectionRefs.aboutRef.current,
       duration: 1,
       ease: "power2.inOut",
     });
   };
 
   const scrollToProject = () => {
+    if (!sectionRefs.projectRef.current) return;
     gsap.to(window, {
-      scrollTo: 16300,
+      scrollTo: sectionRefs.projectRef.current,
       duration: 1,
       ease: "power2.inOut",
     });
   };
 
   const scrollToContact = () => {
+    if (!sectionRefs.contactRef.current) return;
     gsap.to(window, {
-      scrollTo: 22150,
+      scrollTo: sectionRefs.contactRef.current,
       duration: 1,
       ease: "power2.inOut",
     });

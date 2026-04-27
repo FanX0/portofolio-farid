@@ -2,6 +2,7 @@
 
 @theme {
   --font-poppins: var(--font-poppins);
+  --font-fraunces: var(--font-fraunces);
   --black-color: #1e1e1e;
   --white-color: #eee;
 }
@@ -40,4 +41,18 @@ body {
 
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
   background: #444;
+}
+
+.wonky-italic {
+  font-style: italic;
+  font-variation-settings: "SOFT" 100, "WONK" 1;
+}
+
+.cormorant-italic {
+  font-family: var(--font-cormorant);
+  font-style: italic;
+}
+
+.tech-icon-group {
+  visibility: hidden;
 }

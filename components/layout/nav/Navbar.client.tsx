@@ -1,14 +1,41 @@
 "use client";
 
+import { useState, useRef, type RefObject } from "react";
+import gsap, { useGSAP } from "@/shared/lib/gsap";
 import { useNavbarAnimation } from "./navbar.animation";
 import useNavCircleHover from "@/components/layout/nav/useNavCircleHover";
 import { NavArrowIcon } from "@/components/ui/NavArrowIcon";
+
+type SectionRefs = {
+  heroRef: RefObject<HTMLElement | null>;
+  aboutRef: RefObject<HTMLElement | null>;
+  projectRef: RefObject<HTMLElement | null>;
+  contactRef: RefObject<HTMLElement | null>;
+};
+
 type NavbarClientProps = {
   onToggle: () => void;
   isOpen: boolean;
+  isLoading: boolean;
+  onIntroComplete?: () => void;
+  sectionRefs: SectionRefs;
 };
 
-export default function NavbarClient({ onToggle, isOpen }: NavbarClientProps) {
+export default function NavbarClient({
+  onToggle,
+  isOpen,
+  isLoading,
+  onIntroComplete,
+  sectionRefs,
+}: NavbarClientProps) {
+  const [isHoverDisabled, setIsHoverDisabled] = useState(isLoading);
+  const preloaderRef = useRef<HTMLDivElement>(null);
+  const navLeftRef = useRef<HTMLSpanElement>(null);
+  const navRightRef = useRef<HTMLSpanElement>(null);
+  const navLineRef = useRef<HTMLDivElement>(null);
+  const navLogoContainerRef = useRef<HTMLDivElement>(null);
+  const navLinksRef = useRef<HTMLDivElement>(null);
+
   const {
     container,
     toggleIconRef,
@@ -18,6 +45,8 @@ export default function NavbarClient({ onToggle, isOpen }: NavbarClientProps) {
     scrollToContact,
   } = useNavbarAnimation({
     isOpen,
+    isLoading,
+    sectionRefs,
   });
 
   const {
@@ -27,7 +56,7 @@ export default function NavbarClient({ onToggle, isOpen }: NavbarClientProps) {
     navArrow: navArrowHome,
     onEnter: onEnterHome,
     onLeave: onLeaveHome,
-  } = useNavCircleHover();
+  } = useNavCircleHover(isHoverDisabled);
   const {
     navRef: navRefAbout,
     navDot: navDotAbout,
@@ -35,7 +64,7 @@ export default function NavbarClient({ onToggle, isOpen }: NavbarClientProps) {
     navArrow: navArrowAbout,
     onEnter: onEnterAbout,
     onLeave: onLeaveAbout,
-  } = useNavCircleHover();
+  } = useNavCircleHover(isHoverDisabled);
   const {
     navRef: navRefProject,
     navDot: navDotProject,
@@ -43,7 +72,7 @@ export default function NavbarClient({ onToggle, isOpen }: NavbarClientProps) {
     navArrow: navArrowProject,
     onEnter: onEnterProject,
     onLeave: onLeaveProject,
-  } = useNavCircleHover();
+  } = useNavCircleHover(isHoverDisabled);
   const {
     navRef: navRefContact,
     navDot: navDotContact,
@@ -51,7 +80,100 @@ export default function NavbarClient({ onToggle, isOpen }: NavbarClientProps) {
     navArrow: navArrowContact,
     onEnter: onEnterContact,
     onLeave: onLeaveContact,
-  } = useNavCircleHover();
+  } = useNavCircleHover(isHoverDisabled);
+
+  // Preloader Animation
+  useGSAP(
+    () => {
+      if (!isLoading) return;
+
+      const tl = gsap.timeline();
+
+      // Initial state moved to CSS/JSX to avoid glitch on refresh
+      const logoEl = navLogoContainerRef.current;
+      if (logoEl) {
+        const rect = logoEl.getBoundingClientRect();
+        const centerX = window.innerWidth / 2;
+        const centerY = window.innerHeight * 0.25;
+
+        const offsetX = centerX - (rect.left + rect.width / 2);
+        const offsetY = centerY - (rect.top + rect.height / 2);
+
+        gsap.set(logoEl, { x: offsetX, y: offsetY });
+      }
+
+      tl.to([navLeftRef.current, navRightRef.current], {
+        opacity: 1,
+        y: 0,
+        duration: 0.8,
+        ease: "power3.out",
+        stagger: 0.1,
+      })
+        .to(
+          navLineRef.current,
+          {
+            scaleX: 1,
+            duration: 0.6,
+            ease: "expo.inOut",
+          },
+          "-=0.4",
+        )
+        .to(
+          navLineRef.current,
+          {
+            width: 0,
+            margin: 0,
+            opacity: 0,
+            duration: 0.8,
+            ease: "power3.inOut",
+          },
+          "+=1.5",
+        )
+        .to(
+          navRightRef.current,
+          {
+            marginLeft: "0.3em",
+            duration: 0.8,
+            ease: "power3.inOut",
+          },
+          "-=0.8",
+        )
+        .to(
+          navLogoContainerRef.current,
+          {
+            x: 0,
+            y: 0,
+            duration: 1.2,
+            ease: "expo.inOut",
+          },
+          "-=0.2",
+        )
+        .to(
+          [navLinksRef.current, navDotHome.current, ".progressbar-track"],
+          {
+            opacity: 1,
+            y: 0,
+            duration: 1,
+            stagger: 0.05,
+            ease: "power2.out",
+          },
+          "-=0.8",
+        )
+        .to(
+          preloaderRef.current,
+          {
+            opacity: 0,
+            duration: 0.5,
+            onComplete: () => {
+              setIsHoverDisabled(false);
+              onIntroComplete?.();
+            },
+          },
+          "-=0.5",
+        );
+    },
+    { scope: container, dependencies: [isLoading] },
+  );
 
   const handleSidebarToggle = () => {
     onToggle();
@@ -59,8 +181,8 @@ export default function NavbarClient({ onToggle, isOpen }: NavbarClientProps) {
 
   return (
     <nav ref={container} className="container flex flex-col text-[1rem] z-20 ">
-      <div className="pr-[1rem] lg:pr-[0]">
-        <ul className="flex items-center lg:gap-[1.875rem] w-full ">
+      <div className="pr-4 lg:pr-0">
+        <ul className="flex items-center lg:gap-7.5 w-full ">
           <div className=" flex lg:flex-col items-center w-full ">
             <button
               ref={navRefHome}
@@ -68,26 +190,46 @@ export default function NavbarClient({ onToggle, isOpen }: NavbarClientProps) {
               onClick={scrollToHome}
               onMouseEnter={onEnterHome}
               onMouseLeave={onLeaveHome}
-              className="home-link flex items-center gap-[1rem] h-[4.0625rem] lg:flex lg:w-full lg:py-[1.75rem] lg:h-[5.875rem] text-left appearance-none cursor-pointer"
+              className="home-link group flex items-center gap-4 h-16.25 lg:flex lg:w-full lg:py-7 lg:h-23.5 text-left appearance-none cursor-pointer"
             >
               <div
                 ref={navDotHome}
-                className="nav-dot w-[0.5rem] h-[0.5rem] outline outline-white rounded-full hidden lg:block"
+                className="nav-dot w-2 h-2 outline outline-white rounded-full hidden lg:block opacity-0 -translate-y-2"
               />
-              <p>farid</p>
+              <div
+                ref={navLogoContainerRef}
+                className="flex items-center text-[1rem] tracking-tighter"
+              >
+                <span ref={navLeftRef} className="opacity-0 translate-y-[10px]">
+                  farid
+                </span>
+                <div
+                  ref={navLineRef}
+                  className="h-[0.5px] bg-white/30 origin-center mx-6 w-40 lg:w-160 scale-x-0"
+                />
+                <span
+                  ref={navRightRef}
+                  className="opacity-0 translate-y-[10px]"
+                >
+                  azhari
+                </span>
+              </div>
               <div
                 ref={navCircleHome}
-                className="nav-circle opacity-0 w-[3rem] h-[3rem] bg-white rounded-full hidden lg:flex justify-center items-center"
+                className="nav-circle opacity-0 w-12 h-12 bg-white rounded-full hidden lg:flex justify-center items-center"
               >
                 <NavArrowIcon ref={navArrowHome} />
               </div>
             </button>
-            <div className="progressbar-track w-full h-[1px] bg-gray-300/10 hidden lg:block">
-              <div className="progressbar-desktop-fill-name w-full h-[1px] bg-white origin-left scale-x-0"></div>
+            <div className="progressbar-track w-full h-px bg-gray-300/10 hidden lg:block opacity-0">
+              <div className="progressbar-desktop-fill-name w-full h-px bg-white origin-left scale-x-0"></div>
             </div>
           </div>
-          <div className="flex  lg:w-full  lg:gap-[1.875rem]">
-            <li className="lg:hidden flex items-center h-[4.0625rem]">
+          <div
+            ref={navLinksRef}
+            className="flex lg:w-full lg:gap-7.5 opacity-0 -translate-y-2"
+          >
+            <li className="lg:hidden flex items-center h-16.25">
               <button
                 className="sidebar-toggle cursor-pointer"
                 type="button"
@@ -140,85 +282,85 @@ export default function NavbarClient({ onToggle, isOpen }: NavbarClientProps) {
                 </svg>
               </button>
             </li>
-            <li className="flex lg:flex-col items-center w-full hidden lg:block">
+            <li className="lg:flex lg:flex-col items-center w-full hidden lg:block">
               <button
                 ref={navRefAbout}
                 type="button"
                 onClick={scrollToAbout}
                 onMouseEnter={onEnterAbout}
                 onMouseLeave={onLeaveAbout}
-                className="about-link flex items-center gap-[1rem] h-[4.0625rem] w-full lg:py-[1.75rem] lg:h-[5.875rem] cursor-pointer"
+                className="about-link group flex items-center gap-4 h-16.25 w-full lg:py-7 lg:h-23.5 cursor-pointer"
               >
                 <div
                   ref={navDotAbout}
-                  className="nav-dot w-[0.5rem] h-[0.5rem] outline outline-white rounded-full"
+                  className="nav-dot w-2 h-2 outline outline-white rounded-full"
                 />
-                <p>About</p>
+                <span>About</span>
                 <div
                   ref={navCircleAbout}
-                  className="nav-circle opacity-0 w-[3rem] h-[3rem] bg-white rounded-full flex justify-center items-center"
+                  className="nav-circle opacity-0 w-12 h-12 bg-white rounded-full flex justify-center items-center"
                 >
                   <NavArrowIcon ref={navArrowAbout} />
                 </div>
               </button>
-              <div className="progressbar-track w-full h-[1px] bg-gray-300/10 ">
-                <div className="progressbar-desktop-fill-about w-full h-[1px] bg-white origin-left scale-x-0"></div>
+              <div className="progressbar-track w-full h-px bg-gray-300/10 opacity-0">
+                <div className="progressbar-desktop-fill-about w-full h-px bg-white origin-left scale-x-0"></div>
               </div>
             </li>
-            <li className="flex lg:flex-col items-center w-full hidden lg:block">
+            <li className="lg:flex lg:flex-col items-center w-full hidden lg:block">
               <button
                 ref={navRefProject}
                 type="button"
                 onMouseEnter={onEnterProject}
                 onMouseLeave={onLeaveProject}
                 onClick={scrollToProject}
-                className="project-link flex items-center gap-[1rem] h-[4.0625rem] w-full lg:py-[1.75rem] lg:h-[5.875rem] cursor-pointer"
+                className="project-link group flex items-center gap-4 h-16.25 w-full lg:py-7 lg:h-23.5 cursor-pointer"
               >
                 <div
                   ref={navDotProject}
-                  className="nav-dot w-[0.5rem] h-[0.5rem] outline outline-white rounded-full"
+                  className="nav-dot w-2 h-2 outline outline-white rounded-full"
                 />
-                <p>Project</p>
+                <span>Project</span>
                 <div
                   ref={navCircleProject}
-                  className="nav-circle opacity-0 w-[3rem] h-[3rem] bg-white rounded-full flex justify-center items-center"
+                  className="nav-circle opacity-0 w-12 h-12 bg-white rounded-full flex justify-center items-center"
                 >
                   <NavArrowIcon ref={navArrowProject} />
                 </div>
               </button>
-              <div className="progressbar-track w-full h-[1px] bg-gray-300/10 ">
-                <div className="progressbar-desktop-fill-project w-full h-[1px] bg-white origin-left scale-x-0"></div>
+              <div className="progressbar-track w-full h-px bg-gray-300/10 opacity-0">
+                <div className="progressbar-desktop-fill-project w-full h-px bg-white origin-left scale-x-0"></div>
               </div>
             </li>
-            <li className="flex lg:flex-col items-center w-full hidden lg:block">
+            <li className="lg:flex lg:flex-col items-center w-full hidden lg:block">
               <button
                 ref={navRefContact}
                 type="button"
                 onMouseEnter={onEnterContact}
                 onMouseLeave={onLeaveContact}
                 onClick={scrollToContact}
-                className="contact-link flex items-center gap-[1rem] h-[4.0625rem] w-full lg:py-[1.75rem] lg:h-[5.875rem] cursor-pointer"
+                className="contact-link group flex items-center gap-4 h-16.25 w-full lg:py-7 lg:h-23.5 cursor-pointer"
               >
                 <div
                   ref={navDotContact}
-                  className="nav-dot w-[0.5rem] h-[0.5rem] outline outline-white rounded-full"
+                  className="nav-dot w-2 h-2 outline outline-white rounded-full"
                 />
-                <p>Contact</p>
+                <span>Contact</span>
                 <div
                   ref={navCircleContact}
-                  className="nav-circle opacity-0 w-[3rem] h-[3rem] bg-white rounded-full flex justify-center items-center"
+                  className="nav-circle opacity-0 w-12 h-12 bg-white rounded-full flex justify-center items-center"
                 >
                   <NavArrowIcon ref={navArrowContact} />
                 </div>
               </button>
-              <div className="progressbar-track w-full h-[1px] bg-gray-300/10 ">
-                <div className="progressbar-desktop-fill-contact w-full h-[1px] bg-white origin-left scale-x-0"></div>
+              <div className="progressbar-track w-full h-px bg-gray-300/10 opacity-0">
+                <div className="progressbar-desktop-fill-contact w-full h-px bg-white origin-left scale-x-0"></div>
               </div>
             </li>
           </div>
         </ul>
-        <div className="progressbar-track w-full h-[1px] bg-gray-300/10 lg:hidden ">
-          <div className="progressbar-mobile-fill w-full h-[1px] bg-white origin-left scale-x-0"></div>
+        <div className="progressbar-track w-full h-px bg-gray-300/10 lg:hidden opacity-0">
+          <div className="progressbar-mobile-fill w-full h-px bg-white origin-left scale-x-0"></div>
         </div>
       </div>
     </nav>

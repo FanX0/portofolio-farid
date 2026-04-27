@@ -4,33 +4,69 @@ import { useRef, useState, useEffect } from "react";
 import type { HeroSectionProps } from "./hero.types";
 
 import TextMask from "@/components/ui/TextMask";
-import LogoTransition from "@/components/common/logotransition/LogoTransition.server";
+import WordRotate from "@/components/ui/WordRotate";
+import FlairButton from "@/components/ui/FlairButton";
 import Image from "next/image";
 
-import { initHeroAnimation } from "./hero.animation";
+import { useHeroAnimation } from "./hero.animation";
 import { useBoxHeroAnimation } from "./useBoxHeroAnimation";
 
 import { getImageUrl } from "@/shared/lib/sanity/image";
 import gsap, { useGSAP } from "@/shared/lib/gsap";
 
-export default function HeroSectionClient({ projects }: HeroSectionProps) {
+export default function HeroSectionClient({
+  projects,
+  isLoading,
+  onIntroComplete,
+  sectionRefs,
+}: HeroSectionProps) {
   const [imageReady, setImageReady] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const container = useRef<HTMLDivElement>(null);
-  const { circleArrowRef, arrowRef, onMouseEnter, onMouseLeave } =
-    useBoxHeroAnimation();
+  const [isPlaying, setIsPlaying] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  const {
+    container,
+    scrollToContact,
+    heroText1,
+    heroText2,
+    heroText3,
+    heroText4,
+    heroText5,
+    heroText6,
+    heroText7,
+    heroText8,
+    heroText9,
+    heroText10,
+    leftColContentRef,
+    leftColRef,
+    rightColRef,
+    heroHeadlineRef,
+    playButtonRef,
+  } = useHeroAnimation({
+    sectionRefs,
+    onIntroComplete,
+  });
+
+  const {
+    circleArrowRef,
+    arrowContainerRef,
+    arrowRef,
+    onMouseEnter,
+    onMouseLeave,
+    onMouseMove,
+  } = useBoxHeroAnimation();
 
   const latestProject = projects[0];
   const projectImages = latestProject?.images || [];
 
+  // Main Hero Timeline: runs on mount
   useGSAP(
     () => {
-      // Hero Image Animation
-      if (container.current && imageReady) {
-        initHeroAnimation({ container: container.current });
-      }
+      // Initial hidden states handled by CSS classes (.opacity-0 .translate-y-10)
+      // and for expand parts (.w-0)
     },
-    { scope: container, dependencies: [imageReady] },
+    { scope: container },
   );
 
   useEffect(() => {
@@ -50,85 +86,141 @@ export default function HeroSectionClient({ projects }: HeroSectionProps) {
     };
   }, [projectImages.length]);
 
-  const handleScrollToContact = () => {
-    gsap.to(window, {
-      scrollTo: 22150,
-      duration: 2,
-      ease: "power2.out",
-    });
-  };
-  const handleScrollToProject = () => {
-    gsap.to(window, {
-      scrollTo: 16300,
-      duration: 2,
-      ease: "power2.out",
-    });
+  const handlePlayClick = () => {
+    if (!container.current || !videoRef.current) return;
+
+    if (!isPlaying) {
+      // Unmute and play the video
+      videoRef.current.muted = false;
+      videoRef.current.play();
+      setIsPlaying(true);
+
+      // Scroll to trigger the ScrollTrigger expansion
+      const scrollTarget =
+        container.current.offsetTop + window.innerHeight * 0.8;
+      gsap.to(window, {
+        scrollTo: scrollTarget,
+        duration: 1.5,
+        ease: "power2.inOut",
+      });
+    } else {
+      // Pause and mute the video
+      videoRef.current.pause();
+      videoRef.current.muted = true;
+      setIsPlaying(false);
+    }
   };
 
   return (
     <div ref={container} className="hero-section">
-      <div className="bg-[var(--white-color)] h-dvh lg:max-h-[80rem]  flex justify-center items-center">
-        <div className="container  flex items-end  pb-[2rem] h-full max-h-[80rem]  ">
-          <div className="w-full  lg:py-0   flex flex-col  gap-[4rem]  lg:flex-row justify-between h-[43rem] lg:h-[25rem]">
-            <TextMask className="text-[8rem] font-semibold lg:hidden   h-[21rem]">
-              farid
-            </TextMask>
-            <div className="box-hero-image flex w-full h-full lg:w-[50%] lg:order-2 ">
-              <div className="project-image relative flex w-full h-full  rounded-[2rem] overflow-hidden ">
-                {projectImages.map((image, index) => {
-                  const imageUrl = getImageUrl(image);
-                  if (!imageUrl) return null;
+      <div className="relative bg-[var(--white-color)] lg:h-dvh lg:max-h-[80rem] flex justify-center items-center">
+        <div
+          ref={heroHeadlineRef}
+          className="absolute p-4 mb-[25rem] lg:mb-[19rem]"
+        >
+          <h1
+            aria-label="I Create Interactive Experiences that feel smooth, fast, and alive."
+            className="flex flex-col items-center text-[1.5rem] lg:text-[5rem] font-fraunces leading-tight"
+          >
+            <span
+              aria-hidden="true"
+              className="flex items-center gap-x-[0.3em] justify-center"
+            >
+              <span ref={heroText1} className="hidden ">
+                Creating
+              </span>
+              <span ref={heroText2} className="hidden ">
+                Interactive
+              </span>
+              <span ref={heroText3} className="hidden ">
+                Digital
+              </span>
+            </span>
+            <span
+              aria-hidden="true"
+              className="flex items-center gap-x-[0.3em] justify-center"
+            >
+              <span className="hidden" ref={heroText4}>
+                Experiences
+              </span>
 
-                  return (
-                    <Image
-                      width={1280}
-                      height={1280}
-                      key={index}
-                      src={imageUrl}
-                      alt={latestProject?.title || "Project Image"}
-                      className={`object-cover w-full h-full absolute inset-0   ${
-                        index === currentIndex ? "opacity-100" : "opacity-0"
-                      }`}
-                      onLoadingComplete={() => {
-                        if (index === 0) setImageReady(true);
-                      }}
-                      priority={index === 0}
-                    />
-                  );
-                })}
-              </div>
-            </div>
-            <div className="flex flex-col gap-[3rem] lg:justify-between lg:order-1 ">
-              <div className="flex flex-col gap-[0.5rem]">
-                <TextMask start="" className="heading font-regular">
-                  A frontend-focused developer
-                </TextMask>
-                <TextMask start="" className="heading font-medium">
-                  specializing in animation, performance,
-                </TextMask>
-                <TextMask start="" className="heading font-medium">
-                  and modern web technologies
-                </TextMask>
-                <TextMask start="" className="heading font-medium">
-                  for standout digital products.
-                </TextMask>
+              <span ref={heroText5} className="hidden">
+                that
+              </span>
+              <span className="hidden" ref={heroText6}>
+                feel
+              </span>
+            </span>
+            <span
+              aria-hidden="true"
+              className="flex items-center gap-x-[0.3em] justify-center"
+            >
+              <span ref={heroText7} className="hidden">
+                smooth,
+              </span>
+              <span ref={heroText8} className="hidden">
+                fast,
+              </span>
+              <span className="hidden" ref={heroText9}>
+                and
+              </span>
+              <span className="hidden" ref={heroText10}>
+                alive.
+              </span>
+            </span>
+          </h1>
+        </div>
+        <div className="container flex flex-col justify-end gap-[4rem] lg:gap-[8rem] pb-[4rem] lg:pb-[6rem] h-full mt-[20rem] lg:mt-0">
+          <div className="relative w-full lg:py-0 flex flex-col gap-[4rem] lg:flex-row justify-between items-center lg:items-end h-auto">
+            <div
+              ref={leftColRef}
+              className="w-full"
+            >
+              <div 
+                ref={leftColContentRef}
+                className="hidden flex flex-col gap-[2rem] lg:justify-between opacity-0 items-center lg:items-start w-full"
+              >
+                <div className="flex flex-col gap-[0.5rem] text-center lg:text-left ">
+                <div className="font-fraunces text-[1rem] lg:text-[2.2rem] leading-[1.2] lg:leading-[1.1] text-[var(--black-color)]">
+                  A creative developer specializing
+                  <br />
+                  in crafting modern, intuitive, and
+                  <br />
+                  engaging digital experiences
+                  <div className="flex items-center justify-center lg:justify-start gap-[0.3em]">
+                    <span className="italic">for</span>
+                    <div className="lg:h-[2.2rem]">
+                      <WordRotate
+                        words={["B2B", "digital", "startup", "ecommerce"]}
+                      />
+                    </div>
+                    <span>brands.</span>
+                  </div>
+                </div>
               </div>
               <div
-                onClick={handleScrollToContact}
-                className="box-hero-link cursor-pointer flex items-center justify-between px-[2rem] lg:px-[3rem] bg-black w-[20rem] h-[6rem]  lg:w-[22.75rem] lg:h-[7.8125rem] rounded-full hover:bg-[var(--white-color)] text-white hover:text-black hover:outline-black hover:outline-[3px]"
+                onClick={scrollToContact}
+                className="box-hero-link cursor-pointer flex items-center justify-between px-[1.2rem] lg:px-[2rem] mt-[0rem] lg:mt-[0.8rem] bg-black w-[10rem] h-[3rem] lg:w-[15rem] lg:h-[4rem] rounded-full text-white"
                 onMouseEnter={onMouseEnter}
                 onMouseLeave={onMouseLeave}
+                onMouseMove={onMouseMove}
               >
-                <TextMask start="" className=" text-[1.2rem]  font-medium ">
+                <TextMask
+                  start=""
+                  className=" text-[0.8rem] lg:text-[1rem] font-medium "
+                >
                   Get in touch
                 </TextMask>
 
-                <div className="relative w-[4rem] h-[4rem] flex items-center justify-center">
+                <div className="relative w-[1.8rem] h-[1.8rem] lg:w-[2.5rem] lg:h-[2.5rem] flex items-center justify-center">
                   <div
                     ref={circleArrowRef}
-                    className="absolute inset-0 bg-white rounded-full origin-right "
+                    className="z-0 absolute inset-0 bg-white rounded-full  "
                   />
-                  <div className="z-10 w-[4rem] h-[4rem] flex items-center justify-center rounded-full overflow-hidden">
+                  <div
+                    ref={arrowContainerRef}
+                    className="z-10 w-full h-full flex items-center justify-center rounded-full overflow-hidden pointer-events-none"
+                  >
                     <svg
                       ref={arrowRef}
                       width="24"
@@ -136,7 +228,7 @@ export default function HeroSectionClient({ projects }: HeroSectionProps) {
                       viewBox="0 0 24 26"
                       fill="none"
                       xmlns="http://www.w3.org/2000/svg"
-                      className="arrow-down w-[1.4rem] h-[1.4rem] relative"
+                      className="arrow-down w-[0.8rem] h-[0.8rem] lg:w-[1rem] lg:h-[1rem] relative text-white"
                     >
                       <path
                         d="M11.5 1.5L11.5 21.5"
@@ -156,27 +248,39 @@ export default function HeroSectionClient({ projects }: HeroSectionProps) {
                   </div>
                 </div>
               </div>
+              </div>
+            </div>
+
+            <div
+              ref={rightColRef}
+              onClick={handlePlayClick}
+              className="group relative w-full lg:max-w-[30rem] h-auto rounded-[1rem] overflow-hidden opacity-0 cursor-pointer"
+            >
+              <video
+                ref={videoRef}
+                src="/videos/hero/project-preview.mp4"
+                autoPlay
+                loop
+                muted
+                playsInline
+                className="w-full h-auto block"
+              />
+              {/* Play button overlay */}
+              <div
+                className={`absolute inset-0 flex items-center justify-center z-20 transition-opacity duration-300 pointer-events-none ${
+                  isPlaying ? "opacity-0" : "opacity-100"
+                }`}
+              >
+                <FlairButton
+                  ref={playButtonRef}
+                  label="Play"
+                  hasBorder={false}
+                  className="w-24 h-24 rounded-full bg-black/50 backdrop-blur-sm pointer-events-auto"
+                />
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      <div className="h-[26rem] lg:h-dvh bg-[var(--white-color)] py-[2rem] ">
-        <div className="container  w-full flex flex-col gap-[2rem] items-center justify-between ">
-          <div className="flex w-full justify-between items-center">
-            <p className="">Recent Project</p>
-            <button
-              type="button"
-              onClick={handleScrollToProject}
-              className="view-all-project cursor-pointer"
-            >
-              View all / {projects.length}
-            </button>
-          </div>
-          <div className="box-project-image h-[15rem] lg:h-[53rem] w-full rounded-[2rem]"></div>
-        </div>
-      </div>
-      <div className="relative">
-        <LogoTransition />
       </div>
     </div>
   );

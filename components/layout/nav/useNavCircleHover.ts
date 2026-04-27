@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import gsap, { useGSAP } from "@/shared/lib/gsap";
 
-export default function useNavCircleHover() {
+export default function useNavCircleHover(disabled: boolean = false) {
   const navRef = useRef<HTMLButtonElement>(null);
   const navDot = useRef<HTMLDivElement>(null);
   const navCircle = useRef<HTMLDivElement>(null);
@@ -43,7 +43,8 @@ export default function useNavCircleHover() {
   );
 
   const onEnter = () => {
-    if (!navRef.current || !navDot.current || !navCircle.current) return;
+    if (disabled || !navRef.current || !navDot.current || !navCircle.current)
+      return;
 
     // Kill any reset tween
     resetTweenRef.current?.kill();
@@ -71,7 +72,8 @@ export default function useNavCircleHover() {
   };
 
   const onLeave = () => {
-    if (!navRef.current || !navDot.current || !navCircle.current) return;
+    if (disabled || !navRef.current || !navDot.current || !navCircle.current)
+      return;
 
     // Pause the looping arrow animation
     arrowTlRef.current?.pause();
