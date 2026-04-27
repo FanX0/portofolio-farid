@@ -23,7 +23,7 @@ export function useHeroAnimation({ sectionRefs, onIntroComplete }: UseHeroAnimat
   const leftColRef = useRef<HTMLDivElement>(null);
   const rightColRef = useRef<HTMLDivElement>(null);
   const heroHeadlineRef = useRef<HTMLDivElement>(null);
-  const playButtonRef = useRef<HTMLDivElement>(null);
+  const playButtonRef = useRef<HTMLButtonElement>(null);
 
   useGSAP(
     () => {
