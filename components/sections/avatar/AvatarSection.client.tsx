@@ -1,22 +1,13 @@
 "use client";
 
-import { useGSAP } from "@/shared/lib/gsap";
-import { useRef } from "react";
-import { initAvatarAnimation } from "./avatar.animation";
+import { useAvatarAnimation } from "./avatar.animation";
 
 export default function AvatarSectionClient() {
-  const container = useRef<HTMLDivElement>(null);
-
-  useGSAP(
-    () => {
-      if (!container.current) return;
-      return initAvatarAnimation({ container: container.current });
-    },
-    { scope: container },
-  );
+  const { container } = useAvatarAnimation();
 
   return (
     <div ref={container} className="h-dvh bg-[var(--black-color)]">
+      <style dangerouslySetInnerHTML={{ __html: `.tech-icon-group { visibility: hidden; }` }} />
       <div className="h-full w-full flex items-end justify-center overflow-hidden">
         <svg
           className="avatar relative w-[20rem] lg:w-[35rem] h-auto left-0 left-2  lg:left-[2.5rem] "
@@ -32,7 +23,7 @@ export default function AvatarSectionClient() {
               d="M138 445C138 445 152.765 411.498 292.782 412.006C432.799 412.513 444 445 444 445H138Z"
               fill="#453A37"
             />
-            <g aria-label="html">
+            <g aria-label="html" className="tech-icon-group">
               <path
                 d="M169.5 484C169.5 376.5 119.5 360 58.5 570.5"
                 stroke="#B6FD0F"
@@ -63,7 +54,7 @@ export default function AvatarSectionClient() {
                 />
               </g>
             </g>
-            <g aria-label="vue">
+            <g aria-label="vue" className="tech-icon-group">
               <path
                 className="vue-vector"
                 d="M183 470.5C105 319.5 383 423 267.5 285"
@@ -83,7 +74,11 @@ export default function AvatarSectionClient() {
               </g>
             </g>
 
-            <g aria-label="react" clipPath="url(#clip1_130_177)">
+            <g
+              aria-label="react"
+              clipPath="url(#clip1_130_177)"
+              className="tech-icon-group"
+            >
               <path
                 className="react-vector"
                 d="M397.5 481C397.5 481 460 397.5 425 381.5C390 365.5 236 466 214.5 404C193 342 225.5 281 225.5 281"
@@ -111,7 +106,7 @@ export default function AvatarSectionClient() {
               </g>
             </g>
 
-            <g aria-label="js">
+            <g aria-label="js" className="tech-icon-group">
               <path
                 className="js-vector"
                 d="M181.5 499C234.446 473.905 244.5 357 25 443"
@@ -130,7 +125,7 @@ export default function AvatarSectionClient() {
                 />
               </g>
             </g>
-            <g aria-label="nestjs">
+            <g aria-label="nestjs" className="tech-icon-group">
               <path
                 className="nestjs-vector"
                 d="M318.5 471C318.5 471 243.5 418 285 391C326.5 364 301 466 479.5 364.5"
@@ -145,7 +140,7 @@ export default function AvatarSectionClient() {
                 />
               </g>
             </g>
-            <g aria-label="css">
+            <g aria-label="css" className="tech-icon-group">
               <path
                 className="css-vector"
                 d="M211.5 470C211.5 470 365 333 389.5 413.5C414 494 176.5 305 53.5 368"
@@ -180,7 +175,7 @@ export default function AvatarSectionClient() {
                 />
               </g>
             </g>
-            <g aria-label="tailwind">
+            <g aria-label="tailwind" className="tech-icon-group">
               <path
                 className="tailwind-vector"
                 d="M192.5 486C192.5 486 265.5 374.5 224 351.5C182.5 328.5 107.5 316.5 123.5 287"
@@ -195,7 +190,7 @@ export default function AvatarSectionClient() {
                 />
               </g>
             </g>
-            <g aria-label="express">
+            <g aria-label="express" className="tech-icon-group">
               <path
                 className="express-vector"
                 d="M195.5 471C221.999 423.5 140.999 441 209.5 402.5C278 364 467 327.5 467 327.5"
@@ -209,7 +204,7 @@ export default function AvatarSectionClient() {
                 fill="black"
               />
             </g>
-            <g aria-label="nuxt">
+            <g aria-label="nuxt" className="tech-icon-group">
               <path
                 className="nuxt-vector"
                 d="M380 475.5C380 475.5 135 416.5 279.5 383C424 349.5 432 413.5 427.5 301.5"
@@ -232,7 +227,7 @@ export default function AvatarSectionClient() {
                 />
               </g>
             </g>
-            <g aria-label="php">
+            <g aria-label="php" className="tech-icon-group">
               <path
                 className="php-vector"
                 d="M241.5 466C202 428 310.5 319 511 466"
@@ -323,7 +318,7 @@ export default function AvatarSectionClient() {
                 </g>
               </g>
             </g>
-            <g aria-label="laravel">
+            <g aria-label="laravel" className="tech-icon-group">
               <path
                 className="laravel-vector"
                 d="M394.001 469C394.001 469 380.5 441.5 398.5 422C416.5 402.5 507.5 405 507.5 405"
@@ -340,7 +335,7 @@ export default function AvatarSectionClient() {
                 />
               </g>
             </g>
-            <g aria-label="svelte">
+            <g aria-label="svelte" className="tech-icon-group">
               <path
                 className="svelte-vector"
                 d="M323 471C323 471 395.5 452.5 378.5 414.5C361.5 376.5 257.5 463.5 245 414.5C232.5 365.5 367 319 323 284"
@@ -359,7 +354,7 @@ export default function AvatarSectionClient() {
                 />
               </g>
             </g>
-            <g aria-label="nextjs">
+            <g aria-label="nextjs" className="tech-icon-group">
               <path
                 className="nextjs-vector"
                 d="M375 472C375 472 245.822 384.897 347 361C448.177 337.103 367 318.5 367 275.5"
@@ -374,7 +369,7 @@ export default function AvatarSectionClient() {
                 />
               </g>
             </g>
-            <g aria-label="ts">
+            <g aria-label="ts" className="tech-icon-group">
               <path
                 className="ts-vector"
                 d="M249.5 481C249.5 481 420.5 354.5 371.5 337.5C322.5 320.5 112.5 463 76 303.5"
