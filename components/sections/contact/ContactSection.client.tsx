@@ -1,16 +1,14 @@
 "use client";
 
-import { useRef, useEffect, useState, useActionState } from "react";
-import { useGSAP } from "@/shared/lib/gsap";
-import initContactAnimation from "./contact.animation";
+import { useEffect, useState, useActionState } from "react";
+import { useContactAnimation } from "./contact.animation";
 import stamp from "@/public/images/f-stamp.png";
 import Image from "next/image";
 import { sendEmail } from "@/features/contact/actions/sendEmail/sendEmail";
 import type { EmailState } from "@/shared/types/email";
 
 export default function ContactSectionClient() {
-  const container = useRef<HTMLDivElement>(null);
-  const tlClick = useRef<gsap.core.Timeline | null>(null);
+  const { container, tlClick } = useContactAnimation();
 
   const initialState: EmailState = { success: false };
 
@@ -27,22 +25,11 @@ export default function ContactSectionClient() {
     }
   }, [state?.success]);
 
-  useGSAP(
-    () => {
-      if (!container.current) return;
-      const animation = initContactAnimation({ container: container.current });
-      if (animation && animation.tlClick) {
-        tlClick.current = animation.tlClick;
-      }
-    },
-    { scope: container },
-  );
-
   return (
     <div ref={container} className="bg-[var(--black-color)]">
-      <div className=" w-full overflow-hidden">
-        <div className="text-running h-dvh flex items-center w-[70rem] lg:w-[140rem] ">
-          <p className="text-white text-[9rem] lg:text-[18.75rem]  font-bold ">
+      <div className="text-running-wrapper w-full overflow-hidden">
+        <div className="text-running h-dvh flex items-center w-fit px-[20vw]">
+          <p className="text-running-text text-white text-[9rem] lg:text-[18.75rem] font-bold whitespace-nowrap">
             LETS TALK IDEA
           </p>
         </div>
