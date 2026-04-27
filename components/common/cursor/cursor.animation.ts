@@ -100,14 +100,14 @@ export default function initCursorAnimation({
       });
       showText("Click");
     }
-    if (target.closest(".image-line")) {
+    if (target.closest(".project-image-box")) {
       gsap.to(cursor, {
         scale: 9,
         borderRadius: "50%",
         backgroundColor: "white",
         duration: 0.3,
       });
-      showText("Drag");
+      showText("Click");
     }
     if (target.closest(".email-link")) {
       gsap.to(cursor, {
@@ -172,8 +172,8 @@ export default function initCursorAnimation({
       });
       hideText();
     }
-    const imageLine = target.closest(".image-line");
-    if (imageLine && !imageLine.contains(e.relatedTarget as Node)) {
+    const projectImageBox = target.closest(".project-image-box");
+    if (projectImageBox && !projectImageBox.contains(e.relatedTarget as Node)) {
       gsap.to(cursor, {
         scale: 1,
         backgroundColor: "", // Clear inline style to revert to CSS class

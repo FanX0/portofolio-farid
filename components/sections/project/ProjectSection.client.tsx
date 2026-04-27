@@ -6,13 +6,9 @@ import TextMaskScroll from "@/components/ui/TextMaskScroll";
 import Image from "next/image";
 
 import gsap from "gsap";
-import { useGSAP } from "@gsap/react";
-import { Draggable } from "gsap/all";
-import { initProjectAnimation } from "./project.animation";
+import { useProjectAnimation } from "./project.animation";
 
 import { getImageUrl } from "@/shared/lib/sanity/image";
-
-gsap.registerPlugin(Draggable);
 
 type Props = {
   projects: Project[];
@@ -25,11 +21,11 @@ const ProjectSectionClient = ({ projects }: Props) => {
   const [imageIndex, setImageIndex] = useState(0);
   const [viewMode, setViewMode] = useState<"list" | "image">("list");
 
-  const container = useRef<HTMLDivElement>(null);
   const modalRef = useRef<HTMLDivElement>(null);
   const backdropRef = useRef<HTMLDivElement>(null);
   const modalTl = useRef<gsap.core.Timeline | null>(null);
-  const tl = useRef<gsap.core.Timeline | null>(null);
+
+  const { container, tl } = useProjectAnimation({ projects });
 
   const modalImage = getImageUrl(activeProject?.images?.[imageIndex]);
 
@@ -90,17 +86,6 @@ const ProjectSectionClient = ({ projects }: Props) => {
     }
   }, [activeProject]);
 
-  useGSAP(
-    () => {
-      if (!container.current) return;
-      const animation = initProjectAnimation({ container: container.current });
-      if (animation && animation.tl) {
-        tl.current = animation.tl;
-      }
-    },
-    { scope: container, dependencies: [projects] },
-  );
-
   const handleClickImage = () => {
     setViewMode("image");
     setActivedList(false);
@@ -133,9 +118,6 @@ const ProjectSectionClient = ({ projects }: Props) => {
   const handleCloseProject = () => {
     modalTl.current?.reverse();
     setTimeout(() => {
-      // Don't kill the timeline here usually if you want to replay it, but following user logic
-      // Actually user logic was: modalTl.current?.kill(); modalTl.current = null;
-      // This forces re-creation on next open via useEffect, which is fine.
       modalTl.current?.kill();
       modalTl.current = null;
       setActiveProject(null);
@@ -143,9 +125,12 @@ const ProjectSectionClient = ({ projects }: Props) => {
   };
 
   return (
-    <div ref={container} className="h-dvh bg-[var(--black-color)] text-white">
+    <div
+      ref={container}
+      className="bg-[var(--black-color)] text-white pb-[6rem]"
+    >
       <div className="container mx-auto w-full h-full">
-        <div className="w-full h-full flex flex-col gap-8">
+        <div className="w-full flex flex-col gap-8">
           <TextMaskScroll
             startMobile="center center"
             startDesktop="center center"
@@ -171,15 +156,15 @@ const ProjectSectionClient = ({ projects }: Props) => {
             </button>
           </div>
 
-          <div className="relative h-full overflow-hidden">
-            <section className="list-wrapper h-full ">
+          <div className="relative w-full grid">
+            <section className="list-wrapper col-start-1 row-start-1">
               <div className="list-line flex flex-col">
                 {projects.map((project, index) => {
                   return (
                     <button
                       key={project._id}
                       onClick={() => handleOpenProject(project)}
-                      className="project-item border-b border-gray-500 w-full cursor-pointer"
+                      className="project-item border-b border-gray-500 w-full cursor-pointer select-none"
                     >
                       <div className="project-text overflow-hidden h-[4rem]">
                         <div className=" project-text-inner flex flex-col ">
@@ -204,8 +189,8 @@ const ProjectSectionClient = ({ projects }: Props) => {
                 })}
               </div>
             </section>
-            <section className="image-wrapper absolute top-0 w-full h-full pointer-events-none flex justify-center">
-              <div className="image-line grid grid-cols-1 justify-items-center lg:grid-cols-3 gap-[4rem] h-full w-full  mt-[4rem] ">
+            <section className="image-wrapper col-start-1 row-start-1 w-full pointer-events-none flex justify-center z-10">
+              <div className="image-line grid grid-cols-1 justify-items-center lg:grid-cols-3 gap-[4rem] w-full mt-[2rem] pb-[4rem]">
                 {projects.map((project) => {
                   const imageUrl = getImageUrl(project.images?.[0]);
 
@@ -213,9 +198,9 @@ const ProjectSectionClient = ({ projects }: Props) => {
                     <button
                       key={project._id}
                       onClick={() => handleOpenProject(project)}
-                      className="cursor-pointer"
+                      className="cursor-pointer select-none pointer-events-auto"
                     >
-                      <div className=" w-[25rem] h-[15rem] rounded-[2rem] overflow-hidden">
+                      <div className="project-image-box w-[25rem] h-[15rem] rounded-[2rem] overflow-hidden">
                         {imageUrl && (
                           <Image
                             src={imageUrl}
