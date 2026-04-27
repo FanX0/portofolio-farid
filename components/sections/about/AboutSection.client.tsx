@@ -1,22 +1,12 @@
 "use client";
 
-import { useRef } from "react";
-
-import { useGSAP } from "@gsap/react";
 import TextClipPath from "@/components/ui/TextClipPath";
-
 import TextMaskScroll from "@/components/ui/TextMaskScroll";
-import { initAboutAnimation } from "./about.animation";
+import { useAboutAnimation } from "./about.animation";
 
 export default function AboutSectionClient() {
-  const container = useRef<HTMLDivElement | null>(null);
-  useGSAP(
-    () => {
-      if (!container.current) return;
-      return initAboutAnimation({ container: container.current });
-    },
-    { scope: container },
-  );
+  const { container } = useAboutAnimation();
+
   return (
     <div ref={container} className=" bg-[var(--black-color)]  h-full">
       <div className="h-dvh flex justify-center items-center">

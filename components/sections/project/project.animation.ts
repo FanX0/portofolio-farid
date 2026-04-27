@@ -1,156 +1,133 @@
-import gsap, { Draggable } from "@/shared/lib/gsap";
+import { useRef } from "react";
+import gsap, { useGSAP } from "@/shared/lib/gsap";
+import type { Project } from "@/shared/types/project";
 
-type ProjectAnimationParams = {
-  container: HTMLElement;
+type UseProjectAnimationParams = {
+  projects: Project[];
 };
 
-export function initProjectAnimation({ container }: ProjectAnimationParams) {
-  const q = gsap.utils.selector(container);
+export function useProjectAnimation({ projects }: UseProjectAnimationParams) {
+  const container = useRef<HTMLDivElement>(null);
+  const tl = useRef<gsap.core.Timeline | null>(null);
 
-  const listWrapper = q(".list-wrapper")[0] as HTMLElement;
-  const listLine = q(".list-line")[0] as HTMLElement;
-  const listItems = q(".list-line > button");
-  const imageWrapper = q(".image-wrapper")[0] as HTMLElement;
-  const imageLine = q(".image-line")[0] as HTMLElement;
-  const imageItems = q(".image-line > button");
+  useGSAP(
+    () => {
+      if (!container.current) return;
 
-  if (
-    !listWrapper ||
-    !listLine ||
-    !listItems.length ||
-    !imageWrapper ||
-    !imageLine ||
-    !imageItems.length
-  ) {
-    return;
-  }
+      const q = gsap.utils.selector(container.current);
 
-  // Initial state
-  gsap.set(listWrapper, { pointerEvents: "auto" });
-  gsap.set(imageWrapper, { pointerEvents: "none" });
+      const listWrapper = q(".list-wrapper")[0] as HTMLElement;
+      const listLine = q(".list-line")[0] as HTMLElement;
+      const listItems = q(".list-line > button");
+      const imageWrapper = q(".image-wrapper")[0] as HTMLElement;
+      const imageLine = q(".image-line")[0] as HTMLElement;
+      const imageItems = q(".image-line > button");
 
-  const tl = gsap.timeline({
-    paused: true,
+      if (
+        !listWrapper ||
+        !listLine ||
+        !listItems.length ||
+        !imageWrapper ||
+        !imageLine ||
+        !imageItems.length
+      ) {
+        return;
+      }
 
-    onStart: () => {
-      gsap.set(listWrapper, { pointerEvents: "none" });
-      gsap.set(imageWrapper, { pointerEvents: "auto" });
-    },
-
-    onReverseComplete: () => {
+      // Initial state
       gsap.set(listWrapper, { pointerEvents: "auto" });
       gsap.set(imageWrapper, { pointerEvents: "none" });
-    },
-  });
 
-  // --- Image Draggable ---
-  const minImageY = Math.min(
-    0,
-    imageWrapper.clientHeight - imageLine.scrollHeight,
-  );
+      const timeline = gsap.timeline({
+        paused: true,
 
-  Draggable.create(imageLine, {
-    type: "y",
-    inertia: true,
-    edgeResistance: 0.9,
-    zIndexBoost: false,
+        onStart: () => {
+          gsap.set(listWrapper, { pointerEvents: "none" });
+          gsap.set(imageWrapper, { pointerEvents: "auto" });
+        },
 
-    onRelease() {
-      const currentMinImageY = Math.min(
-        0,
-        imageWrapper.clientHeight - imageLine.scrollHeight,
+        onReverseComplete: () => {
+          gsap.set(listWrapper, { pointerEvents: "auto" });
+          gsap.set(imageWrapper, { pointerEvents: "none" });
+        },
+      });
+
+      timeline.fromTo(
+        listItems,
+        { xPercent: 0, opacity: 1 },
+        {
+          xPercent: -100,
+          opacity: 0,
+          duration: 2,
+          ease: "power4.inOut",
+          stagger: {
+            each: 0.2,
+            from: "start",
+          },
+        },
       );
 
-      const y = gsap.getProperty(imageLine, "y") as number;
+      timeline.fromTo(
+        imageItems,
+        { scale: 0, opacity: 0 },
+        {
+          scale: 1,
+          opacity: 1,
 
-      if (y > 0) {
-        gsap.to(imageLine, { y: 0, duration: 0.8, ease: "expo.out" });
-      } else if (y < currentMinImageY) {
-        gsap.to(imageLine, {
-          y: currentMinImageY,
-          duration: 0.8,
-          ease: "expo.out",
+          duration: 2,
+          ease: "power4.inOut",
+          stagger: {
+            each: 0.2,
+            from: "start",
+          },
+        },
+      );
+
+      const items = q(".project-item");
+
+      items.forEach((item) => {
+        const inner = item.querySelector(".project-text-inner");
+        if (!inner) return;
+
+        gsap.set(inner, {
+          y: "-8rem",
+          willChange: "transform",
         });
-      }
-    },
-  });
 
-  tl.fromTo(
-    listItems,
-    { xPercent: 0 },
-    {
-      xPercent: -100,
+        item.addEventListener("mouseenter", ((e: Event) => {
+          const mouseEvent = e as MouseEvent;
+          const rect = item.getBoundingClientRect();
+          const relativeY = mouseEvent.clientY - rect.top;
+          const isFromTop = relativeY < rect.height / 2;
 
-      duration: 2,
-      ease: "power4.inOut",
-      stagger: {
-        each: 0.2,
-        from: "start",
-      },
+          gsap.set(inner, { y: isFromTop ? "-8rem" : 0 });
+          gsap.to(inner, {
+            y: "-4rem",
+            duration: 0.45,
+            ease: "power3.out",
+            overwrite: "auto",
+          });
+        }) as EventListener);
+
+        item.addEventListener("mouseleave", ((e: Event) => {
+          const mouseEvent = e as MouseEvent;
+          const rect = item.getBoundingClientRect();
+          const relativeY = mouseEvent.clientY - rect.top;
+          const isToTop = relativeY < rect.height / 2;
+
+          gsap.to(inner, {
+            y: isToTop ? "-8rem" : 0,
+            duration: 0.45,
+            ease: "power3.out",
+            overwrite: "auto",
+          });
+        }) as EventListener);
+      });
+
+      tl.current = timeline;
     },
+    { scope: container, dependencies: [projects] },
   );
 
-  tl.fromTo(
-    imageItems,
-    { scale: 0, opacity: 0 },
-    {
-      scale: 1,
-      opacity: 1,
-
-      duration: 2,
-      ease: "power4.inOut",
-      stagger: {
-        each: 0.2,
-        from: "start",
-      },
-    },
-  );
-
-  const items = q(".project-item");
-
-  items.forEach((item) => {
-    const inner = item.querySelector(".project-text-inner");
-    if (!inner) return;
-
-    gsap.set(inner, {
-      y: "-8rem",
-      willChange: "transform",
-    });
-
-    item.addEventListener("mouseenter", ((e: Event) => {
-      const mouseEvent = e as MouseEvent;
-      const rect = item.getBoundingClientRect();
-      const relativeY = mouseEvent.clientY - rect.top;
-      const isFromTop = relativeY < rect.height / 2;
-
-      // Entering from top -> Slide DOWN (reveal middle by coming from -8rem)
-      // Entering from bottom -> Slide UP (reveal middle by coming from 0)
-      gsap.set(inner, { y: isFromTop ? "-8rem" : 0 });
-      // Animate to center (hover state)
-      gsap.to(inner, {
-        y: "-4rem",
-        duration: 0.45,
-        ease: "power3.out",
-        overwrite: "auto",
-      });
-    }) as EventListener);
-
-    item.addEventListener("mouseleave", ((e: Event) => {
-      const mouseEvent = e as MouseEvent;
-      const rect = item.getBoundingClientRect();
-      const relativeY = mouseEvent.clientY - rect.top;
-      const isToTop = relativeY < rect.height / 2;
-
-      // Leaving to top -> Slide UP (exit to -8rem)
-      // Leaving to bottom -> Slide DOWN (exit to 0)
-      gsap.to(inner, {
-        y: isToTop ? "-8rem" : 0,
-        duration: 0.45,
-        ease: "power3.out",
-        overwrite: "auto",
-      });
-    }) as EventListener);
-  });
-
-  return { tl };
+  return { container, tl };
 }

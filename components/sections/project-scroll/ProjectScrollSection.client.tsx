@@ -1,25 +1,15 @@
 "use client";
 
-import { useRef } from "react";
 import { ProjectScrollSectionProps } from "./projectScroll.types";
-import { useGSAP } from "@/shared/lib/gsap";
-import initProjectScroll from "./projectScroll.animation";
+import { useProjectScrollAnimation } from "./projectScroll.animation";
 import Image from "next/image";
-import { urlFor, getImageUrl } from "@/shared/lib/sanity/image";
+import { getImageUrl } from "@/shared/lib/sanity/image";
 
 export default function ProjectScrollClient({
   projects = [],
 }: ProjectScrollSectionProps) {
-  const container = useRef<HTMLDivElement>(null);
+  const { container } = useProjectScrollAnimation();
   const latestProjects = [...projects].reverse();
-
-  useGSAP(
-    () => {
-      if (!container.current) return;
-      return initProjectScroll({ container: container.current });
-    },
-    { scope: container },
-  );
 
   return (
     <div ref={container} className=" bg-[var(--white-color)] ">
