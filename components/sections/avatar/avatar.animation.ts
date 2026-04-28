@@ -1,7 +1,6 @@
 import { useRef } from "react";
 import gsap, { ScrollTrigger, useGSAP } from "@/shared/lib/gsap";
 
-const heavyEaseIn = (x: number) => x ** 5;
 
 export function useAvatarAnimation() {
   const container = useRef<HTMLDivElement>(null);
@@ -9,6 +8,9 @@ export function useAvatarAnimation() {
   useGSAP(
     () => {
       if (!container.current) return;
+
+      // Disable lag smoothing to prevent 'jumps' on initial load when JS is busy
+      gsap.ticker.lagSmoothing(0);
 
       const q = gsap.utils.selector(container.current);
       const getVector = (selector: string) =>
@@ -48,40 +50,31 @@ export function useAvatarAnimation() {
 
       const mm = gsap.matchMedia();
 
-      const runAnimation = (scrollDuration: string, avatarScale: number) => {
-        if (!htmlVector || !htmlLogo) return;
+      const runAnimation = (
+        scrollDuration: string,
+        avatarScale: number,
+        hairY: number,
+      ) => {
+        const htmlVector = getVector(".html-vector");
+        if (!htmlVector) {
+          // If paths aren't ready (intermittent reload issue), try a refresh shortly
+          setTimeout(() => {
+            ScrollTrigger.refresh();
+          }, 200);
+          return;
+        }
 
-        ScrollTrigger.create({
-          trigger: container.current,
-          start: "center center",
-          end: scrollDuration,
-          scrub: true,
-          pin: true,
-        });
-
-        gsap.to(avatarEl, {
-          scale: avatarScale,
+        const tl = gsap.timeline({
           scrollTrigger: {
             trigger: container.current,
             start: "top top",
-            end: "+=50%",
+            end: scrollDuration,
             scrub: 1.5,
+            pin: true,
           },
-          ease: heavyEaseIn,
-        });
-        gsap.to(hairEl, {
-          y: -300,
-          scrollTrigger: {
-            trigger: container.current,
-            start: "top top",
-            end: "+=100%",
-            scrub: 1.5,
-          },
-          ease: heavyEaseIn,
         });
 
-        gsap.set(htmlLogo, { scale: 0.8 });
-
+        // Initialize elements
         gsap.set(
           [
             htmlVector,
@@ -103,16 +96,40 @@ export function useAvatarAnimation() {
             drawSVG: 0,
           },
         );
+        // Initial state
+        gsap.set(avatarEl, { filter: "blur(0px) saturate(100%)" });
+        gsap.set(htmlLogo, { scale: 0.8 });
 
-        const tl = gsap.timeline({
-          scrollTrigger: {
-            trigger: container.current,
-            start: "top top",
-            end: scrollDuration,
-            scrub: 1.5,
+        // Avatar scaling - happens over full duration
+        tl.to(
+          avatarEl,
+          {
+            scale: avatarScale,
+            ease: "power2.inOut",
           },
-        });
+          0,
+        );
 
+        // Gray effect and blur - starts halfway through the animation (at 0.25s of 0.5s default)
+        tl.to(
+          avatarEl,
+          {
+            filter: "blur(5px) saturate(0%)",
+            ease: "power4.in",
+          },
+          0.25,
+        );
+
+        tl.to(
+          hairEl,
+          {
+            y: hairY,
+            ease: "power1.inOut",
+          },
+          0,
+        );
+
+        // Tech vectors drawing
         tl.to(
           [
             htmlVector,
@@ -131,244 +148,77 @@ export function useAvatarAnimation() {
             tailwindVector,
           ],
           {
-            duration: 5,
             drawSVG: "100%",
-            ease: heavyEaseIn,
-          },
-        );
-
-        tl.to(
-          [htmlLogo],
-          {
-            duration: 5,
-            ease: heavyEaseIn,
-
-            motionPath: {
-              path: htmlVector,
-              align: htmlVector,
-              autoRotate: true,
-              alignOrigin: [0.5, 0.5],
-            },
-          },
-          0,
-        );
-        tl.to(
-          [vueLogo],
-          {
-            duration: 5,
-            ease: heavyEaseIn,
-
-            motionPath: {
-              path: vueVector,
-              align: vueVector,
-              autoRotate: true,
-              alignOrigin: [0.5, 0.5],
-            },
-          },
-          0,
-        );
-        tl.to(
-          [reactLogo],
-          {
-            duration: 5,
-            ease: heavyEaseIn,
-
-            motionPath: {
-              path: reactVector,
-              align: reactVector,
-              autoRotate: true,
-              alignOrigin: [0.5, 0.5],
-            },
-          },
-          0,
-        );
-        tl.to(
-          [jsLogo],
-          {
-            duration: 5,
-            ease: heavyEaseIn,
-
-            motionPath: {
-              path: jsVector,
-              align: jsVector,
-              autoRotate: true,
-              alignOrigin: [0.5, 0.5],
-            },
-          },
-          0,
-        );
-        tl.to(
-          [nestjsLogo],
-          {
-            duration: 5,
-            ease: heavyEaseIn,
-
-            motionPath: {
-              path: nestjsVector,
-              align: nestjsVector,
-              autoRotate: true,
-              alignOrigin: [0.5, 0.5],
-            },
-          },
-          0,
-        );
-        tl.to(
-          [cssLogo],
-          {
-            duration: 5,
-            ease: heavyEaseIn,
-
-            motionPath: {
-              path: cssVector,
-              align: cssVector,
-              autoRotate: true,
-              alignOrigin: [0.5, 0.5],
-            },
-          },
-          0,
-        );
-        tl.to(
-          [expressLogo],
-          {
-            duration: 5,
-            ease: heavyEaseIn,
-
-            motionPath: {
-              path: expressVector,
-              align: expressVector,
-              autoRotate: true,
-              alignOrigin: [0.5, 0.5],
-            },
-          },
-          0,
-        );
-        tl.to(
-          [nuxtLogo],
-          {
-            duration: 5,
-            ease: heavyEaseIn,
-
-            motionPath: {
-              path: nuxtVector,
-              align: nuxtVector,
-              autoRotate: true,
-              alignOrigin: [0.5, 0.5],
-            },
-          },
-          0,
-        );
-        tl.to(
-          [phpLogo],
-          {
-            duration: 5,
-            ease: heavyEaseIn,
-
-            motionPath: {
-              path: phpVector,
-              align: phpVector,
-              autoRotate: true,
-              alignOrigin: [0.5, 0.5],
-            },
-          },
-          0,
-        );
-        tl.to(
-          [laravelLogo],
-          {
-            duration: 5,
-            ease: heavyEaseIn,
-
-            motionPath: {
-              path: laravelVector,
-              align: laravelVector,
-              autoRotate: true,
-              alignOrigin: [0.5, 0.5],
-            },
-          },
-          0,
-        );
-        tl.to(
-          [svelteLogo],
-          {
-            duration: 5,
-            ease: heavyEaseIn,
-
-            motionPath: {
-              path: svelteVector,
-              align: svelteVector,
-              autoRotate: true,
-              alignOrigin: [0.5, 0.5],
-            },
-          },
-          0,
-        );
-        tl.to(
-          [nextjsLogo],
-          {
-            duration: 5,
-            ease: heavyEaseIn,
-
-            motionPath: {
-              path: nextjsVector,
-              align: nextjsVector,
-              autoRotate: true,
-              alignOrigin: [0.5, 0.5],
-            },
-          },
-          0,
-        );
-        tl.to(
-          [tsLogo],
-          {
-            duration: 5,
-            ease: heavyEaseIn,
-
-            motionPath: {
-              path: tsVector,
-              align: tsVector,
-              autoRotate: true,
-              alignOrigin: [0.5, 0.5],
-            },
-          },
-          0,
-        );
-        tl.to(
-          [tailwindLogo],
-          {
-            duration: 5,
-            ease: heavyEaseIn,
-
-            motionPath: {
-              path: tailwindVector,
-              align: tailwindVector,
-              autoRotate: true,
-              alignOrigin: [0.5, 0.5],
-            },
+            ease: "none",
           },
           0,
         );
 
-        tl.fromTo(
-          avatarEl,
-          { filter: "blur(0px) saturate(100%)" },
-          {
-            duration: 2,
-            ease: heavyEaseIn,
-            filter: "blur(5px) saturate(0%)",
-          },
-        );
+        // Logos motion paths
+        const logos = [
+          { logo: htmlLogo, vector: htmlVector },
+          { logo: vueLogo, vector: vueVector },
+          { logo: reactLogo, vector: reactVector },
+          { logo: jsLogo, vector: jsVector },
+          { logo: nestjsLogo, vector: nestjsVector },
+          { logo: cssLogo, vector: cssVector },
+          { logo: expressLogo, vector: expressVector },
+          { logo: nuxtLogo, vector: nuxtVector },
+          { logo: phpLogo, vector: phpVector },
+          { logo: laravelLogo, vector: laravelVector },
+          { logo: svelteLogo, vector: svelteVector },
+          { logo: nextjsLogo, vector: nextjsVector },
+          { logo: tsLogo, vector: tsVector },
+          { logo: tailwindLogo, vector: tailwindVector },
+        ];
 
-        // Make icons visible now that GSAP has parsed timeline and scrollTrigger has set initial layout
+        logos.forEach(({ logo, vector }) => {
+          tl.to(
+            logo,
+            {
+              motionPath: {
+                path: vector,
+                align: vector,
+                autoRotate: true,
+                alignOrigin: [0.5, 0.5],
+              },
+              ease: "none",
+            },
+            0,
+          );
+        });
+
+        // Make icons visible now that GSAP has parsed timeline
         gsap.set(".tech-icon-group", { visibility: "visible" });
+
+        // Force a refresh after a small delay to ensure layout is settled on reload
+        setTimeout(() => {
+          ScrollTrigger.refresh();
+        }, 100);
       };
 
-      mm.add("(min-width: 64rem)", () => {
-        runAnimation("+=200%", 1.5);
-      });
+      mm.add(
+        {
+          isMobile: "(max-width: 1023px)",
+          isLG: "(min-width: 1024px) and (max-width: 1279px)",
+          isXL: "(min-width: 1280px) and (max-width: 1535px)",
+          is2XL: "(min-width: 1536px)",
+        },
+        (context) => {
+          const { isMobile, isLG, isXL, is2XL } = context.conditions as any;
 
-      mm.add("(max-width: 63.9rem)", () => {
-        runAnimation("+=100%", 1);
-      });
+          if (isMobile) {
+            runAnimation("+=100%", 1, -150);
+          } else if (isLG) {
+            runAnimation("+=180%", 1.4, -250);
+          } else if (isXL) {
+            runAnimation("+=150%", 1.3, -250);
+          } else {
+            // 2XL
+            runAnimation("+=200%", 1.5, -300);
+          }
+        },
+      );
     },
     { scope: container },
   );

@@ -10,7 +10,7 @@ export default function AvatarSectionClient() {
       <style dangerouslySetInnerHTML={{ __html: `.tech-icon-group { visibility: hidden; }` }} />
       <div className="h-full w-full flex items-end justify-center overflow-hidden">
         <svg
-          className="avatar relative w-[20rem] lg:w-[35rem] h-auto left-0 left-2  lg:left-[2.5rem] "
+          className="avatar relative w-[20rem] lg:w-[35rem] h-auto left-0 lg:left-[2.5rem] "
           width="660"
           height="955"
           viewBox="0 0 660 955"

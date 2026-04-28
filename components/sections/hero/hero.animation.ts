@@ -59,14 +59,15 @@ export function useHeroAnimation({
 
           const xOffset3 = getVal(-130, -250, -350, -430);
           const xOffset4 = getVal(150, 320, 450, 500);
-          const yOffsetStart1 = getVal(100, 200, 300, 400);
-          const yOffsetStart3 = getVal(100, 200, 300, 400);
-          const yOffsetStart4 = getVal(50, 200, 300, 400);
-          const yOffsetMid1 = getVal(30, 90, 120, 150);
-          const yOffsetMid3 = getVal(33, 100, 130, 160);
-          const yOffsetMid4 = getVal(5, 40, 40, 60);
+          const yOffsetStart1 = getVal(200, 200, 300, 400);
+          const yOffsetStart3 = getVal(200, 200, 300, 400);
+          const yOffsetStart4 = getVal(100, 200, 300, 400);
+          const yOffsetMid1 = getVal(60, 90, 120, 150);
+          const yOffsetMid3 = getVal(63, 100, 130, 160);
+          const yOffsetMid4 = getVal(32, 40, 40, 60);
           const xOffsetSmallNeg = getVal(-5, -20, -30, -40);
           const xOffsetSmallPos = getVal(5, 20, 30, 40);
+          const yOffsetSmall = isMobile ? -100 : 0;
 
           const tl = gsap.timeline({
             onComplete: () => {
@@ -184,6 +185,7 @@ export function useHeroAnimation({
           tl.from(
             heroText2.current,
             {
+              y: yOffsetSmall,
               x: xOffsetSmallNeg,
               opacity: 1,
               duration: 1,
@@ -195,6 +197,7 @@ export function useHeroAnimation({
           tl.from(
             [heroText5.current, heroText6.current],
             {
+              y: yOffsetSmall,
               x: xOffsetSmallPos,
               opacity: 1,
               duration: 1,
@@ -211,7 +214,7 @@ export function useHeroAnimation({
               heroText10.current,
             ],
             {
-              y: 0,
+              y: yOffsetSmall,
               x: xOffsetSmallNeg,
               duration: 1,
               opacity: 1,

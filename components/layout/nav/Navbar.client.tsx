@@ -94,7 +94,7 @@ export default function NavbarClient({
       if (logoEl) {
         const rect = logoEl.getBoundingClientRect();
         const centerX = window.innerWidth / 2;
-        const centerY = window.innerHeight * 0.25;
+        const centerY = window.innerHeight * 0.15;
 
         const offsetX = centerX - (rect.left + rect.width / 2);
         const offsetY = centerY - (rect.top + rect.height / 2);

@@ -62,7 +62,7 @@ export default function HomeClient({ projects }: HomeClientProps) {
       // distances are correct — this prevents the scroll-jump bug.
       setTimeout(() => {
         ScrollTrigger.refresh();
-      }, 50);
+      }, 150);
     }
   }, [isLoading]);
 
