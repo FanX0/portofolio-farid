@@ -9,8 +9,10 @@ export const siteMetadata: Metadata = {
     template: "%s | Farid Azhari",
   },
   description:
-    "Creative Developer & Frontend Specialist focusing on turning digital interfaces into immersive experiences. Expert in GSAP, ScrollTrigger, Three.js, React, and Next.js for high-performance, storytelling-driven websites.",
+    "Farid Azhari — Creative Developer specializing in turning digital interfaces into immersive experiences. Expert in GSAP, ScrollTrigger, Three.js, React, and Next.js for high-performance websites.",
   keywords: [
+    "Farid Azhari",
+    "Farid Azhari developer",
     "GSAP developer",
     "web animation",
     "scroll-based animation",
@@ -42,7 +44,7 @@ export const siteMetadata: Metadata = {
   openGraph: {
     title: "Farid Azhari | Creative Developer & Frontend Specialist",
     description:
-      "Turning digital interfaces into immersive experiences. Specializing in GSAP, ScrollTrigger, and Three.js to craft websites that come alive through performance and storytelling.",
+      "Farid Azhari — Turning digital interfaces into immersive experiences. Specializing in GSAP, ScrollTrigger, and Three.js to craft websites that come alive through performance and storytelling.",
     url: process.env.NEXT_PUBLIC_BASE_URL || "https://faridazhari.com",
     siteName: "Farid Azhari Portfolio",
     images: [
@@ -60,7 +62,7 @@ export const siteMetadata: Metadata = {
     card: "summary_large_image",
     title: "Farid Azhari | Creative Developer & Frontend Specialist",
     description:
-      "Turning digital interfaces into immersive experiences. Specializing in GSAP, ScrollTrigger, and Three.js to craft websites that come alive.",
+      "Farid Azhari — Turning digital interfaces into immersive experiences. Specializing in GSAP, ScrollTrigger, and Three.js.",
     images: ["/og-image.png"],
   },
   robots: {
