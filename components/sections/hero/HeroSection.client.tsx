@@ -86,8 +86,18 @@ export default function HeroSectionClient({
     };
   }, [projectImages.length]);
 
+  const [showModal, setShowModal] = useState(false);
+  const modalVideoRef = useRef<HTMLVideoElement>(null);
+
   const handlePlayClick = () => {
     if (!container.current || !videoRef.current) return;
+
+    const isMobile = window.innerWidth < 1024;
+
+    if (isMobile) {
+      setShowModal(true);
+      return;
+    }
 
     if (!isPlaying) {
       // Unmute and play the video
@@ -108,6 +118,13 @@ export default function HeroSectionClient({
       videoRef.current.pause();
       videoRef.current.muted = true;
       setIsPlaying(false);
+    }
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+    if (modalVideoRef.current) {
+      modalVideoRef.current.pause();
     }
   };
 
@@ -254,7 +271,7 @@ export default function HeroSectionClient({
             <div
               ref={rightColRef}
               onClick={handlePlayClick}
-              className="group relative w-full lg:max-w-[30rem] h-auto rounded-[1rem] overflow-hidden opacity-0 cursor-pointer"
+              className="group relative w-full lg:max-w-[30rem] h-auto rounded-[1rem] overflow-hidden opacity-0 cursor-pointer z-30"
             >
               <video
                 ref={videoRef}
@@ -274,6 +291,7 @@ export default function HeroSectionClient({
                 <FlairButton
                   ref={playButtonRef}
                   label="Play"
+                  onClick={handlePlayClick}
                   hasBorder={false}
                   className="w-24 h-24 rounded-full bg-black/50 backdrop-blur-sm pointer-events-auto"
                 />
@@ -281,6 +299,70 @@ export default function HeroSectionClient({
             </div>
           </div>
         </div>
+      </div>
+      <MobileVideoModal
+        isOpen={showModal}
+        onClose={handleCloseModal}
+        videoRef={modalVideoRef}
+      />
+    </div>
+  );
+}
+
+function MobileVideoModal({
+  isOpen,
+  onClose,
+  videoRef,
+}: {
+  isOpen: boolean;
+  onClose: () => void;
+  videoRef: React.RefObject<HTMLVideoElement | null>;
+}) {
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+      if (videoRef.current) {
+        videoRef.current.play();
+      }
+    } else {
+      document.body.style.overflow = "unset";
+    }
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, [isOpen, videoRef]);
+
+  if (!isOpen) return null;
+
+  return (
+    <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/40 backdrop-blur-xl">
+      <button
+        onClick={onClose}
+        className="absolute top-6 right-6 z-[110] w-12 h-12 flex items-center justify-center rounded-full bg-black/20 backdrop-blur-md text-white transition-transform hover:scale-110 border border-white/10"
+        aria-label="Close modal"
+      >
+        <svg
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+      <div className="w-full h-full flex items-center justify-center p-4">
+        <video
+          ref={videoRef}
+          src="/videos/hero/project-preview.mp4"
+          loop
+          playsInline
+          className="w-full h-auto max-h-[80vh] rounded-[1rem]"
+        />
       </div>
     </div>
   );

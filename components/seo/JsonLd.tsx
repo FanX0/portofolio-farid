@@ -6,7 +6,7 @@ export default function JsonLd() {
   const personSchema = {
     "@context": "https://schema.org",
     "@type": "Person",
-    name: "Farid Azhari Nurcahyo",
+    name: "Farid Azhari",
     url: baseUrl,
     jobTitle: "Creative Developer & Frontend Specialist",
     description:
@@ -32,7 +32,7 @@ export default function JsonLd() {
   const websiteSchema = {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    name: "Farid Azhari Nurcahyo Portfolio",
+    name: "Farid Azhari Portfolio",
     url: baseUrl,
     potentialAction: {
       "@type": "SearchAction",
