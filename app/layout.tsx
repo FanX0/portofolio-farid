@@ -17,10 +17,10 @@ const fraunces = Fraunces({
   style: ["normal", "italic"],
 });
 
-export const metadata: Metadata = {
-  title: "Portfolio Farid Azhari Nurcahyo",
-  description: "Portfolio Farid Azhari Nurcahyo",
-};
+import { siteMetadata } from "@/shared/config/metadata";
+import JsonLd from "@/components/seo/JsonLd";
+
+export const metadata: Metadata = siteMetadata;
 
 export default function RootLayout({
   children,
@@ -30,6 +30,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${poppins.variable} ${fraunces.variable} antialiased`}>
+        <JsonLd />
         <GlobalBreakpointReload />
         <Cursor />
         {children}
