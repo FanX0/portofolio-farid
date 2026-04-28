@@ -7,7 +7,10 @@ type UseHeroAnimationParams = {
   onIntroComplete?: () => void;
 };
 
-export function useHeroAnimation({ sectionRefs, onIntroComplete }: UseHeroAnimationParams = {}) {
+export function useHeroAnimation({
+  sectionRefs,
+  onIntroComplete,
+}: UseHeroAnimationParams = {}) {
   const container = useRef<HTMLDivElement>(null);
   const heroText1 = useRef<HTMLSpanElement>(null);
   const heroText2 = useRef<HTMLSpanElement>(null);
@@ -29,26 +32,41 @@ export function useHeroAnimation({ sectionRefs, onIntroComplete }: UseHeroAnimat
     () => {
       if (!container.current) return;
 
-      let mm = gsap.matchMedia();
+      const mm = gsap.matchMedia();
 
       mm.add(
         {
           isMobile: "(max-width: 1023px)",
-          isDesktop: "(min-width: 1024px)",
+          isLG: "(min-width: 1024px) and (max-width: 1279px)",
+          isXL: "(min-width: 1280px) and (max-width: 1535px)",
+          is2XL: "(min-width: 1536px)",
         },
         (context) => {
-          const isMobile = context.conditions?.isMobile;
+          const { isMobile, isLG, isXL, is2XL } = context.conditions as any;
 
-          const xOffset3 = isMobile ? -130 : -430;
-          const xOffset4 = isMobile ? 150 : 500;
-          const yOffsetStart1 = isMobile ? 100 : 200;
-          const yOffsetStart3 = isMobile ? 100 : 200;
-          const yOffsetStart4 = isMobile ? 50 : 200;
-          const yOffsetMid1 = isMobile ? 30 : 90;
-          const yOffsetMid3 = isMobile ? 33 : 100;
-          const yOffsetMid4 = isMobile ? 5 : 0;
-          const xOffsetSmallNeg = isMobile ? -5 : -20;
-          const xOffsetSmallPos = isMobile ? 5 : 20;
+          // Helper to pick values based on screen size
+          const getVal = (
+            mobile: number,
+            lg: number,
+            xl: number,
+            xxl: number,
+          ) => {
+            if (isMobile) return mobile;
+            if (isLG) return lg;
+            if (isXL) return xl;
+            return xxl;
+          };
+
+          const xOffset3 = getVal(-130, -250, -350, -430);
+          const xOffset4 = getVal(150, 320, 450, 500);
+          const yOffsetStart1 = getVal(100, 200, 300, 400);
+          const yOffsetStart3 = getVal(100, 200, 300, 400);
+          const yOffsetStart4 = getVal(50, 200, 300, 400);
+          const yOffsetMid1 = getVal(30, 90, 120, 150);
+          const yOffsetMid3 = getVal(33, 100, 130, 160);
+          const yOffsetMid4 = getVal(5, 40, 40, 60);
+          const xOffsetSmallNeg = getVal(-5, -20, -30, -40);
+          const xOffsetSmallPos = getVal(5, 20, 30, 40);
 
           const tl = gsap.timeline({
             onComplete: () => {

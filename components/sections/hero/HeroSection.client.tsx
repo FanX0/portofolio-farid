@@ -133,11 +133,11 @@ export default function HeroSectionClient({
       <div className="relative bg-[var(--white-color)] lg:h-dvh lg:max-h-[80rem] flex justify-center items-center">
         <div
           ref={heroHeadlineRef}
-          className="absolute p-4 mb-[25rem] lg:mb-[19rem]"
+          className="absolute p-4 mb-[32rem] lg:mb-[19rem]"
         >
           <h1
-            aria-label="I Create Interactive Experiences that feel smooth, fast, and alive."
-            className="flex flex-col items-center text-[1.5rem] lg:text-[5rem] font-fraunces leading-tight"
+            aria-label="Creating Interactive Digital Experiences that feel smooth, fast, and alive."
+            className="flex flex-col items-center text-[1.5rem] lg:text-[3rem] xl:text-[4.2rem] 2xl:text-[5rem] font-fraunces leading-tight"
           >
             <span
               aria-hidden="true"
@@ -187,84 +187,81 @@ export default function HeroSectionClient({
             </span>
           </h1>
         </div>
-        <div className="container flex flex-col justify-end gap-[4rem] lg:gap-[8rem] pb-[4rem] lg:pb-[6rem] h-full mt-[20rem] lg:mt-0">
+        <div className="container flex flex-col justify-end gap-[4rem] lg:gap-[8rem] pb-[4rem] lg:pb-[6rem] h-full mt-[28rem] lg:mt-0">
           <div className="relative w-full lg:py-0 flex flex-col gap-[4rem] lg:flex-row justify-between items-center lg:items-end h-auto">
-            <div
-              ref={leftColRef}
-              className="w-full"
-            >
-              <div 
+            <div ref={leftColRef} className="w-full">
+              <div
                 ref={leftColContentRef}
                 className="hidden flex flex-col gap-[2rem] lg:justify-between opacity-0 items-center lg:items-start w-full"
               >
                 <div className="flex flex-col gap-[0.5rem] text-center lg:text-left ">
-                <div className="font-fraunces text-[1rem] lg:text-[2.2rem] leading-[1.2] lg:leading-[1.1] text-[var(--black-color)]">
-                  A creative developer specializing
-                  <br />
-                  in crafting modern, intuitive, and
-                  <br />
-                  engaging digital experiences
-                  <div className="flex items-center justify-center lg:justify-start gap-[0.3em]">
-                    <span className="italic">for</span>
-                    <div className="lg:h-[2.2rem]">
-                      <WordRotate
-                        words={["B2B", "digital", "startup", "ecommerce"]}
-                      />
-                    </div>
-                    <span>brands.</span>
-                  </div>
+                  <p className="font-fraunces text-[1rem] lg:text-[1.8rem] xl:text-[2rem] 2xl:text-[2.2rem] leading-[1.2] lg:leading-[1.1] text-[var(--black-color)]">
+                    A creative developer specializing
+                    <br />
+                    in crafting modern, intuitive, and
+                    <br />
+                    engaging digital experiences
+                    <span className="flex items-center justify-center lg:justify-start gap-[0.3em]">
+                      <span className="italic">for</span>
+                      <span className="lg:h-[2.2rem] inline-block">
+                        <WordRotate
+                          words={["B2B", "digital", "startup", "ecommerce"]}
+                        />
+                      </span>
+                      <span>brands.</span>
+                    </span>
+                  </p>
                 </div>
-              </div>
-              <div
-                onClick={scrollToContact}
-                className="box-hero-link cursor-pointer flex items-center justify-between gap-x-2 px-[1.2rem] lg:px-[2rem] mt-[0rem] lg:mt-[0.8rem] bg-black w-[10rem] h-[3rem] lg:w-[15rem] lg:h-[4rem] rounded-full text-white"
-                onMouseEnter={onMouseEnter}
-                onMouseLeave={onMouseLeave}
-                onMouseMove={onMouseMove}
-              >
-                <TextMask
-                  start=""
-                  className="text-[0.8rem] lg:text-[1rem] font-medium pr-2"
+                <div
+                  onClick={scrollToContact}
+                  className="box-hero-link cursor-pointer flex items-center justify-between gap-x-2 px-[1.2rem] lg:px-[2rem] mt-[0rem] lg:mt-[0.8rem] bg-black w-fit min-w-[10rem] h-[3rem] lg:w-[15rem] lg:h-[4rem] rounded-full text-white whitespace-nowrap"
+                  onMouseEnter={onMouseEnter}
+                  onMouseLeave={onMouseLeave}
+                  onMouseMove={onMouseMove}
                 >
-                  Get in touch
-                </TextMask>
-
-                <div className="relative w-[1.8rem] h-[1.8rem] lg:w-[2.5rem] lg:h-[2.5rem] flex items-center justify-center">
-                  <div
-                    ref={circleArrowRef}
-                    className="z-0 absolute inset-0 bg-white rounded-full  "
-                  />
-                  <div
-                    ref={arrowContainerRef}
-                    className="z-10 w-full h-full flex items-center justify-center rounded-full overflow-hidden pointer-events-none"
+                  <TextMask
+                    start=""
+                    className="text-[0.8rem] lg:text-[1rem] font-medium pr-2"
                   >
-                    <svg
-                      ref={arrowRef}
-                      width="24"
-                      height="26"
-                      viewBox="0 0 24 26"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="arrow-down w-[0.8rem] h-[0.8rem] lg:w-[1rem] lg:h-[1rem] relative text-white"
+                    Get in touch
+                  </TextMask>
+
+                  <div className="relative w-[1.8rem] h-[1.8rem] lg:w-[2.5rem] lg:h-[2.5rem] flex items-center justify-center">
+                    <div
+                      ref={circleArrowRef}
+                      className="z-0 absolute inset-0 bg-white rounded-full  "
+                    />
+                    <div
+                      ref={arrowContainerRef}
+                      className="z-10 w-full h-full flex items-center justify-center rounded-full overflow-hidden pointer-events-none"
                     >
-                      <path
-                        d="M11.5 1.5L11.5 21.5"
-                        stroke="currentColor"
-                        strokeWidth="3"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                      <path
-                        d="M17.5 16.5L11.5 23.5L5.5 16.5"
-                        stroke="currentColor"
-                        strokeWidth="3"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                    </svg>
+                      <svg
+                        ref={arrowRef}
+                        width="24"
+                        height="26"
+                        viewBox="0 0 24 26"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="arrow-down w-[0.8rem] h-[0.8rem] lg:w-[1rem] lg:h-[1rem] relative text-white"
+                      >
+                        <path
+                          d="M11.5 1.5L11.5 21.5"
+                          stroke="currentColor"
+                          strokeWidth="3"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                        <path
+                          d="M17.5 16.5L11.5 23.5L5.5 16.5"
+                          stroke="currentColor"
+                          strokeWidth="3"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </svg>
+                    </div>
                   </div>
                 </div>
-              </div>
               </div>
             </div>
 
