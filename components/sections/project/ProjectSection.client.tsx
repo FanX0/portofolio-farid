@@ -258,11 +258,6 @@ const ProjectSectionClient = ({ projects }: Props) => {
                       {/* Project Details */}
                       <div className="p-6 lg:p-8 flex flex-col gap-8 pb-56">
                         <div className="flex flex-col gap-4">
-                          <div className="flex items-center gap-2">
-                            <span className="px-3 py-1 bg-[#bbf771] text-black text-[0.7rem] uppercase tracking-widest rounded-full border border-[#bbf771] font-medium">
-                              Project Case
-                            </span>
-                          </div>
                           <h2 className="text-4xl lg:text-5xl font-bold text-white tracking-tight">
                             {activeProject.title}
                           </h2>
