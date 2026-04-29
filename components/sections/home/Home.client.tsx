@@ -40,30 +40,28 @@ export default function HomeClient({ projects }: HomeClientProps) {
   }, []);
 
   useEffect(() => {
-    // Lock both html and body — required for full cross-browser scroll prevention
-    if (isLoading) {
-      const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
-      document.documentElement.style.overflow = "hidden";
-      document.body.style.overflow = "hidden";
-      document.documentElement.style.paddingRight = `${scrollbarWidth}px`;
-    } else {
-      // Restore defaults — use "" not "auto" to avoid overriding CSS
-      document.documentElement.style.overflow = "";
-      document.body.style.overflow = "";
-      document.documentElement.style.paddingRight = "";
-      
-      const injectedStyle = document.getElementById("pre-paint-scroll-lock");
-      if (injectedStyle) {
-        injectedStyle.remove();
-      }
+    const applyScrollLock = () => {
+      // @ts-expect-error - Accessing global lenis instance
+      const lenis = window.lenis;
 
-      // ScrollTrigger cached its measurements while overflow was hidden.
-      // Recalculate after the layout reflows so pin spacers and scroll
-      // distances are correct — this prevents the scroll-jump bug.
-      setTimeout(() => {
-        ScrollTrigger.refresh();
-      }, 150);
-    }
+      if (isLoading) {
+        if (lenis) {
+          lenis.stop();
+        } else {
+          // lenis might not be initialized yet on first render, try again next frame
+          requestAnimationFrame(applyScrollLock);
+        }
+      } else {
+        if (lenis) lenis.start();
+
+        const injectedStyle = document.getElementById("pre-paint-scroll-lock");
+        if (injectedStyle) {
+          injectedStyle.remove();
+        }
+      }
+    };
+
+    applyScrollLock();
   }, [isLoading]);
 
   // Reload page when layout crosses a major breakpoint (mobile ↔ desktop).
@@ -94,15 +92,6 @@ export default function HomeClient({ projects }: HomeClientProps) {
           history.scrollRestoration = 'manual';
         }
         window.scrollTo(0, 0);
-        
-        // Only run on initial load when isLoading is true
-        if (document.readyState === 'loading' || !document.getElementById('pre-paint-scroll-lock')) {
-          var sbw = window.innerWidth - document.documentElement.clientWidth;
-          var style = document.createElement('style');
-          style.id = 'pre-paint-scroll-lock';
-          style.innerHTML = 'html, body { overflow: hidden !important; padding-right: ' + sbw + 'px !important; }';
-          document.head.appendChild(style);
-        }
       `}} />
       <header className="fixed top-0 w-full z-50 text-white mix-blend-difference">
         <Navbar 
@@ -129,10 +118,10 @@ export default function HomeClient({ projects }: HomeClientProps) {
             </section>
             <section ref={aboutRef} id="about" aria-label="About">
               <AboutSection />
+              <AvatarSection />
             </section>
           </div>
           <section ref={projectRef} id="project" aria-label="Project">
-            <AvatarSection />
             <ProjectScrollSection projects={projects} />
             <ProjectSection projects={projects} />
           </section>
