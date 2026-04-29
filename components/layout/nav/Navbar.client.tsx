@@ -182,8 +182,8 @@ export default function NavbarClient({
   return (
     <nav ref={container} className="container flex flex-col text-[1rem] z-20 ">
       <div className="pr-4 lg:pr-0">
-        <ul className="flex items-center lg:gap-7.5 w-full ">
-          <li className=" flex lg:flex-col items-center w-full ">
+        <ul className="flex items-center justify-between lg:justify-start lg:gap-7.5 w-full ">
+          <li className=" flex lg:flex-col items-center lg:w-full ">
             <button
               ref={navRefHome}
               type="button"
@@ -226,7 +226,7 @@ export default function NavbarClient({
               <div className="progressbar-desktop-fill-name w-full h-px bg-white origin-left scale-x-0"></div>
             </div>
           </li>
-          <li className="w-full">
+          <li className="lg:w-full">
             <ul
               ref={navLinksRef}
               className="flex lg:w-full lg:gap-7.5 opacity-0 -translate-y-2"
