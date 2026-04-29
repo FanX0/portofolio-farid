@@ -15,18 +15,18 @@ export default function AboutSectionClient() {
           className="container h-full max-h-[80rem] flex flex-col items-end gap-[2rem] pt-[10rem] lg:pb-[4rem]"
         >
           <TextMaskScroll
-            startDesktop="top+=800"
+            startDesktop="top+=100"
             endDesktop="+=200"
-            startMobile="top+=800"
+            startMobile="top+=100"
             endMobile="+=200"
             className=" text-[clamp(5rem,10vw+1rem,10rem)]  font-bold text-white w-full"
           >
             About
           </TextMaskScroll>
           <TextClipPath
-            startDesktop="top+=800"
+            startDesktop="top+=400"
             endDesktop="+=1500"
-            startMobile="top+=800"
+            startMobile="top+=400"
             endMobile="+=1500"
             className=" leading-[2rem] lg:leading-[4rem] text-[1.5rem] lg:text-[3rem] text-left font-bold text-center "
           >

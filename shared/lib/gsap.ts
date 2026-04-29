@@ -9,6 +9,7 @@ import {
   Draggable,
   ScrollToPlugin,
   SplitText,
+  MorphSVGPlugin,
 } from "gsap/all";
 
 gsap.registerPlugin(
@@ -20,6 +21,7 @@ gsap.registerPlugin(
   Draggable,
   ScrollToPlugin,
   SplitText,
+  MorphSVGPlugin,
 );
 
 export {
@@ -31,5 +33,6 @@ export {
   Draggable,
   ScrollToPlugin,
   SplitText,
+  MorphSVGPlugin,
 };
 export default gsap;
