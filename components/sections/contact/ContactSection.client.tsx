@@ -84,7 +84,7 @@ export default function ContactSectionClient() {
                     )}
                   </div>
                   <div className="flex flex-col gap-[0.5rem] lg:col-span-2">
-                    <label htmlFor="email">Message</label>
+                    <label htmlFor="message">Message</label>
                     <textarea
                       id="message"
                       name="message"

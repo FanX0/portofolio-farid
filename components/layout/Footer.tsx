@@ -39,7 +39,11 @@ const Footer = () => {
           </div>
           <ul className="flex gap-[1rem]">
             <li className="w-[1.5rem]">
-              <a href="https://github.com/FanX0/" className="github-link">
+              <a
+                href="https://github.com/FanX0/"
+                className="github-link"
+                aria-label="GitHub Profile"
+              >
                 <svg
                   width="24"
                   height="24"
@@ -68,6 +72,7 @@ const Footer = () => {
               <a
                 href="https://www.instagram.com/faridazharii/"
                 className="instagram-link"
+                aria-label="Instagram Profile"
               >
                 <svg
                   width="24"
@@ -100,6 +105,7 @@ const Footer = () => {
               <a
                 href="https://www.linkedin.com/in/faridazharii/"
                 className="linkedin-link"
+                aria-label="LinkedIn Profile"
               >
                 <svg
                   width="24"
@@ -138,7 +144,10 @@ const Footer = () => {
           </p>
 
           {/* DUPLICATE */}
-          <p className="text-[5rem] lg:text-[15rem] font-semibold tracking-tighter whitespace-nowrap pr-20">
+          <p
+            aria-hidden="true"
+            className="text-[5rem] lg:text-[15rem] font-semibold tracking-tighter whitespace-nowrap pr-20"
+          >
             <span className="tracking-[-0.15em]">F</span>
             ARID AZHARI NUR
             <span className="tracking-[-0.1em]">C</span>

@@ -22,6 +22,8 @@ import JsonLd from "@/components/seo/JsonLd";
 
 export const metadata: Metadata = siteMetadata;
 
+import SmoothScroll from "@/components/common/SmoothScroll/SmoothScroll.client";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -33,7 +35,7 @@ export default function RootLayout({
         <JsonLd />
         <GlobalBreakpointReload />
         <Cursor />
-        {children}
+        <SmoothScroll>{children}</SmoothScroll>
       </body>
     </html>
   );

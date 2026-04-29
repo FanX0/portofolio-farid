@@ -212,7 +212,8 @@ export default function HeroSectionClient({
                     </span>
                   </p>
                 </div>
-                <div
+                <button
+                  type="button"
                   onClick={scrollToContact}
                   className="box-hero-link cursor-pointer flex items-center justify-between gap-x-2 px-[1.2rem] lg:px-[2rem] mt-[0rem] lg:mt-[0.8rem] bg-black w-fit min-w-[10rem] h-[3rem] lg:w-[15rem] lg:h-[4rem] rounded-full text-white whitespace-nowrap"
                   onMouseEnter={onMouseEnter}
@@ -261,22 +262,30 @@ export default function HeroSectionClient({
                       </svg>
                     </div>
                   </div>
-                </div>
+                </button>
               </div>
             </div>
 
             <div
               ref={rightColRef}
               onClick={handlePlayClick}
+              role="button"
+              tabIndex={0}
+              aria-label="Play Project Preview Video"
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ") handlePlayClick();
+              }}
               className="group relative w-full lg:max-w-[30rem] h-auto rounded-[1rem] overflow-hidden opacity-0 cursor-pointer z-30"
             >
               <video
                 ref={videoRef}
                 src="/videos/hero/project-preview.mp4"
+                poster="/images/hero-poster.webp"
                 autoPlay
                 loop
                 muted
                 playsInline
+                preload="metadata"
                 className="w-full h-auto block"
               />
               {/* Play button overlay */}

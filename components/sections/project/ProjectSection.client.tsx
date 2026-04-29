@@ -217,7 +217,9 @@ const ProjectSectionClient = ({ projects }: Props) => {
               </div>
             </section>
             <section
-              aria-label="project-modal"
+              role="dialog"
+              aria-modal="true"
+              aria-label="Project Details Modal"
               className="fixed inset-0 w-full z-9999 pointer-events-none flex items-center justify-center p-4 lg:p-8"
             >
               {activeProject && (
@@ -236,6 +238,7 @@ const ProjectSectionClient = ({ projects }: Props) => {
                     <button
                       className="absolute top-4 right-4 z-10 w-10 h-10 bg-black/20 backdrop-blur-md rounded-full flex items-center justify-center border border-white/10 text-white cursor-pointer hover:bg-black/40 transition-colors"
                       onClick={handleCloseProject}
+                      aria-label="Close Project Details"
                     >
                       <span>✕</span>
                     </button>

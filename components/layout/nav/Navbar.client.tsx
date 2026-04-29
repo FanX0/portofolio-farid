@@ -34,7 +34,7 @@ export default function NavbarClient({
   const navRightRef = useRef<HTMLSpanElement>(null);
   const navLineRef = useRef<HTMLDivElement>(null);
   const navLogoContainerRef = useRef<HTMLDivElement>(null);
-  const navLinksRef = useRef<HTMLDivElement>(null);
+  const navLinksRef = useRef<HTMLUListElement>(null);
 
   const {
     container,
@@ -183,10 +183,11 @@ export default function NavbarClient({
     <nav ref={container} className="container flex flex-col text-[1rem] z-20 ">
       <div className="pr-4 lg:pr-0">
         <ul className="flex items-center lg:gap-7.5 w-full ">
-          <div className=" flex lg:flex-col items-center w-full ">
+          <li className=" flex lg:flex-col items-center w-full ">
             <button
               ref={navRefHome}
               type="button"
+              aria-label="Home"
               onClick={scrollToHome}
               onMouseEnter={onEnterHome}
               onMouseLeave={onLeaveHome}
@@ -224,17 +225,19 @@ export default function NavbarClient({
             <div className="progressbar-track w-full h-px bg-gray-300/10 hidden lg:block opacity-0">
               <div className="progressbar-desktop-fill-name w-full h-px bg-white origin-left scale-x-0"></div>
             </div>
-          </div>
-          <div
-            ref={navLinksRef}
-            className="flex lg:w-full lg:gap-7.5 opacity-0 -translate-y-2"
-          >
-            <li className="lg:hidden flex items-center h-16.25">
-              <button
-                className="sidebar-toggle cursor-pointer"
-                type="button"
-                onClick={handleSidebarToggle}
-              >
+          </li>
+          <li className="w-full">
+            <ul
+              ref={navLinksRef}
+              className="flex lg:w-full lg:gap-7.5 opacity-0 -translate-y-2"
+            >
+              <li className="lg:hidden flex items-center h-16.25">
+                <button
+                  className="sidebar-toggle cursor-pointer"
+                  type="button"
+                  aria-label="Toggle Sidebar"
+                  onClick={handleSidebarToggle}
+                >
                 <svg
                   ref={toggleIconRef}
                   width="40"
@@ -357,7 +360,8 @@ export default function NavbarClient({
                 <div className="progressbar-desktop-fill-contact w-full h-px bg-white origin-left scale-x-0"></div>
               </div>
             </li>
-          </div>
+          </ul>
+        </li>
         </ul>
         <div className="progressbar-track w-full h-px bg-gray-300/10 lg:hidden opacity-0">
           <div className="progressbar-mobile-fill w-full h-px bg-white origin-left scale-x-0"></div>

@@ -115,7 +115,7 @@ export default function HomeClient({ projects }: HomeClientProps) {
       <Sidebar isOpen={isSidebarOpen} onClose={toggleSidebar} />
       <main>
         <article>
-          <section ref={heroRef} id="hero" aria-label="Hero">
+          <section ref={heroRef} id="hero" aria-label="Hero" className="bg-[var(--white-color)]">
             <HeroSection 
               projects={projects} 
               isLoading={isLoading} 
@@ -123,7 +123,7 @@ export default function HomeClient({ projects }: HomeClientProps) {
               sectionRefs={{ heroRef, aboutRef, projectRef, contactRef }}
             />
           </section>
-          <section aria-label="Logo Transition" className="relative h-dvh flex items-center justify-center">
+          <section aria-label="Logo Transition" className="relative h-dvh flex items-center justify-center bg-[var(--white-color)]">
             <LogoTransition />
           </section>
           <section ref={aboutRef} id="about" aria-label="About">

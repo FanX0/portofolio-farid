@@ -244,14 +244,18 @@ export default function initCursorAnimation({
     }
   };
 
-  window.addEventListener("mousemove", moveCursor);
-  window.addEventListener("mouseover", onHover);
-  window.addEventListener("mouseout", onLeave);
+  if (window.innerWidth >= 1024) {
+    window.addEventListener("mousemove", moveCursor);
+    window.addEventListener("mouseover", onHover);
+    window.addEventListener("mouseout", onLeave);
+  }
 
   // ✅ IMPORTANT: cleanup
   return () => {
-    window.removeEventListener("mousemove", moveCursor);
-    window.removeEventListener("mouseover", onHover);
-    window.removeEventListener("mouseout", onLeave);
+    if (window.innerWidth >= 1024) {
+      window.removeEventListener("mousemove", moveCursor);
+      window.removeEventListener("mouseover", onHover);
+      window.removeEventListener("mouseout", onLeave);
+    }
   };
 }
