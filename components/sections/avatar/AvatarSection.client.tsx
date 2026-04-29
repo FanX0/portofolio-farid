@@ -14,7 +14,7 @@ export default function AvatarSectionClient() {
       />
       <div className="h-full w-full flex items-end justify-center overflow-hidden">
         <svg
-          className="avatar relative w-[20rem] lg:w-[35rem] h-auto left-[2rem] lg:left-[2.5rem] "
+          className="avatar relative w-[20rem] lg:w-[35rem] h-auto left-[1rem] lg:left-[2.5rem] "
           width="660"
           height="955"
           viewBox="0 0 660 955"
