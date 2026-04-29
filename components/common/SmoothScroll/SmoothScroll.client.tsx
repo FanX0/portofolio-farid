@@ -19,6 +19,9 @@ export default function SmoothScroll({
       wheelMultiplier: 1,
     });
 
+    // @ts-expect-error - Expose lenis globally for easy access
+    window.lenis = lenis;
+
     // Keep ScrollTrigger in sync with Lenis
     lenis.on("scroll", ScrollTrigger.update);
 
