@@ -130,7 +130,7 @@ const ProjectSectionClient = ({ projects }: Props) => {
       className="bg-[var(--black-color)] text-white pb-[2rem]"
     >
       <div className="container mx-auto w-full h-full">
-        <div className="w-full flex flex-col gap-8">
+        <div className="w-full flex flex-col gap-4">
           <TextMaskScroll
             startMobile="center center"
             startDesktop="center center"

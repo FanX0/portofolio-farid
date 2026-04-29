@@ -25,9 +25,9 @@ export default function AboutSectionClient() {
           </TextMaskScroll>
           <TextClipPath
             startDesktop="top+=800"
-            endDesktop="+=4000"
+            endDesktop="+=1500"
             startMobile="top+=800"
-            endMobile="+=4000"
+            endMobile="+=1500"
             className=" leading-[2rem] lg:leading-[4rem] text-[1.5rem] lg:text-[3rem] text-left font-bold text-center "
           >
             I translate ideas into compelling, user focused experiences that

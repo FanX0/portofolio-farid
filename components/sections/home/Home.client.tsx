@@ -66,6 +66,23 @@ export default function HomeClient({ projects }: HomeClientProps) {
     }
   }, [isLoading]);
 
+  // Reload page when layout crosses a major breakpoint (mobile ↔ desktop).
+  // Complex GSAP ScrollTrigger animations with pins, scrub, and matchMedia
+  // can't always cleanly re-initialize on resize — a reload is the safest fix.
+  useEffect(() => {
+    const breakpoint = 1024;
+    let lastWasMobile = window.innerWidth < breakpoint;
+
+    const handleResize = () => {
+      const isMobile = window.innerWidth < breakpoint;
+      if (isMobile !== lastWasMobile) {
+        window.location.reload();
+      }
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };

@@ -17,6 +17,7 @@ export function useProjectScrollAnimation() {
           end: "+=400%",
           scrub: 1,
           pin: true,
+          invalidateOnRefresh: true,
         },
       });
 

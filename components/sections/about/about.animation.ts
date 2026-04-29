@@ -11,9 +11,10 @@ export function useAboutAnimation() {
       ScrollTrigger.create({
         trigger: container.current,
         start: "top top",
-        end: "+=600%",
+        end: "+=370%",
         scrub: true,
         pin: true,
+        invalidateOnRefresh: true,
       });
     },
     { scope: container },

@@ -28,9 +28,9 @@ export default function ContactSectionClient() {
   return (
     <div ref={container} className="bg-[var(--black-color)]">
       <div className="text-running-wrapper w-full overflow-hidden">
-        <div className="text-running h-[60dvh] flex items-center w-fit px-[20vw]">
+        <div className="text-running h-dvh flex items-center w-fit px-[20vw]">
           <p className="text-running-text text-white text-[9rem] lg:text-[18.75rem] font-bold whitespace-nowrap">
-            LETS TALK IDEA
+            LET'S TALK IDEA
           </p>
         </div>
       </div>

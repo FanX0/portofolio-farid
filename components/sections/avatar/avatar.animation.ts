@@ -50,6 +50,9 @@ export function useAvatarAnimation() {
 
       const mm = gsap.matchMedia();
 
+      let retryCount = 0;
+      const MAX_RETRIES = 10;
+
       const runAnimation = (
         scrollDuration: string,
         avatarScale: number,
@@ -57,10 +60,14 @@ export function useAvatarAnimation() {
       ) => {
         const htmlVector = getVector(".html-vector");
         if (!htmlVector) {
-          // If paths aren't ready (intermittent reload issue), try a refresh shortly
-          setTimeout(() => {
-            ScrollTrigger.refresh();
-          }, 200);
+          // SVG paths aren't rendered yet (race condition on initial load).
+          // Retry after a short delay so the animation actually gets created.
+          if (retryCount < MAX_RETRIES) {
+            retryCount++;
+            gsap.delayedCall(0.15, () =>
+              runAnimation(scrollDuration, avatarScale, hairY),
+            );
+          }
           return;
         }
 
@@ -71,6 +78,7 @@ export function useAvatarAnimation() {
             end: scrollDuration,
             scrub: 1.5,
             pin: true,
+            invalidateOnRefresh: true,
           },
         });
 
