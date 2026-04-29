@@ -134,7 +134,7 @@ const ProjectSectionClient = ({ projects }: Props) => {
           <TextMaskScroll
             startMobile="center center"
             startDesktop="center center"
-            endMobile="+=500"
+            endMobile="+=300"
             endDesktop="+=500"
             className="text-[clamp(5rem,10vw+1rem,10rem)] font-bold"
           >
@@ -159,7 +159,7 @@ const ProjectSectionClient = ({ projects }: Props) => {
           <div className="relative w-full grid">
             <section className="list-wrapper col-start-1 row-start-1">
               <div className="list-line flex flex-col">
-                {projects.map((project, index) => {
+                {[...projects].reverse().map((project, index) => {
                   return (
                     <button
                       key={project._id}

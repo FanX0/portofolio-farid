@@ -10,11 +10,12 @@ export function useProjectScrollAnimation() {
 
       const q = gsap.utils.selector(container.current);
 
+      const isMobile = window.innerWidth < 1024;
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: container.current,
           start: "top top",
-          end: "+=400%",
+          end: isMobile ? "+=800%" : "+=400%",
           scrub: 1,
           pin: true,
           invalidateOnRefresh: true,

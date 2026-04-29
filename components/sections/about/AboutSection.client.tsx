@@ -18,7 +18,7 @@ export default function AboutSectionClient() {
             startDesktop="top+=100"
             endDesktop="+=200"
             startMobile="top+=100"
-            endMobile="+=200"
+            endMobile="+=600"
             className=" text-[clamp(5rem,10vw+1rem,10rem)]  font-bold text-white w-full"
           >
             About
@@ -27,7 +27,7 @@ export default function AboutSectionClient() {
             startDesktop="top+=400"
             endDesktop="+=1500"
             startMobile="top+=400"
-            endMobile="+=1500"
+            endMobile="+=2500"
             className=" leading-[2rem] lg:leading-[4rem] text-[1.5rem] lg:text-[3rem] text-left font-bold text-center "
           >
             I translate ideas into compelling, user focused experiences that
