@@ -123,12 +123,14 @@ export default function HomeClient({ projects }: HomeClientProps) {
               sectionRefs={{ heroRef, aboutRef, projectRef, contactRef }}
             />
           </section>
-          <section aria-label="Logo Transition" className="relative h-dvh flex items-center justify-center bg-[var(--white-color)]">
-            <LogoTransition />
-          </section>
-          <section ref={aboutRef} id="about" aria-label="About">
-            <AboutSection />
-          </section>
+          <div className="relative">
+            <section aria-label="Logo Transition" className="absolute top-0 left-0 w-full h-screen z-10 pointer-events-none">
+              <LogoTransition />
+            </section>
+            <section ref={aboutRef} id="about" aria-label="About">
+              <AboutSection />
+            </section>
+          </div>
           <section ref={projectRef} id="project" aria-label="Project">
             <AvatarSection />
             <ProjectScrollSection projects={projects} />
