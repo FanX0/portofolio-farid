@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useState, useEffect } from "react";
+import Image from "next/image";
 import type { HeroSectionProps } from "./hero.types";
 
 import TextMask from "@/components/ui/TextMask";
@@ -20,6 +21,7 @@ import { lockScroll, unlockScroll } from "@/shared/lib/utils/scrollLock";
 export default function HeroSectionClient({
   onIntroComplete,
   sectionRefs,
+  isLoading,
 }: Omit<HeroSectionProps, "projects">) {
   const [isPlaying, setIsPlaying] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -114,6 +116,16 @@ export default function HeroSectionClient({
 
   return (
     <div ref={container} className="hero-section">
+      {/* Pre-load and optimize the poster image using Next.js Image component */}
+      <div className="hidden pointer-events-none" aria-hidden="true">
+        <Image 
+          src={assets.videos.heroPreview.poster} 
+          alt="" 
+          priority 
+          width={400} 
+          height={225} 
+        />
+      </div>
       <div className="relative bg-[var(--white-color)] lg:h-dvh lg:max-h-[80rem] flex justify-center items-center">
         <div
           ref={heroHeadlineRef}
@@ -267,11 +279,11 @@ export default function HeroSectionClient({
                 ref={videoRef}
                 src={getVideoUrl("heroPreview")}
                 poster={assets.videos.heroPreview.poster}
-                autoPlay
+                autoPlay={!isLoading}
                 loop
                 muted
                 playsInline
-                preload="metadata"
+                preload={isLoading ? "none" : "auto"}
                 className="w-full h-auto block"
               />
               {/* Play button overlay */}
