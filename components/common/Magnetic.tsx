@@ -7,6 +7,11 @@ export default function Magnetic({ children }: { children: React.ReactElement })
   const magnetic = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    // Disable magnetic effect on touch devices or small screens to save performance
+    if (typeof window !== "undefined" && (window.innerWidth < 1024 || window.matchMedia("(pointer: coarse)").matches)) {
+      return;
+    }
+
     const xTo = gsap.quickTo(magnetic.current, "x", {
       duration: 1,
       ease: "elastic.out(1, 0.3)",
