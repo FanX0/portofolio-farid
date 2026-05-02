@@ -19,7 +19,7 @@ export function useAvatarAnimation() {
         hairY: number,
       ) => {
         const q = gsap.utils.selector(container.current);
-        const getVector = (selector: string) => q(selector)[0] as SVGPathElement;
+        const getVector = (selector: string) => q(selector)[0] as any;
 
         // Fetch all elements fresh
         const htmlVector = getVector(".html-vector");
