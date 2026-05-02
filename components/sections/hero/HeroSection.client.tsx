@@ -24,6 +24,7 @@ export default function HeroSectionClient({
   isLoading,
 }: Omit<HeroSectionProps, "projects">) {
   const [isPlaying, setIsPlaying] = useState(false);
+  const [videoReady, setVideoReady] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
 
   const {
@@ -60,15 +61,15 @@ export default function HeroSectionClient({
 
 
 
+  // Start loading the video only after the intro animation completes
+  useEffect(() => {
+    if (!isLoading) {
+      // Small delay to let the main thread breathe after animation
+      const timer = setTimeout(() => setVideoReady(true), 300);
+      return () => clearTimeout(timer);
+    }
+  }, [isLoading]);
 
-  // Main Hero Timeline: runs on mount
-  useGSAP(
-    () => {
-      // Initial hidden states handled by CSS classes (.opacity-0 .translate-y-10)
-      // and for expand parts (.w-0)
-    },
-    { scope: container },
-  );
 
 
 
@@ -116,16 +117,6 @@ export default function HeroSectionClient({
 
   return (
     <div ref={container} className="hero-section">
-      {/* Pre-load and optimize the poster image using Next.js Image component */}
-      <div className="hidden pointer-events-none" aria-hidden="true">
-        <Image 
-          src={assets.videos.heroPreview.poster} 
-          alt="" 
-          priority 
-          width={400} 
-          height={225} 
-        />
-      </div>
       <div className="relative bg-[var(--white-color)] lg:h-dvh lg:max-h-[80rem] flex justify-center items-center">
         <div
           ref={heroHeadlineRef}
@@ -275,17 +266,27 @@ export default function HeroSectionClient({
               }}
               className="group relative w-full lg:max-w-[30rem] aspect-video rounded-[1rem] overflow-hidden opacity-0 cursor-pointer z-30"
             >
-              <video
-                ref={videoRef}
-                src={getVideoUrl("heroPreview")}
-                poster={assets.videos.heroPreview.poster}
-                autoPlay={!isLoading}
-                loop
-                muted
-                playsInline
-                preload={isLoading ? "none" : "auto"}
-                className="w-full h-auto block"
-              />
+              {videoReady ? (
+                <video
+                  ref={videoRef}
+                  src={getVideoUrl("heroPreview")}
+                  poster={assets.videos.heroPreview.poster}
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  preload="auto"
+                  className="w-full h-full object-cover"
+                />
+              ) : (
+                <Image
+                  src={assets.videos.heroPreview.poster}
+                  alt="Project Preview"
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 1024px) 100vw, 30rem"
+                />
+              )}
               {/* Play button overlay */}
               <div
                 className={`absolute inset-0 flex items-center justify-center z-20 transition-opacity duration-300 pointer-events-none ${
