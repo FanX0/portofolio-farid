@@ -183,7 +183,7 @@ export function useNavbarAnimation({
   };
 
   const scrollToAbout = () => {
-    const lenis = window.lenis;
+    const lenis = window.lenis as any;
     if (lenis) {
       // We use an offset of 800 because the About section is pinned,
       // so we need to scroll 800px into the pin to see the text start animating.
@@ -198,7 +198,7 @@ export function useNavbarAnimation({
   };
 
   const scrollToProject = () => {
-    const lenis = window.lenis;
+    const lenis = window.lenis as any;
     if (lenis) {
       lenis.scrollTo("#project-list", { duration: 1.2 });
     } else {
@@ -211,7 +211,7 @@ export function useNavbarAnimation({
   };
 
   const scrollToContact = () => {
-    const lenis = window.lenis;
+    const lenis = window.lenis as any;
     if (lenis) {
       lenis.scrollTo("#contact-form", { duration: 1.2 });
     } else {
