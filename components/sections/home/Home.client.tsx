@@ -41,8 +41,7 @@ export default function HomeClient({ projects }: HomeClientProps) {
 
   useEffect(() => {
     const applyScrollLock = () => {
-      // @ts-expect-error - Accessing global lenis instance
-      const lenis = window.lenis;
+      const lenis = window.lenis as any;
 
       if (isLoading) {
         // Lock both native scroll and Lenis
