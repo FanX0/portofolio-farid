@@ -33,7 +33,6 @@ export default function SidebarClient({ isOpen, onClose }: SidebarClientProps) {
 
   const handleLinkClick = (selector: string | number) => {
     onClose();
-    // @ts-expect-error - Accessing global lenis instance
     const lenis = window.lenis;
 
     const offsetValue = selector === "#about" ? 800 : 0;

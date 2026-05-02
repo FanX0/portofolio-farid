@@ -170,7 +170,6 @@ export function useNavbarAnimation({
 
   // ─── Scroll helpers ───────────────────────────────────────────────────────────
   const scrollToHome = () => {
-    // @ts-expect-error - Accessing global lenis instance
     const lenis = window.lenis;
     if (lenis) {
       lenis.scrollTo("#hero", { duration: 1.2 });
@@ -184,7 +183,6 @@ export function useNavbarAnimation({
   };
 
   const scrollToAbout = () => {
-    // @ts-expect-error - Accessing global lenis instance
     const lenis = window.lenis;
     if (lenis) {
       // We use an offset of 800 because the About section is pinned,
@@ -200,7 +198,6 @@ export function useNavbarAnimation({
   };
 
   const scrollToProject = () => {
-    // @ts-expect-error - Accessing global lenis instance
     const lenis = window.lenis;
     if (lenis) {
       lenis.scrollTo("#project-list", { duration: 1.2 });
