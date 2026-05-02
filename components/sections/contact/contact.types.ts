@@ -1,1 +1,1 @@
-export type ContactSectionProps = {};
+export type ContactSectionProps = Record<string, never>;

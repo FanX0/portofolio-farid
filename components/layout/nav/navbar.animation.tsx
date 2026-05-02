@@ -170,7 +170,8 @@ export function useNavbarAnimation({
 
   // ─── Scroll helpers ───────────────────────────────────────────────────────────
   const scrollToHome = () => {
-    const lenis = window.lenis as any;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const lenis = (window as any).lenis;
     if (lenis) {
       lenis.scrollTo("#hero", { duration: 1.2 });
     } else {
@@ -178,12 +179,13 @@ export function useNavbarAnimation({
         scrollTo: "#hero",
         duration: 1.2,
         ease: "power2.inOut",
-      } as any);
+      });
     }
   };
 
   const scrollToAbout = () => {
-    const lenis = window.lenis as any;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const lenis = (window as any).lenis;
     if (lenis) {
       // We use an offset of 800 because the About section is pinned,
       // so we need to scroll 800px into the pin to see the text start animating.
@@ -193,12 +195,13 @@ export function useNavbarAnimation({
         scrollTo: { y: "#about", offsetY: -1200 },
         duration: 1.2,
         ease: "power2.inOut",
-      } as any);
+      });
     }
   };
 
   const scrollToProject = () => {
-    const lenis = window.lenis as any;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const lenis = (window as any).lenis;
     if (lenis) {
       lenis.scrollTo("#project-list", { duration: 1.2 });
     } else {
@@ -206,12 +209,13 @@ export function useNavbarAnimation({
         scrollTo: "#project-list",
         duration: 1.2,
         ease: "power2.inOut",
-      } as any);
+      });
     }
   };
 
   const scrollToContact = () => {
-    const lenis = window.lenis as any;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const lenis = (window as any).lenis;
     if (lenis) {
       lenis.scrollTo("#contact-form", { duration: 1.2 });
     } else {
@@ -219,7 +223,7 @@ export function useNavbarAnimation({
         scrollTo: "#contact-form",
         duration: 1.2,
         ease: "power2.inOut",
-      } as any);
+      });
     }
   };
 

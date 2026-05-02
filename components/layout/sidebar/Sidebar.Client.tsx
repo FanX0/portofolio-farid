@@ -33,8 +33,9 @@ export default function SidebarClient({ isOpen, onClose }: SidebarClientProps) {
 
   const handleLinkClick = (selector: string | number) => {
     onClose();
-    const lenis = window.lenis as any;
-
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const lenis = (window as any).lenis;
+    
     const offsetValue = selector === "#about" ? 800 : 0;
 
     if (lenis) {
@@ -49,7 +50,7 @@ export default function SidebarClient({ isOpen, onClose }: SidebarClientProps) {
         duration: 1.2,
         ease: "power2.inOut",
         delay: 0.5,
-      } as any);
+      });
     }
   };
 

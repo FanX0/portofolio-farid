@@ -20,7 +20,7 @@ const TextMask = ({
   start?: string;
   as?: ElementType;
 }) => {
-  const containerRef = useRef<any>(null);
+  const containerRef = useRef<HTMLElement>(null);
 
   useGSAP(
     () => {

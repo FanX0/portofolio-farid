@@ -16,7 +16,7 @@ export function useAvatarAnimation() {
       const getVector = (selector: string) =>
         q(selector)[0] as Element as SVGPathElement;
 
-      const htmlVector = getVector(".html-vector");
+      getVector(".html-vector");
       const htmlLogo = q(".html-logo")[0];
       const vueVector = getVector(".vue-vector");
       const vueLogo = q(".vue-logo")[0];
@@ -203,6 +203,9 @@ export function useAvatarAnimation() {
         setTimeout(() => {
           ScrollTrigger.refresh();
         }, 100);
+        setTimeout(() => {
+          ScrollTrigger.refresh();
+        }, 500);
       };
 
       mm.add(
@@ -213,7 +216,13 @@ export function useAvatarAnimation() {
           is2XL: "(min-width: 1536px)",
         },
         (context) => {
-          const { isMobile, isLG, isXL, is2XL } = context.conditions as any;
+          const conditions = context.conditions as {
+            isMobile: boolean;
+            isLG: boolean;
+            isXL: boolean;
+            is2XL: boolean;
+          };
+          const { isMobile, isLG, isXL } = conditions;
 
           if (isMobile) {
             runAnimation("+=100%", 1, -150);

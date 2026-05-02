@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import gsap, { ScrollTrigger, useGSAP } from "@/shared/lib/gsap";
+import gsap, { useGSAP } from "@/shared/lib/gsap";
 import type { SectionRefs } from "./hero.types";
 
 type UseHeroAnimationParams = {
@@ -42,7 +42,13 @@ export function useHeroAnimation({
           is2XL: "(min-width: 1536px)",
         },
         (context) => {
-          const { isMobile, isLG, isXL, is2XL } = context.conditions as any;
+          const conditions = context.conditions as {
+            isMobile: boolean;
+            isLG: boolean;
+            isXL: boolean;
+            is2XL: boolean;
+          };
+          const { isMobile, isLG, isXL } = conditions;
 
           // Helper to pick values based on screen size
           const getVal = (
