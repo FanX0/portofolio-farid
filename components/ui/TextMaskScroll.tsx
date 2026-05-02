@@ -16,6 +16,7 @@ const TextMaskScroll = ({
   endMobile,
   startDesktop,
   endDesktop,
+  trigger,
 }: {
   children: ReactNode;
   className: string;
@@ -23,6 +24,7 @@ const TextMaskScroll = ({
   endMobile?: string | number;
   startDesktop?: string | number;
   endDesktop?: string | number;
+  trigger?: string | HTMLElement;
 }) => {
   const containerRef = useRef<HTMLParagraphElement>(null);
 
@@ -40,24 +42,24 @@ const TextMaskScroll = ({
 
   useGSAP(
     (context) => {
-      const q = context.selector!;
-      const text = q("#text");
-
       const container = containerRef.current;
       if (!container) return;
 
-      const splitText = new SplitText(text, { type: "chars" });
+      const text = container.querySelector(".text-mask-inner");
+      if (!text) return;
+
+      const splitText = new SplitText(text as HTMLElement, { type: "chars" });
 
       const mm = gsap.matchMedia();
 
       mm.add("(min-width: 80rem)", () => {
         gsap.from(splitText.chars, {
-          y: "100%",
+          yPercent: 100,
           stagger: 0.05,
           duration: 0.5,
           ease: "power2.out",
           scrollTrigger: {
-            trigger: container,
+            trigger: trigger || container,
             start: startD,
             end: endD,
             scrub: true,
@@ -66,12 +68,12 @@ const TextMaskScroll = ({
       });
       mm.add("(max-width: 80rem)", () => {
         gsap.from(splitText.chars, {
-          y: "100%",
+          yPercent: 100,
           stagger: 0.05,
           duration: 0.5,
           ease: "power2.out",
           scrollTrigger: {
-            trigger: text,
+            trigger: trigger || text,
             start: startM,
             end: endM,
             scrub: true,
@@ -84,7 +86,7 @@ const TextMaskScroll = ({
 
   return (
     <p ref={containerRef} className={className}>
-      <span id="text" className="block overflow-hidden">
+      <span className="text-mask-inner block overflow-hidden">
         {children}
       </span>
     </p>

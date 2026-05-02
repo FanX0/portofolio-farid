@@ -41,10 +41,11 @@ export default function ContactSectionClient() {
             <fieldset className="relative  flex flex-col  justify-end items-center h-[45rem]  overflow-hidden">
               <TextMaskScroll
                 className="w-full text-center text-white py-[1rem] text-[4rem] font-semibold"
-                startDesktop="top 80%"
-                endDesktop="top 50%"
-                startMobile="top 90%"
-                endMobile="top 60%"
+                trigger="#contact-form"
+                startDesktop="top bottom"
+                endDesktop="top 40%"
+                startMobile="top bottom"
+                endMobile="top 50%"
               >
                 Say Hello
               </TextMaskScroll>
