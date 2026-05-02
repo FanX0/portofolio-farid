@@ -264,7 +264,7 @@ export default function HeroSectionClient({
               onKeyDown={(e) => {
                 if (e.key === "Enter" || e.key === " ") handlePlayClick();
               }}
-              className="group relative w-full lg:max-w-[30rem] aspect-video rounded-[1rem] overflow-hidden cursor-pointer z-30"
+              className="group relative w-full lg:max-w-[30rem] aspect-video rounded-[1rem] overflow-hidden opacity-0 cursor-pointer z-30"
             >
               {videoReady ? (
                 <video

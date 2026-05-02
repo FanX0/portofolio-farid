@@ -1,26 +1,27 @@
 import type { Metadata } from "next";
 import { Poppins, Fraunces } from "next/font/google";
 import "./globals.css";
-import GlobalBreakpointReload from "@/components/common/GlobalBreakpointReload";
-import Cursor from "@/components/common/cursor/Cursor";
+import Cursor from "@/components/common/Cursor/Cursor.client";
+import GlobalBreakpointReload from "@/components/common/GlobalBreakpointReload/GlobalBreakpointReload.client";
+import JsonLd from "@/components/common/JsonLd/JsonLd.client";
 
 const poppins = Poppins({
-  variable: "--font-poppins",
   subsets: ["latin"],
-  weight: ["400", "600", "700"],
+  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+  variable: "--font-poppins",
 });
 
 const fraunces = Fraunces({
-  variable: "--font-fraunces",
   subsets: ["latin"],
-  weight: ["400"],
+  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+  variable: "--font-fraunces",
   style: ["normal", "italic"],
 });
 
-import { siteMetadata } from "@/shared/config/metadata";
-import JsonLd from "@/components/seo/JsonLd";
-
-export const metadata: Metadata = siteMetadata;
+export const metadata: Metadata = {
+  title: "Farid Azhari | Portfolio",
+  description: "Creative developer specializing in modern web experiences.",
+};
 
 import SmoothScroll from "@/components/common/SmoothScroll/SmoothScroll.client";
 
@@ -32,12 +33,6 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <link
-          rel="preload"
-          href="/images/hero-poster.png"
-          as="image"
-          type="image/png"
-        />
         <style id="pre-paint-scroll-lock">
           {`
             html {

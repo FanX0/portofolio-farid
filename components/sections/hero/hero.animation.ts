@@ -129,7 +129,7 @@ export function useHeroAnimation({
           tl.set(rightColRef.current, {
             scale: 0.9,
             y: 30,
-            opacity: 0.1, // Slight opacity to encourage LCP detection but still allow fade-in
+            opacity: 0, // Hidden initially during intro animation
           });
 
           tl.to(heroText1.current, {
