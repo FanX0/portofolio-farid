@@ -86,6 +86,7 @@ export function useHeroAnimation({
             x: 0,
             opacity: 0,
             display: "block",
+            willChange: "transform, opacity",
           });
 
           tl.set(heroText3.current, {
@@ -93,12 +94,14 @@ export function useHeroAnimation({
             x: xOffset3,
             opacity: 0,
             display: "block",
+            willChange: "transform, opacity",
           });
           tl.set(heroText4.current, {
             y: yOffsetStart4,
             x: xOffset4,
             opacity: 0,
             display: "block",
+            willChange: "transform, opacity",
           });
           tl.set(
             [
@@ -113,8 +116,21 @@ export function useHeroAnimation({
             {
               opacity: 0,
               display: "flex",
+              willChange: "transform, opacity",
             },
           );
+          
+          // Pre-set columns for performance
+          gsap.set([leftColContentRef.current, rightColRef.current], {
+            willChange: "transform, opacity",
+          });
+          
+          // Initial state for right col to help LCP - keep it mostly visible but scaled
+          tl.set(rightColRef.current, {
+            scale: 0.9,
+            y: 30,
+            opacity: 0.1, // Slight opacity to encourage LCP detection but still allow fade-in
+          });
 
           tl.to(heroText1.current, {
             y: yOffsetMid1,

@@ -32,6 +32,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        <link
+          rel="preload"
+          href="/images/hero-poster.png"
+          as="image"
+          type="image/png"
+        />
         <style id="pre-paint-scroll-lock">
           {`
             html {

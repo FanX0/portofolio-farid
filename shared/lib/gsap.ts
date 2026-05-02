@@ -4,12 +4,16 @@ import {
   ScrollTrigger,
   ScrollToPlugin,
   SplitText,
+  DrawSVGPlugin,
+  MotionPathPlugin,
 } from "gsap/all";
 
 gsap.registerPlugin(
   ScrollTrigger,
   ScrollToPlugin,
   SplitText,
+  DrawSVGPlugin,
+  MotionPathPlugin,
 );
 
 export {
@@ -17,5 +21,7 @@ export {
   ScrollTrigger,
   ScrollToPlugin,
   SplitText,
+  DrawSVGPlugin,
+  MotionPathPlugin,
 };
 export default gsap;
