@@ -33,7 +33,7 @@ export default function SidebarClient({ isOpen, onClose }: SidebarClientProps) {
 
   const handleLinkClick = (selector: string | number) => {
     onClose();
-    const lenis = window.lenis;
+    const lenis = window.lenis as any;
 
     const offsetValue = selector === "#about" ? 800 : 0;
 

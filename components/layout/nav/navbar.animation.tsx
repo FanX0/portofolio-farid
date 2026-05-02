@@ -170,7 +170,7 @@ export function useNavbarAnimation({
 
   // ─── Scroll helpers ───────────────────────────────────────────────────────────
   const scrollToHome = () => {
-    const lenis = window.lenis;
+    const lenis = window.lenis as any;
     if (lenis) {
       lenis.scrollTo("#hero", { duration: 1.2 });
     } else {
