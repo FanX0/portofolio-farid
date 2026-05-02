@@ -23,14 +23,14 @@ export default function ContactSectionClient() {
     if (state?.success === true && tlClick.current) {
       tlClick.current.restart(true);
     }
-  }, [state?.success]);
+  }, [state?.success, tlClick]);
 
   return (
     <div ref={container} className="bg-[var(--black-color)]">
       <div className="text-running-wrapper w-full overflow-hidden">
         <div className="text-running h-dvh flex items-center w-fit px-[20vw]">
           <p className="text-running-text text-white text-[9rem] lg:text-[18.75rem] font-bold whitespace-nowrap">
-            LET'S TALK IDEA
+            LET&apos;S TALK IDEA
           </p>
         </div>
       </div>
@@ -185,7 +185,7 @@ export default function ContactSectionClient() {
                     width="1280"
                     height="1280"
                     src={stamp}
-                    alt="stamp"
+                    alt="Farid Azhari Stamp"
                   ></Image>
                 </div>
               </div>

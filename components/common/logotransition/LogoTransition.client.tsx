@@ -25,14 +25,16 @@ export default function LogoTransitionClient() {
       <div className="left-logo  bg-[var(--white-color)] h-screen w-[50%] flex justify-end items-center">
         <Image
           src={logoLeft}
-          alt="logo-left"
+          alt=""
+          aria-hidden="true"
           className="w-auto h-[70rem] lg:h-[50rem] object-contain"
         />
       </div>
       <div className="right-logo  bg-[var(--white-color)] h-screen w-[50%] flex justify-start items-center">
         <Image
           src={logoRight}
-          alt="logo-right"
+          alt=""
+          aria-hidden="true"
           className="w-auto h-[70rem] lg:h-[50rem] object-contain"
         />
       </div>
