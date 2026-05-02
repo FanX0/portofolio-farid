@@ -5,6 +5,7 @@ import gsap, { useGSAP } from "@/shared/lib/gsap";
 import { useNavbarAnimation } from "./navbar.animation";
 import useNavCircleHover from "@/components/layout/nav/useNavCircleHover";
 import { NavArrowIcon } from "@/components/ui/NavArrowIcon";
+import Magnetic from "@/components/common/Magnetic";
 
 type SectionRefs = {
   heroRef: RefObject<HTMLElement | null>;
@@ -232,58 +233,60 @@ export default function NavbarClient({
               className="flex lg:w-full lg:gap-7.5 opacity-0 -translate-y-2"
             >
               <li className="lg:hidden flex items-center h-16.25">
-                <button
-                  className="sidebar-toggle cursor-pointer"
-                  type="button"
-                  aria-label="Toggle Sidebar"
-                  onClick={handleSidebarToggle}
-                >
-                <svg
-                  ref={toggleIconRef}
-                  width="40"
-                  height="40"
-                  viewBox="0 0 40 40"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <rect
-                    className="toggle-bg"
-                    x="0.5"
-                    y="0.5"
-                    width="39"
-                    height="39"
-                    rx="19.5"
-                    stroke="#fff"
-                  />
-                  <rect
-                    className="toggle-dot"
-                    x="11"
-                    y="18"
-                    width="4"
-                    height="4"
-                    rx="2"
-                    fill="#fff"
-                  />
-                  <rect
-                    className="toggle-dot"
-                    x="18"
-                    y="18"
-                    width="4"
-                    height="4"
-                    rx="2"
-                    fill="#fff"
-                  />
-                  <rect
-                    className="toggle-dot"
-                    x="25"
-                    y="18"
-                    width="4"
-                    height="4"
-                    rx="2"
-                    fill="#fff"
-                  />
-                </svg>
-              </button>
+                <Magnetic>
+                  <button
+                    className="sidebar-toggle cursor-pointer"
+                    type="button"
+                    aria-label="Toggle Sidebar"
+                    onClick={handleSidebarToggle}
+                  >
+                    <svg
+                      ref={toggleIconRef}
+                      width="40"
+                      height="40"
+                      viewBox="0 0 40 40"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <rect
+                        className="toggle-bg"
+                        x="0.5"
+                        y="0.5"
+                        width="39"
+                        height="39"
+                        rx="19.5"
+                        stroke="#fff"
+                      />
+                      <rect
+                        className="toggle-dot"
+                        x="11"
+                        y="18"
+                        width="4"
+                        height="4"
+                        rx="2"
+                        fill="#fff"
+                      />
+                      <rect
+                        className="toggle-dot"
+                        x="18"
+                        y="18"
+                        width="4"
+                        height="4"
+                        rx="2"
+                        fill="#fff"
+                      />
+                      <rect
+                        className="toggle-dot"
+                        x="25"
+                        y="18"
+                        width="4"
+                        height="4"
+                        rx="2"
+                        fill="#fff"
+                      />
+                    </svg>
+                  </button>
+                </Magnetic>
             </li>
             <li className="lg:flex lg:flex-col items-center w-full hidden lg:block">
               <button

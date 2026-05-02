@@ -6,22 +6,21 @@ import type { HeroSectionProps } from "./hero.types";
 import TextMask from "@/components/ui/TextMask";
 import WordRotate from "@/components/ui/WordRotate";
 import FlairButton from "@/components/ui/FlairButton";
-import Image from "next/image";
+
 
 import { useHeroAnimation } from "./hero.animation";
 import { useBoxHeroAnimation } from "./useBoxHeroAnimation";
+import Magnetic from "@/components/common/Magnetic";
 
-import { getImageUrl } from "@/shared/lib/sanity/image";
+
+import { assets, getVideoUrl } from "@/shared/config/assets";
 import gsap, { useGSAP } from "@/shared/lib/gsap";
+import { lockScroll, unlockScroll } from "@/shared/lib/utils/scrollLock";
 
 export default function HeroSectionClient({
-  projects,
-  isLoading,
   onIntroComplete,
   sectionRefs,
-}: HeroSectionProps) {
-  const [imageReady, setImageReady] = useState(false);
-  const [currentIndex, setCurrentIndex] = useState(0);
+}: Omit<HeroSectionProps, "projects">) {
   const [isPlaying, setIsPlaying] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
 
@@ -57,8 +56,8 @@ export default function HeroSectionClient({
     onMouseMove,
   } = useBoxHeroAnimation();
 
-  const latestProject = projects[0];
-  const projectImages = latestProject?.images || [];
+
+
 
   // Main Hero Timeline: runs on mount
   useGSAP(
@@ -69,22 +68,7 @@ export default function HeroSectionClient({
     { scope: container },
   );
 
-  useEffect(() => {
-    if (projectImages.length <= 1) return;
 
-    let timer: gsap.core.Tween;
-
-    const nextSlide = () => {
-      setCurrentIndex((prev) => (prev + 1) % projectImages.length);
-      timer = gsap.delayedCall(1, nextSlide);
-    };
-
-    timer = gsap.delayedCall(1, nextSlide);
-
-    return () => {
-      timer?.kill();
-    };
-  }, [projectImages.length]);
 
   const [showModal, setShowModal] = useState(false);
   const modalVideoRef = useRef<HTMLVideoElement>(null);
@@ -212,57 +196,59 @@ export default function HeroSectionClient({
                     </span>
                   </p>
                 </div>
-                <button
-                  type="button"
-                  onClick={scrollToContact}
-                  className="box-hero-link cursor-pointer flex items-center justify-between gap-x-2 px-[1.2rem] lg:px-[2rem] mt-[0rem] lg:mt-[0.8rem] bg-black w-fit min-w-[10rem] h-[3rem] lg:w-[15rem] lg:h-[4rem] rounded-full text-white whitespace-nowrap"
-                  onMouseEnter={onMouseEnter}
-                  onMouseLeave={onMouseLeave}
-                  onMouseMove={onMouseMove}
-                >
-                  <TextMask
-                    start=""
-                    className="text-[0.8rem] lg:text-[1rem] font-medium pr-2"
+                <Magnetic>
+                  <button
+                    type="button"
+                    onClick={scrollToContact}
+                    className="box-hero-link cursor-pointer flex items-center justify-between gap-x-2 px-[1.2rem] lg:px-[2rem] mt-[0rem] lg:mt-[0.8rem] bg-black w-fit min-w-[10rem] h-[3rem] lg:w-[15rem] lg:h-[4rem] rounded-full text-white whitespace-nowrap"
+                    onMouseEnter={onMouseEnter}
+                    onMouseLeave={onMouseLeave}
+                    onMouseMove={onMouseMove}
                   >
-                    Get in touch
-                  </TextMask>
-
-                  <div className="relative w-[1.8rem] h-[1.8rem] lg:w-[2.5rem] lg:h-[2.5rem] flex items-center justify-center">
-                    <div
-                      ref={circleArrowRef}
-                      className="z-0 absolute inset-0 bg-white rounded-full  "
-                    />
-                    <div
-                      ref={arrowContainerRef}
-                      className="z-10 w-full h-full flex items-center justify-center rounded-full overflow-hidden pointer-events-none"
+                    <TextMask
+                      start=""
+                      className="text-[0.8rem] lg:text-[1rem] font-medium pr-2"
                     >
-                      <svg
-                        ref={arrowRef}
-                        width="24"
-                        height="26"
-                        viewBox="0 0 24 26"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="arrow-down w-[0.8rem] h-[0.8rem] lg:w-[1rem] lg:h-[1rem] relative text-white"
+                      Get in touch
+                    </TextMask>
+
+                    <div className="relative w-[1.8rem] h-[1.8rem] lg:w-[2.5rem] lg:h-[2.5rem] flex items-center justify-center">
+                      <div
+                        ref={circleArrowRef}
+                        className="z-0 absolute inset-0 bg-white rounded-full  "
+                      />
+                      <div
+                        ref={arrowContainerRef}
+                        className="z-10 w-full h-full flex items-center justify-center rounded-full overflow-hidden pointer-events-none"
                       >
-                        <path
-                          d="M11.5 1.5L11.5 21.5"
-                          stroke="currentColor"
-                          strokeWidth="3"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                        <path
-                          d="M17.5 16.5L11.5 23.5L5.5 16.5"
-                          stroke="currentColor"
-                          strokeWidth="3"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                      </svg>
+                        <svg
+                          ref={arrowRef}
+                          width="24"
+                          height="26"
+                          viewBox="0 0 24 26"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="arrow-down w-[0.8rem] h-[0.8rem] lg:w-[1rem] lg:h-[1rem] relative text-white"
+                        >
+                          <path
+                            d="M11.5 1.5L11.5 21.5"
+                            stroke="currentColor"
+                            strokeWidth="3"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
+                          <path
+                            d="M17.5 16.5L11.5 23.5L5.5 16.5"
+                            stroke="currentColor"
+                            strokeWidth="3"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
+                        </svg>
+                      </div>
                     </div>
-                  </div>
-                </button>
+                  </button>
+                </Magnetic>
               </div>
             </div>
 
@@ -279,8 +265,8 @@ export default function HeroSectionClient({
             >
               <video
                 ref={videoRef}
-                src="/videos/hero/project-preview.mp4"
-                poster="/images/hero-poster.webp"
+                src={getVideoUrl("heroPreview")}
+                poster={assets.videos.heroPreview.poster}
                 autoPlay
                 loop
                 muted
@@ -326,15 +312,15 @@ function MobileVideoModal({
 }) {
   useEffect(() => {
     if (isOpen) {
-      document.body.style.overflow = "hidden";
+      lockScroll();
       if (videoRef.current) {
         videoRef.current.play();
       }
     } else {
-      document.body.style.overflow = "unset";
+      unlockScroll();
     }
     return () => {
-      document.body.style.overflow = "unset";
+      unlockScroll();
     };
   }, [isOpen, videoRef]);
 
@@ -364,7 +350,8 @@ function MobileVideoModal({
       <div className="w-full h-full flex items-center justify-center p-4">
         <video
           ref={videoRef}
-          src="/videos/hero/project-preview.mp4"
+          src={getVideoUrl("heroPreview")}
+          poster={assets.videos.heroPreview.poster}
           loop
           playsInline
           className="w-full h-auto max-h-[80vh] rounded-[1rem]"
