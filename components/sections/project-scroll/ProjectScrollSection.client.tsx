@@ -41,6 +41,7 @@ export default function ProjectScrollClient({
                           height={1280}
                           src={imageUrl}
                           alt={project.title}
+                          sizes="(max-width: 768px) 100vw, 33vw"
                           className="w-full h-full object-cover"
                         />
                       )}
@@ -62,6 +63,7 @@ export default function ProjectScrollClient({
                           height={1280}
                           src={imageUrl}
                           alt={project.title}
+                          sizes="(max-width: 768px) 100vw, 33vw"
                           className="w-full h-full object-cover"
                         />
                       )}
@@ -83,6 +85,7 @@ export default function ProjectScrollClient({
                           height={1280}
                           src={imageUrl}
                           alt={project.title}
+                          sizes="(max-width: 768px) 100vw, 33vw"
                           className="w-full h-full object-cover"
                         />
                       )}

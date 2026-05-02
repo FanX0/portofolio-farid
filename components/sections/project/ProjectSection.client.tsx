@@ -9,6 +9,7 @@ import gsap from "gsap";
 import { useProjectAnimation } from "./project.animation";
 
 import { getImageUrl } from "@/shared/lib/sanity/image";
+import { lockScroll, unlockScroll } from "@/shared/lib/utils/scrollLock";
 
 type Props = {
   projects: Project[];
@@ -29,10 +30,12 @@ const ProjectSectionClient = ({ projects }: Props) => {
 
   const modalImage = getImageUrl(activeProject?.images?.[imageIndex]);
 
-  useEffect(() => {
-    if (!activeProject) return;
+  const [prevProject, setPrevProject] = useState<Project | null>(null);
+  
+  if (activeProject !== prevProject) {
+    setPrevProject(activeProject);
     setImageIndex(0);
-  }, [activeProject]);
+  }
 
   useEffect(() => {
     if (!activeProject || !activeProject.images?.length) return;
@@ -80,8 +83,10 @@ const ProjectSectionClient = ({ projects }: Props) => {
     if (!modalTl.current) return;
 
     if (activeProject) {
+      lockScroll();
       modalTl.current.play();
     } else {
+      unlockScroll();
       modalTl.current.reverse();
     }
   }, [activeProject]);
@@ -160,7 +165,7 @@ const ProjectSectionClient = ({ projects }: Props) => {
           <div className="relative w-full grid">
             <section className="list-wrapper col-start-1 row-start-1">
               <div className="list-line flex flex-col">
-                {[...projects].reverse().map((project, index) => {
+                {[...projects].reverse().map((project) => {
                   return (
                     <button
                       key={project._id}
@@ -208,6 +213,7 @@ const ProjectSectionClient = ({ projects }: Props) => {
                             width={1280}
                             height={1280}
                             alt={project.title}
+                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                             className="w-full h-full object-cover"
                           />
                         )}
@@ -254,6 +260,8 @@ const ProjectSectionClient = ({ projects }: Props) => {
                             alt={activeProject.title}
                             width={1280}
                             height={800}
+                            priority
+                            sizes="(max-width: 1200px) 100vw, 80vw"
                             className="w-full h-full object-cover"
                           />
                         )}
