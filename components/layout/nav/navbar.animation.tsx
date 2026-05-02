@@ -178,7 +178,7 @@ export function useNavbarAnimation({
         scrollTo: "#hero",
         duration: 1.2,
         ease: "power2.inOut",
-      });
+      } as any);
     }
   };
 
@@ -193,7 +193,7 @@ export function useNavbarAnimation({
         scrollTo: { y: "#about", offsetY: -1200 },
         duration: 1.2,
         ease: "power2.inOut",
-      });
+      } as any);
     }
   };
 
@@ -206,12 +206,11 @@ export function useNavbarAnimation({
         scrollTo: "#project-list",
         duration: 1.2,
         ease: "power2.inOut",
-      });
+      } as any);
     }
   };
 
   const scrollToContact = () => {
-    // @ts-expect-error - Accessing global lenis instance
     const lenis = window.lenis;
     if (lenis) {
       lenis.scrollTo("#contact-form", { duration: 1.2 });
@@ -220,7 +219,7 @@ export function useNavbarAnimation({
         scrollTo: "#contact-form",
         duration: 1.2,
         ease: "power2.inOut",
-      });
+      } as any);
     }
   };
 

@@ -49,7 +49,7 @@ export default function SidebarClient({ isOpen, onClose }: SidebarClientProps) {
         duration: 1.2,
         ease: "power2.inOut",
         delay: 0.5,
-      });
+      } as any);
     }
   };
 
