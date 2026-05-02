@@ -1,18 +1,22 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import HeroSection from "@/components/sections/hero/HeroSection.server";
 import AboutSection from "@/components/sections/about/AboutSection.server";
-import AvatarSection from "@/components/sections/avatar/AvatarSection.server";
-import ContactSection from "@/components/sections/contact/ContactSection.server";
 import Footer from "@/components/layout/Footer";
 import Navbar from "@/components/layout/nav/Navbar.server";
 import LogoTransition from "@/components/common/logotransition/LogoTransition.server";
-import ProjectSection from "@/components/sections/project/ProjectSection.server";
-import ProjectScrollSection from "@/components/sections/project-scroll/ProjectScrollSection.server";
+
 import type { Project } from "@/shared/types/project";
 import Sidebar from "@/components/layout/sidebar/Sidebar.server";
 import { useState, useEffect, useRef, useLayoutEffect } from "react";
-import { ScrollTrigger } from "@/shared/lib/gsap";
+import { lockScroll, unlockScroll } from "@/shared/lib/utils/scrollLock";
+const AvatarSection = dynamic(() => import("@/components/sections/avatar/AvatarSection.server"), { ssr: true });
+const ProjectSection = dynamic(() => import("@/components/sections/project/ProjectSection.server"), { ssr: true });
+const ContactSection = dynamic(() => import("@/components/sections/contact/ContactSection.server"), { ssr: true });
+const ProjectScrollSection = dynamic(() => import("@/components/sections/project-scroll/ProjectScrollSection.server"), { ssr: true });
+
+
 
 type HomeClientProps = {
   projects: Project[];
@@ -41,21 +45,18 @@ export default function HomeClient({ projects }: HomeClientProps) {
 
   useEffect(() => {
     const applyScrollLock = () => {
-      const lenis = window.lenis as any;
+      const lenis = window.lenis;
 
       if (isLoading) {
         // Lock both native scroll and Lenis
-        document.documentElement.style.overflow = "hidden";
-        if (lenis) {
-          lenis.stop();
-        } else {
+        lockScroll();
+        if (!lenis) {
           // lenis might not be initialized yet on first render, try again next frame
           requestAnimationFrame(applyScrollLock);
         }
       } else {
         // Unlock native scroll and Lenis
-        document.documentElement.style.overflow = "";
-        if (lenis) lenis.start();
+        unlockScroll();
 
         const injectedStyle = document.getElementById("pre-paint-scroll-lock");
         if (injectedStyle) {
@@ -68,7 +69,7 @@ export default function HomeClient({ projects }: HomeClientProps) {
     
     return () => {
       // Ensure we unlock on unmount if we were still loading
-      document.documentElement.style.overflow = "";
+      unlockScroll();
     };
   }, [isLoading]);
 
@@ -77,7 +78,7 @@ export default function HomeClient({ projects }: HomeClientProps) {
   // can't always cleanly re-initialize on resize — a reload is the safest fix.
   useEffect(() => {
     const breakpoint = 1024;
-    let lastWasMobile = window.innerWidth < breakpoint;
+    const lastWasMobile = window.innerWidth < breakpoint;
 
     const handleResize = () => {
       const isMobile = window.innerWidth < breakpoint;
