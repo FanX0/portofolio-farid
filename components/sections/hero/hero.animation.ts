@@ -120,7 +120,7 @@ export function useHeroAnimation({
             y: yOffsetMid1,
             x: 0,
             opacity: 1,
-            duration: 1.3,
+            duration: 0.7,
             ease: "power2.out",
           });
 
@@ -128,7 +128,7 @@ export function useHeroAnimation({
             y: yOffsetMid3,
             x: xOffset3,
             opacity: 1,
-            duration: 1.3,
+            duration: 0.7,
             ease: "power2.out",
           });
 
@@ -136,7 +136,7 @@ export function useHeroAnimation({
             y: yOffsetMid4,
             x: xOffset4,
             opacity: 1,
-            duration: 1.3,
+            duration: 0.7,
             ease: "power2.out",
           });
           tl.to(
@@ -144,36 +144,36 @@ export function useHeroAnimation({
             {
               y: 0,
               x: xOffset3,
-              duration: 1,
+              duration: 0.5,
               opacity: 1,
               display: "block",
               ease: "power2.out",
             },
-            "-=0.3",
+            "-=0.15",
           );
           tl.to(
             heroText1.current,
             {
               y: 0,
               x: 0,
-              duration: 1,
+              duration: 0.5,
               opacity: 1,
               display: "block",
               ease: "power2.out",
             },
-            "-=1",
+            "-=0.5",
           );
           tl.to(
             heroText4.current,
             {
               y: 0,
               x: 0,
-              duration: 1,
+              duration: 0.5,
               opacity: 1,
               display: "block",
               ease: "power2.out",
             },
-            "-=0.5",
+            "-=0.25",
           );
 
           tl.to(
@@ -181,12 +181,12 @@ export function useHeroAnimation({
             {
               y: 0,
               x: 0,
-              duration: 1,
+              duration: 0.5,
               opacity: 1,
               display: "block",
               ease: "power2.out",
             },
-            "-=0.5",
+            "-=0.25",
           );
           tl.from(
             heroText2.current,
@@ -194,10 +194,10 @@ export function useHeroAnimation({
               y: yOffsetSmall,
               x: xOffsetSmallNeg,
               opacity: 1,
-              duration: 1,
+              duration: 0.5,
               ease: "power2.out",
             },
-            "-=0.5",
+            "-=0.25",
           );
 
           tl.from(
@@ -206,10 +206,10 @@ export function useHeroAnimation({
               y: yOffsetSmall,
               x: xOffsetSmallPos,
               opacity: 1,
-              duration: 1,
+              duration: 0.5,
               ease: "power2.out",
             },
-            "-=1",
+            "-=0.5",
           );
 
           tl.from(
@@ -222,24 +222,24 @@ export function useHeroAnimation({
             {
               y: yOffsetSmall,
               x: xOffsetSmallNeg,
-              duration: 1,
+              duration: 0.5,
               opacity: 1,
 
               ease: "power2.out",
             },
-            "-=0.5",
+            "-=0.25",
           );
           tl.to(
             leftColContentRef.current,
             {
               y: 0,
               x: 0,
-              duration: 1,
+              duration: 0.6,
               opacity: 1,
               display: "flex",
               ease: "power2.out",
             },
-            "-=0.8",
+            "-=0.4",
           );
           tl.to(
             rightColRef.current,
@@ -247,22 +247,20 @@ export function useHeroAnimation({
               y: 0,
               x: 0,
               scale: 1,
-              duration: 1,
+              duration: 0.6,
               opacity: 1,
               ease: "power2.out",
             },
-            "-=0.8",
+            "-=0.5",
           );
-
-          // Left column content entrance (delayed as requested)
 
           // Play button entrance
           if (playButtonRef.current) {
             tl.fromTo(
               playButtonRef.current,
               { scale: 0, opacity: 0 },
-              { scale: 1, opacity: 1, duration: 0.8, ease: "back.out(1.7)" },
-              "-=0.5",
+              { scale: 1, opacity: 1, duration: 0.4, ease: "back.out(1.7)" },
+              "-=0.3",
             );
           }
         },
