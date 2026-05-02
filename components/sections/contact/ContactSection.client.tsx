@@ -6,6 +6,7 @@ import stamp from "@/public/images/f-stamp.png";
 import Image from "next/image";
 import { sendEmail } from "@/features/contact/actions/sendEmail/sendEmail";
 import type { EmailState } from "@/shared/types/email";
+import TextMaskScroll from "@/components/ui/TextMaskScroll";
 
 export default function ContactSectionClient() {
   const { container, tlClick } = useContactAnimation();
@@ -38,9 +39,15 @@ export default function ContactSectionClient() {
         <div className="h-full  flex items-end ">
           <form action={formAction} className=" w-full">
             <fieldset className="relative  flex flex-col  justify-end items-center h-[45rem]  overflow-hidden">
-              <legend className="w-full text-center text-white py-[1rem]  text-[4rem] font-semibold">
+              <TextMaskScroll
+                className="w-full text-center text-white py-[1rem] text-[4rem] font-semibold"
+                startDesktop="top 80%"
+                endDesktop="top 50%"
+                startMobile="top 90%"
+                endMobile="top 60%"
+              >
                 Say Hello
-              </legend>
+              </TextMaskScroll>
 
               <div className="mail flex flex-col items-center">
                 <div className="mail-form absolute z-30 w-[22rem] lg:w-[50rem]  bottom-[6rem] lg:bottom-[1.5rem]  grid grid-cols-1 lg:grid-cols-2 gap-[1rem] bg-white border-1 border-black px-[1rem] py-[1rem] pb-[5rem] lg:pb-[10rem] rounded-[1rem]">
