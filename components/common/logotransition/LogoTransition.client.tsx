@@ -27,6 +27,7 @@ export default function LogoTransitionClient() {
           src={logoLeft}
           alt=""
           aria-hidden="true"
+          priority
           className="w-auto h-[70rem] lg:h-[50rem] object-contain"
         />
       </div>
@@ -35,6 +36,7 @@ export default function LogoTransitionClient() {
           src={logoRight}
           alt=""
           aria-hidden="true"
+          priority
           className="w-auto h-[70rem] lg:h-[50rem] object-contain"
         />
       </div>
