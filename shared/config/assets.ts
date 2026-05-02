@@ -9,7 +9,7 @@ export const assets = {
       local: "/videos/hero/project-preview.mp4",
       // When you move to a CDN (Cloudinary/Mux), paste the URL below
       cdn: process.env.NEXT_PUBLIC_CDN_HERO_VIDEO || "/videos/hero/project-preview.mp4",
-      poster: "/images/hero-poster.png",
+      poster: "/images/hero-poster.jpg",
     },
   },
   images: {
