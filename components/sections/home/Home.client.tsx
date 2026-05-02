@@ -45,6 +45,8 @@ export default function HomeClient({ projects }: HomeClientProps) {
       const lenis = window.lenis;
 
       if (isLoading) {
+        // Lock both native scroll and Lenis
+        document.documentElement.style.overflow = "hidden";
         if (lenis) {
           lenis.stop();
         } else {
@@ -52,6 +54,8 @@ export default function HomeClient({ projects }: HomeClientProps) {
           requestAnimationFrame(applyScrollLock);
         }
       } else {
+        // Unlock native scroll and Lenis
+        document.documentElement.style.overflow = "";
         if (lenis) lenis.start();
 
         const injectedStyle = document.getElementById("pre-paint-scroll-lock");
@@ -62,6 +66,11 @@ export default function HomeClient({ projects }: HomeClientProps) {
     };
 
     applyScrollLock();
+    
+    return () => {
+      // Ensure we unlock on unmount if we were still loading
+      document.documentElement.style.overflow = "";
+    };
   }, [isLoading]);
 
   // Reload page when layout crosses a major breakpoint (mobile ↔ desktop).

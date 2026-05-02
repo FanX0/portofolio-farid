@@ -31,6 +31,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <style id="pre-paint-scroll-lock">
+          {`
+            html {
+              overflow: hidden !important;
+            }
+          `}
+        </style>
+      </head>
       <body className={`${poppins.variable} ${fraunces.variable} antialiased`}>
         <JsonLd />
         <GlobalBreakpointReload />
