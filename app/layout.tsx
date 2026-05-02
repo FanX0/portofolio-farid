@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import { Poppins, Fraunces } from "next/font/google";
 import "./globals.css";
-import Cursor from "@/components/common/Cursor/Cursor.client";
-import GlobalBreakpointReload from "@/components/common/GlobalBreakpointReload/GlobalBreakpointReload.client";
-import JsonLd from "@/components/common/JsonLd/JsonLd.client";
+import Cursor from "@/components/common/cursor/Cursor";
+import GlobalBreakpointReload from "@/components/common/GlobalBreakpointReload";
+import JsonLd from "@/components/seo/JsonLd";
 
 const poppins = Poppins({
   subsets: ["latin"],
