@@ -13,6 +13,7 @@ const TextClipPath = ({
   startMobile,
   endDesktop,
   endMobile,
+  id,
 }: {
   children: ReactNode;
   className: string;
@@ -20,6 +21,7 @@ const TextClipPath = ({
   startMobile?: string;
   endDesktop?: string;
   endMobile?: string;
+  id?: string;
 }) => {
   const container = useRef<HTMLParagraphElement>(null);
 
@@ -64,7 +66,7 @@ const TextClipPath = ({
   );
 
   return (
-    <p className={className} ref={container}>
+    <p id={id} className={className} ref={container}>
       {children}
     </p>
   );

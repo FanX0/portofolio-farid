@@ -22,6 +22,11 @@ export default function SmoothScroll({
     // @ts-expect-error - Expose lenis globally for easy access
     window.lenis = lenis;
 
+    // If we have a pre-paint scroll lock, start Lenis in stopped state
+    if (document.getElementById("pre-paint-scroll-lock")) {
+      lenis.stop();
+    }
+
     // Keep ScrollTrigger in sync with Lenis
     lenis.on("scroll", ScrollTrigger.update);
 

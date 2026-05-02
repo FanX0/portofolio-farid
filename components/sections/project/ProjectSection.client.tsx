@@ -127,6 +127,7 @@ const ProjectSectionClient = ({ projects }: Props) => {
   return (
     <div
       ref={container}
+      id="project-list"
       className="bg-[var(--black-color)] text-white pb-[2rem]"
     >
       <div className="container mx-auto w-full h-full">

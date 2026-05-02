@@ -31,14 +31,27 @@ export default function SidebarClient({ isOpen, onClose }: SidebarClientProps) {
     { scope: container, dependencies: [isOpen] },
   );
 
-  const handleLinkClick = (scrollTo: number) => {
+  const handleLinkClick = (selector: string | number) => {
     onClose();
-    gsap.to(window, {
-      scrollTo,
-      duration: 1,
-      ease: "power2.inOut",
-      delay: 0.5, // Optional: wait for sidebar close animation to start/finish
-    });
+    // @ts-expect-error - Accessing global lenis instance
+    const lenis = window.lenis;
+
+    const offsetValue = selector === "#about" ? 800 : 0;
+
+    if (lenis) {
+      lenis.scrollTo(selector, {
+        duration: 1.2,
+        delay: 0.5, // Wait for sidebar close animation
+        offset: offsetValue,
+      });
+    } else {
+      gsap.to(window, {
+        scrollTo: { y: selector, offsetY: -offsetValue },
+        duration: 1.2,
+        ease: "power2.inOut",
+        delay: 0.5,
+      });
+    }
   };
 
   return (
@@ -50,21 +63,24 @@ export default function SidebarClient({ isOpen, onClose }: SidebarClientProps) {
       <div className="w-full px-4">
         <ul className="sidebar-list origin-left bg-white flex-col w-full rounded-2xl px-4 divide-y">
           <li>
-            <SidebarLink label="Home" onClick={() => handleLinkClick(0)} />
+            <SidebarLink label="Home" onClick={() => handleLinkClick("#hero")} />
           </li>
           <li>
-            <SidebarLink label="About" onClick={() => handleLinkClick(2850)} />
+            <SidebarLink
+              label="About"
+              onClick={() => handleLinkClick("#about")}
+            />
           </li>
           <li>
             <SidebarLink
               label="Project"
-              onClick={() => handleLinkClick(16300)}
+              onClick={() => handleLinkClick("#project-list")}
             />
           </li>
           <li>
             <SidebarLink
               label="Contact"
-              onClick={() => handleLinkClick(22150)}
+              onClick={() => handleLinkClick("#contact-form")}
             />
           </li>
         </ul>

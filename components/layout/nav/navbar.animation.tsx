@@ -170,39 +170,61 @@ export function useNavbarAnimation({
 
   // ─── Scroll helpers ───────────────────────────────────────────────────────────
   const scrollToHome = () => {
-    if (!sectionRefs.heroRef.current) return;
-    gsap.to(window, {
-      scrollTo: sectionRefs.heroRef.current,
-      duration: 1,
-      ease: "power2.inOut",
-    });
+    // @ts-expect-error - Accessing global lenis instance
+    const lenis = window.lenis;
+    if (lenis) {
+      lenis.scrollTo("#hero", { duration: 1.2 });
+    } else {
+      gsap.to(window, {
+        scrollTo: "#hero",
+        duration: 1.2,
+        ease: "power2.inOut",
+      });
+    }
   };
 
   const scrollToAbout = () => {
-    if (!sectionRefs.aboutRef.current) return;
-    gsap.to(window, {
-      scrollTo: sectionRefs.aboutRef.current,
-      duration: 1,
-      ease: "power2.inOut",
-    });
+    // @ts-expect-error - Accessing global lenis instance
+    const lenis = window.lenis;
+    if (lenis) {
+      // We use an offset of 800 because the About section is pinned,
+      // so we need to scroll 800px into the pin to see the text start animating.
+      lenis.scrollTo("#about", { duration: 1.2, offset: 1200 });
+    } else {
+      gsap.to(window, {
+        scrollTo: { y: "#about", offsetY: -1200 },
+        duration: 1.2,
+        ease: "power2.inOut",
+      });
+    }
   };
 
   const scrollToProject = () => {
-    if (!sectionRefs.projectRef.current) return;
-    gsap.to(window, {
-      scrollTo: sectionRefs.projectRef.current,
-      duration: 1,
-      ease: "power2.inOut",
-    });
+    // @ts-expect-error - Accessing global lenis instance
+    const lenis = window.lenis;
+    if (lenis) {
+      lenis.scrollTo("#project-list", { duration: 1.2 });
+    } else {
+      gsap.to(window, {
+        scrollTo: "#project-list",
+        duration: 1.2,
+        ease: "power2.inOut",
+      });
+    }
   };
 
   const scrollToContact = () => {
-    if (!sectionRefs.contactRef.current) return;
-    gsap.to(window, {
-      scrollTo: sectionRefs.contactRef.current,
-      duration: 1,
-      ease: "power2.inOut",
-    });
+    // @ts-expect-error - Accessing global lenis instance
+    const lenis = window.lenis;
+    if (lenis) {
+      lenis.scrollTo("#contact-form", { duration: 1.2 });
+    } else {
+      gsap.to(window, {
+        scrollTo: "#contact-form",
+        duration: 1.2,
+        ease: "power2.inOut",
+      });
+    }
   };
 
   return {
