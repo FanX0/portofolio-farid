@@ -1,27 +1,19 @@
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
-import {
-  ScrollTrigger,
-  ScrollToPlugin,
-  SplitText,
-  DrawSVGPlugin,
-  MotionPathPlugin,
-} from "gsap/all";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { DrawSVGPlugin } from "gsap/DrawSVGPlugin";
+import { MotionPathPlugin } from "gsap/MotionPathPlugin";
 
 gsap.registerPlugin(
   ScrollTrigger,
-  ScrollToPlugin,
-  SplitText,
   DrawSVGPlugin,
-  MotionPathPlugin,
+  MotionPathPlugin
 );
 
 export {
   useGSAP,
   ScrollTrigger,
-  ScrollToPlugin,
-  SplitText,
   DrawSVGPlugin,
-  MotionPathPlugin,
+  MotionPathPlugin
 };
 export default gsap;
