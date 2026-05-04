@@ -7,13 +7,13 @@ import JsonLd from "@/components/seo/JsonLd";
 
 const poppins = Poppins({
   subsets: ["latin"],
-  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+  weight: ["300", "400", "500", "700"],
   variable: "--font-poppins",
 });
 
 const fraunces = Fraunces({
   subsets: ["latin"],
-  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+  weight: ["400", "500", "700"],
   variable: "--font-fraunces",
   style: ["normal", "italic"],
 });
@@ -33,6 +33,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        {/* DNS-prefetch for Cloudinary CDN (video loads after 3s, so preconnect is wasteful) */}
+        <link rel="dns-prefetch" href="https://res.cloudinary.com" />
         <style id="pre-paint-scroll-lock">
           {`
             html {

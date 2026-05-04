@@ -8,11 +8,9 @@ import TextMask from "@/components/ui/TextMask";
 import WordRotate from "@/components/ui/WordRotate";
 import FlairButton from "@/components/ui/FlairButton";
 
-
 import { useHeroAnimation } from "./hero.animation";
 import { useBoxHeroAnimation } from "./useBoxHeroAnimation";
 import Magnetic from "@/components/common/Magnetic";
-
 
 import { assets, getVideoUrl } from "@/shared/config/assets";
 import gsap, { useGSAP } from "@/shared/lib/gsap";
@@ -59,19 +57,15 @@ export default function HeroSectionClient({
     onMouseMove,
   } = useBoxHeroAnimation();
 
-
-
   // Start loading the video only after the intro animation completes
+  // Delay is set high enough (3s) to push the video mount past the LCP measurement window,
+  // ensuring the fast local poster Image is always the LCP element.
   useEffect(() => {
     if (!isLoading) {
-      // Small delay to let the main thread breathe after animation
-      const timer = setTimeout(() => setVideoReady(true), 300);
+      const timer = setTimeout(() => setVideoReady(true), 3000);
       return () => clearTimeout(timer);
     }
   }, [isLoading]);
-
-
-
 
   const [showModal, setShowModal] = useState(false);
   const modalVideoRef = useRef<HTMLVideoElement>(null);
@@ -95,11 +89,14 @@ export default function HeroSectionClient({
       // Scroll to trigger the ScrollTrigger expansion
       const scrollTarget =
         container.current.offsetTop + window.innerHeight * 0.8;
-      gsap.to(window, {
-        scrollTo: scrollTarget,
-        duration: 1.5,
-        ease: "power2.inOut",
-      });
+
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const lenis = (window as any).lenis;
+      if (lenis) {
+        lenis.scrollTo(scrollTarget, { duration: 1.5 });
+      } else {
+        window.scrollTo({ top: scrollTarget, behavior: "smooth" });
+      }
     } else {
       // Pause and mute the video
       videoRef.current.pause();
@@ -130,13 +127,13 @@ export default function HeroSectionClient({
               aria-hidden="true"
               className="flex items-center gap-x-[0.3em] justify-center"
             >
-              <span ref={heroText1} className="hidden ">
+              <span ref={heroText1} className="opacity-0">
                 Creating
               </span>
-              <span ref={heroText2} className="hidden ">
+              <span ref={heroText2} className="opacity-0">
                 Interactive
               </span>
-              <span ref={heroText3} className="hidden ">
+              <span ref={heroText3} className="opacity-0">
                 Digital
               </span>
             </span>
@@ -144,14 +141,14 @@ export default function HeroSectionClient({
               aria-hidden="true"
               className="flex items-center gap-x-[0.3em] justify-center"
             >
-              <span className="hidden" ref={heroText4}>
+              <span className="opacity-0" ref={heroText4}>
                 Experiences
               </span>
 
-              <span ref={heroText5} className="hidden">
+              <span ref={heroText5} className="opacity-0">
                 that
               </span>
-              <span className="hidden" ref={heroText6}>
+              <span className="opacity-0" ref={heroText6}>
                 feel
               </span>
             </span>
@@ -159,16 +156,16 @@ export default function HeroSectionClient({
               aria-hidden="true"
               className="flex items-center gap-x-[0.3em] justify-center"
             >
-              <span ref={heroText7} className="hidden">
+              <span ref={heroText7} className="opacity-0">
                 smooth,
               </span>
-              <span ref={heroText8} className="hidden">
+              <span ref={heroText8} className="opacity-0">
                 fast,
               </span>
-              <span className="hidden" ref={heroText9}>
+              <span className="opacity-0" ref={heroText9}>
                 and
               </span>
-              <span className="hidden" ref={heroText10}>
+              <span className="opacity-0" ref={heroText10}>
                 alive.
               </span>
             </span>
@@ -179,7 +176,7 @@ export default function HeroSectionClient({
             <div ref={leftColRef} className="w-full">
               <div
                 ref={leftColContentRef}
-                className="hidden flex flex-col gap-[2rem] lg:justify-between opacity-0 items-center lg:items-start w-full"
+                className="flex flex-col gap-[2rem] lg:justify-between opacity-0 items-center lg:items-start w-full"
               >
                 <div className="flex flex-col gap-[0.5rem] text-center lg:text-left ">
                   <p className="font-fraunces text-[1rem] lg:text-[1.8rem] xl:text-[2rem] 2xl:text-[2.2rem] leading-[1.2] lg:leading-[1.1] text-[var(--black-color)]">
@@ -264,29 +261,30 @@ export default function HeroSectionClient({
               onKeyDown={(e) => {
                 if (e.key === "Enter" || e.key === " ") handlePlayClick();
               }}
-              className="group relative w-full lg:max-w-[30rem] aspect-video rounded-[1rem] overflow-hidden opacity-0 cursor-pointer z-30"
+              className="group relative w-full lg:max-w-[30rem] aspect-video rounded-[1rem] overflow-hidden cursor-pointer z-30 will-change-transform opacity-0"
             >
-              {videoReady ? (
+              {/* Poster image is always rendered as the base layer (LCP element) */}
+              <Image
+                src={assets.videos.heroPreview.poster}
+                alt="Project Preview"
+                fill
+                priority
+                fetchPriority="high"
+                loading="eager"
+                className={`object-cover transition-opacity duration-500 ${videoReady ? "opacity-0" : "opacity-100"}`}
+                sizes="(max-width: 768px) 90vw, (max-width: 1024px) 50vw, 30rem"
+              />
+              {/* Video loads on top after intro animation completes */}
+              {videoReady && (
                 <video
                   ref={videoRef}
                   src={getVideoUrl("heroPreview")}
-                  poster={assets.videos.heroPreview.poster}
                   autoPlay
                   loop
                   muted
                   playsInline
-                  preload="auto"
-                  className="w-full h-full object-cover"
-                />
-              ) : (
-                <Image
-                  src={assets.videos.heroPreview.poster}
-                  alt="Project Preview"
-                  fill
-                  priority
-                  loading="eager"
-                  className="object-cover"
-                  sizes="(max-width: 1024px) 100vw, 30rem"
+                  preload="metadata"
+                  className="absolute inset-0 w-full h-full object-cover"
                 />
               )}
               {/* Play button overlay */}

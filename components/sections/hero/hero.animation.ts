@@ -81,29 +81,27 @@ export function useHeroAnimation({
               onIntroComplete?.();
             },
           });
-          tl.set([heroText1.current], {
+          // Immediate sets for performance and to ensure they aren't 'invisible' if the timeline hasn't started
+          gsap.set([heroText1.current], {
             y: yOffsetStart1,
             x: 0,
-            opacity: 0,
-            display: "block",
+            autoAlpha: 0,
             willChange: "transform, opacity",
           });
 
-          tl.set(heroText3.current, {
+          gsap.set(heroText3.current, {
             y: yOffsetStart3,
             x: xOffset3,
-            opacity: 0,
-            display: "block",
+            autoAlpha: 0,
             willChange: "transform, opacity",
           });
-          tl.set(heroText4.current, {
+          gsap.set(heroText4.current, {
             y: yOffsetStart4,
             x: xOffset4,
-            opacity: 0,
-            display: "block",
+            autoAlpha: 0,
             willChange: "transform, opacity",
           });
-          tl.set(
+          gsap.set(
             [
               heroText2.current,
               heroText5.current,
@@ -114,121 +112,83 @@ export function useHeroAnimation({
               heroText10.current,
             ],
             {
-              opacity: 0,
-              display: "flex",
+              autoAlpha: 0,
               willChange: "transform, opacity",
             },
           );
           
-          // Pre-set columns for performance
           gsap.set([leftColContentRef.current, rightColRef.current], {
+            autoAlpha: 0,
             willChange: "transform, opacity",
           });
-          
-          // Initial state for right col to help LCP - keep it mostly visible but scaled
-          tl.set(rightColRef.current, {
-            scale: 0.9,
-            y: 30,
-            opacity: 0, // Hidden initially during intro animation
-          });
 
-          tl.to(heroText1.current, {
-            y: yOffsetMid1,
-            x: 0,
-            opacity: 1,
-            duration: 0.7,
-            ease: "power2.out",
-          });
-
-          tl.to(heroText3.current, {
-            y: yOffsetMid3,
-            x: xOffset3,
-            opacity: 1,
-            duration: 0.7,
-            ease: "power2.out",
-          });
-
-          tl.to(heroText4.current, {
-            y: yOffsetMid4,
-            x: xOffset4,
-            opacity: 1,
-            duration: 0.7,
-            ease: "power2.out",
-          });
+          // Stage 1: Reveal the main words
           tl.to(
-            heroText3.current,
+            [
+              heroText1.current,
+              heroText3.current,
+              heroText4.current,
+            ],
             {
-              y: 0,
-              x: xOffset3,
-              duration: 0.5,
-              opacity: 1,
-              display: "block",
-              ease: "power2.out",
+              y: (i) => [yOffsetMid1, yOffsetMid3, yOffsetMid4][i],
+              x: (i) => [0, xOffset3, xOffset4][i],
+              autoAlpha: 1,
+              duration: 1.5,
+              stagger: 0.15,
+              ease: "power3.out",
             },
-            "-=0.15",
-          );
-          tl.to(
-            heroText1.current,
-            {
-              y: 0,
-              x: 0,
-              duration: 0.5,
-              opacity: 1,
-              display: "block",
-              ease: "power2.out",
-            },
-            "-=0.5",
-          );
-          tl.to(
-            heroText4.current,
-            {
-              y: 0,
-              x: 0,
-              duration: 0.5,
-              opacity: 1,
-              display: "block",
-              ease: "power2.out",
-            },
-            "-=0.25",
           );
 
+          // Stage 2: Settle into final positions
           tl.to(
-            heroText3.current,
+            [heroText1.current, heroText3.current, heroText4.current],
             {
               y: 0,
-              x: 0,
-              duration: 0.5,
-              opacity: 1,
-              display: "block",
-              ease: "power2.out",
+              x: (i) => [0, 0, 0][i], // All settle to 0
+              duration: 1.2,
+              autoAlpha: 1,
+              stagger: 0.1,
+              ease: "power3.out",
             },
-            "-=0.25",
+            "-=0.6",
           );
-          tl.from(
+
+          // Note: heroText2 is animated later below as part of the cinematic flow
+          tl.fromTo(
             heroText2.current,
             {
               y: yOffsetSmall,
               x: xOffsetSmallNeg,
-              opacity: 1,
-              duration: 0.5,
-              ease: "power2.out",
+              autoAlpha: 0,
             },
-            "-=0.25",
-          );
-
-          tl.from(
-            [heroText5.current, heroText6.current],
             {
-              y: yOffsetSmall,
-              x: xOffsetSmallPos,
-              opacity: 1,
-              duration: 0.5,
-              ease: "power2.out",
+              y: 0,
+              x: 0,
+              autoAlpha: 1,
+              duration: 1.2,
+              ease: "power3.out",
             },
             "-=0.5",
           );
 
-          tl.from(
+          tl.fromTo(
+            [heroText5.current, heroText6.current],
+            {
+              y: yOffsetSmall,
+              x: xOffsetSmallPos,
+              autoAlpha: 0,
+            },
+            {
+              y: 0,
+              x: 0,
+              autoAlpha: 1,
+              duration: 1.2,
+              ease: "power3.out",
+            },
+            "-=0.8",
+          );
+
+          tl.fromTo(
             [
               heroText7.current,
               heroText8.current,
@@ -238,36 +198,29 @@ export function useHeroAnimation({
             {
               y: yOffsetSmall,
               x: xOffsetSmallNeg,
-              duration: 0.5,
-              opacity: 1,
-
-              ease: "power2.out",
+              autoAlpha: 0,
             },
-            "-=0.25",
-          );
-          tl.to(
-            leftColContentRef.current,
             {
               y: 0,
               x: 0,
-              duration: 0.6,
-              opacity: 1,
-              display: "flex",
-              ease: "power2.out",
-            },
-            "-=0.4",
-          );
-          tl.to(
-            rightColRef.current,
-            {
-              y: 0,
-              x: 0,
-              scale: 1,
-              duration: 0.6,
-              opacity: 1,
-              ease: "power2.out",
+              autoAlpha: 1,
+              duration: 1.2,
+              stagger: 0.05,
+              ease: "power3.out",
             },
             "-=0.5",
+          );
+          tl.to(
+            [leftColContentRef.current, rightColRef.current],
+            {
+              y: 0,
+              x: 0,
+              duration: 1.5,
+              autoAlpha: 1,
+              stagger: 0.2,
+              ease: "power3.out",
+            },
+            "-=0.8",
           );
 
           // Play button entrance
@@ -290,6 +243,34 @@ export function useHeroAnimation({
           transformOrigin: "left bottom",
         });
 
+        // Cache layout measurements to avoid forced reflows during scroll.
+        // These are recalculated on ScrollTrigger refresh (resize, etc).
+        const gap = 32; // 2rem = 32px
+        let cachedScale = 1;
+        let cachedX = 0;
+        let cachedY = 0;
+        let cachedButtonScale = 1;
+
+        const recalcMeasurements = () => {
+          const el = rightColRef.current;
+          if (!el) return;
+          const rect = el.getBoundingClientRect();
+          const targetW = window.innerWidth - gap * 2;
+          const targetH = window.innerHeight - gap * 2;
+          const sX = targetW / rect.width;
+          const sY = targetH / rect.height;
+          cachedScale = Math.max(sX, sY);
+          cachedX = -rect.left + gap;
+          cachedY = window.innerHeight - (rect.top + rect.height) - gap;
+
+          // Button scale: grow 50% of the parent's growth
+          const halfScale = 1 + (cachedScale - 1) * 0.5;
+          cachedButtonScale = halfScale / cachedScale;
+        };
+
+        // Initial calculation
+        recalcMeasurements();
+
         const scrollTl = gsap.timeline({
           scrollTrigger: {
             trigger: container.current,
@@ -298,6 +279,7 @@ export function useHeroAnimation({
             pin: true,
             scrub: 1,
             invalidateOnRefresh: true,
+            onRefresh: recalcMeasurements,
           },
         });
 
@@ -316,42 +298,14 @@ export function useHeroAnimation({
         );
 
         // Scale video to fill viewport with 2rem gap on all sides
-        const gap = 32; // 2rem = 32px
-
-        const targetScale = () => {
-          const el = rightColRef.current!;
-          const targetW = window.innerWidth - gap * 2;
-          const targetH = window.innerHeight - gap * 2;
-          const sX = targetW / el.offsetWidth;
-          const sY = targetH / el.offsetHeight;
-          return Math.max(sX, sY);
-        };
-
+        // Uses cached values — no layout queries during scroll frames
         scrollTl.fromTo(
           rightColRef.current,
           { scale: 1, x: 0, y: 0, borderRadius: "1rem" },
           {
-            scale: targetScale,
-            x: () => {
-              const el = rightColRef.current!;
-              let left = 0;
-              let cur: HTMLElement | null = el;
-              while (cur) {
-                left += cur.offsetLeft;
-                cur = cur.offsetParent as HTMLElement | null;
-              }
-              return -left + gap;
-            },
-            y: () => {
-              const el = rightColRef.current!;
-              let top = 0;
-              let cur: HTMLElement | null = el;
-              while (cur) {
-                top += cur.offsetTop;
-                cur = cur.offsetParent as HTMLElement | null;
-              }
-              return window.innerHeight - (top + el.offsetHeight) - gap;
-            },
+            scale: () => cachedScale,
+            x: () => cachedX,
+            y: () => cachedY,
             borderRadius: "1rem",
             zIndex: 10,
             duration: 1,
@@ -366,11 +320,7 @@ export function useHeroAnimation({
             playButtonRef.current,
             { scale: 1 },
             {
-              scale: () => {
-                const ts = targetScale();
-                const halfScale = 1 + (ts - 1) * 0.5; // Grow 50% of the parent's growth
-                return halfScale / ts; // Inverse the rest
-              },
+              scale: () => cachedButtonScale,
               ease: "none",
             },
             0,
@@ -382,20 +332,28 @@ export function useHeroAnimation({
   );
 
   const scrollToContact = () => {
-    gsap.to(window, {
-      scrollTo: "#contact-form",
-      duration: 2,
-      ease: "power2.out",
-    });
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const lenis = (window as any).lenis;
+    if (lenis) {
+      lenis.scrollTo("#contact-form", { duration: 2 });
+    } else {
+      const el = document.querySelector("#contact-form");
+      if (el) {
+        const top = el.getBoundingClientRect().top + window.scrollY;
+        window.scrollTo({ top, behavior: "smooth" });
+      }
+    }
   };
 
   const scrollToProject = () => {
     if (!sectionRefs?.projectRef.current) return;
-    gsap.to(window, {
-      scrollTo: sectionRefs.projectRef.current,
-      duration: 2,
-      ease: "power2.out",
-    });
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const lenis = (window as any).lenis;
+    if (lenis) {
+      lenis.scrollTo(sectionRefs.projectRef.current, { duration: 2 });
+    } else {
+      sectionRefs.projectRef.current.scrollIntoView({ behavior: "smooth" });
+    }
   };
 
   return {
