@@ -2,7 +2,6 @@
 
 import dynamic from "next/dynamic";
 import HeroSection from "@/components/sections/hero/HeroSection.server";
-import AboutSection from "@/components/sections/about/AboutSection.server";
 import Footer from "@/components/layout/Footer";
 import Navbar from "@/components/layout/nav/Navbar.server";
 import LogoTransition from "@/components/common/logotransition/LogoTransition.server";
@@ -11,12 +10,14 @@ import type { Project } from "@/shared/types/project";
 import Sidebar from "@/components/layout/sidebar/Sidebar.server";
 import { useState, useEffect, useRef, useLayoutEffect } from "react";
 import { lockScroll, unlockScroll } from "@/shared/lib/utils/scrollLock";
-const AvatarSection = dynamic(() => import("@/components/sections/avatar/AvatarSection.server"), { ssr: true });
-const ProjectSection = dynamic(() => import("@/components/sections/project/ProjectSection.server"), { ssr: true });
-const ContactSection = dynamic(() => import("@/components/sections/contact/ContactSection.server"), { ssr: true });
-const ProjectScrollSection = dynamic(() => import("@/components/sections/project-scroll/ProjectScrollSection.server"), { ssr: true });
 
+import AboutSection from "@/components/sections/about/AboutSection.server";
+import LazySection from "@/components/common/LazySection";
 
+import AvatarSection from "@/components/sections/avatar/AvatarSection.server";
+import ProjectSection from "@/components/sections/project/ProjectSection.server";
+import ContactSection from "@/components/sections/contact/ContactSection.server";
+import ProjectScrollSection from "@/components/sections/project-scroll/ProjectScrollSection.server";
 
 type HomeClientProps = {
   projects: Project[];
@@ -73,9 +74,6 @@ export default function HomeClient({ projects }: HomeClientProps) {
     };
   }, [isLoading]);
 
-  // Reload page when layout crosses a major breakpoint (mobile ↔ desktop).
-  // Complex GSAP ScrollTrigger animations with pins, scrub, and matchMedia
-  // can't always cleanly re-initialize on resize — a reload is the safest fix.
   useEffect(() => {
     const breakpoint = 1024;
     const lastWasMobile = window.innerWidth < breakpoint;
@@ -127,15 +125,23 @@ export default function HomeClient({ projects }: HomeClientProps) {
             </section>
             <section ref={aboutRef} id="about" aria-label="About">
               <AboutSection />
-              <AvatarSection />
+              <LazySection height="600px">
+                <AvatarSection />
+              </LazySection>
             </section>
           </div>
           <section ref={projectRef} id="project" aria-label="Project">
-            <ProjectScrollSection projects={projects} />
-            <ProjectSection projects={projects} />
+            <LazySection height="800px">
+              <ProjectScrollSection projects={projects} />
+            </LazySection>
+            <LazySection height="1000px">
+              <ProjectSection projects={projects} />
+            </LazySection>
           </section>
           <section ref={contactRef} id="contact" aria-label="Contact">
-            <ContactSection />
+            <LazySection height="600px">
+              <ContactSection />
+            </LazySection>
           </section>
         </article>
       </main>
