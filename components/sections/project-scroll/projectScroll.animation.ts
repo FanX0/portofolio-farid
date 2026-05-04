@@ -16,7 +16,7 @@ export function useProjectScrollAnimation() {
           trigger: container.current,
           start: "top top",
           end: isMobile ? "+=800%" : "+=400%",
-          scrub: 1,
+          scrub: isMobile ? true : 1,
           pin: true,
           invalidateOnRefresh: true,
         },

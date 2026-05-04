@@ -175,11 +175,7 @@ export function useNavbarAnimation({
     if (lenis) {
       lenis.scrollTo("#hero", { duration: 1.2 });
     } else {
-      gsap.to(window, {
-        scrollTo: "#hero",
-        duration: 1.2,
-        ease: "power2.inOut",
-      });
+      window.scrollTo({ top: 0, behavior: "smooth" });
     }
   };
 
@@ -191,11 +187,10 @@ export function useNavbarAnimation({
       // so we need to scroll 800px into the pin to see the text start animating.
       lenis.scrollTo("#about", { duration: 1.2, offset: 1200 });
     } else {
-      gsap.to(window, {
-        scrollTo: { y: "#about", offsetY: -1200 },
-        duration: 1.2,
-        ease: "power2.inOut",
-      });
+      const el = document.querySelector("#about");
+      if (el) {
+        window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY + 1200, behavior: "smooth" });
+      }
     }
   };
 
@@ -205,11 +200,7 @@ export function useNavbarAnimation({
     if (lenis) {
       lenis.scrollTo("#project-list", { duration: 1.2 });
     } else {
-      gsap.to(window, {
-        scrollTo: "#project-list",
-        duration: 1.2,
-        ease: "power2.inOut",
-      });
+      document.querySelector("#project-list")?.scrollIntoView({ behavior: "smooth" });
     }
   };
 
@@ -219,11 +210,7 @@ export function useNavbarAnimation({
     if (lenis) {
       lenis.scrollTo("#contact-form", { duration: 1.2 });
     } else {
-      gsap.to(window, {
-        scrollTo: "#contact-form",
-        duration: 1.2,
-        ease: "power2.inOut",
-      });
+      document.querySelector("#contact-form")?.scrollIntoView({ behavior: "smooth" });
     }
   };
 

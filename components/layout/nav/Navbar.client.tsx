@@ -93,14 +93,22 @@ export default function NavbarClient({
       // Initial state moved to CSS/JSX to avoid glitch on refresh
       const logoEl = navLogoContainerRef.current;
       if (logoEl) {
-        const rect = logoEl.getBoundingClientRect();
-        const centerX = window.innerWidth / 2;
-        const centerY = window.innerHeight * 0.15;
+        // Wait for next frame to ensure layout is settled
+        requestAnimationFrame(() => {
+          if (!logoEl) return;
+          
+          // Clear any previous transforms to measure natural position
+          gsap.set(logoEl, { clearProps: "x,y" });
+          
+          const rect = logoEl.getBoundingClientRect();
+          const centerX = window.innerWidth / 2;
+          const centerY = window.innerHeight * 0.15;
 
-        const offsetX = centerX - (rect.left + rect.width / 2);
-        const offsetY = centerY - (rect.top + rect.height / 2);
+          const offsetX = centerX - (rect.left + rect.width / 2);
+          const offsetY = centerY - (rect.top + rect.height / 2);
 
-        gsap.set(logoEl, { x: offsetX, y: offsetY });
+          gsap.set(logoEl, { x: offsetX, y: offsetY });
+        });
       }
 
       tl.to([navLeftRef.current, navRightRef.current], {
@@ -200,7 +208,7 @@ export default function NavbarClient({
               />
               <div
                 ref={navLogoContainerRef}
-                className="flex items-center text-[1rem] tracking-tighter"
+                className="flex items-center text-[1rem] tracking-tighter relative"
               >
                 <span ref={navLeftRef} className="opacity-0 translate-y-[10px]">
                   farid

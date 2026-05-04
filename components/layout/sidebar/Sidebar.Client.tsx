@@ -45,12 +45,14 @@ export default function SidebarClient({ isOpen, onClose }: SidebarClientProps) {
         offset: offsetValue,
       });
     } else {
-      gsap.to(window, {
-        scrollTo: { y: selector, offsetY: -offsetValue },
-        duration: 1.2,
-        ease: "power2.inOut",
-        delay: 0.5,
-      });
+      setTimeout(() => {
+        if (typeof selector === "string") {
+          const el = document.querySelector(selector);
+          if (el) {
+            window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY + offsetValue, behavior: "smooth" });
+          }
+        }
+      }, 500);
     }
   };
 

@@ -57,3 +57,10 @@ body {
   visibility: hidden;
 }
 
+/* Performance optimization for long pages */
+.performance-optimized {
+  content-visibility: auto;
+  /* Provide a rough estimate of the section height to prevent scrollbar jumps */
+  contain-intrinsic-size: 1px 800px; 
+}
+

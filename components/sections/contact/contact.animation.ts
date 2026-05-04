@@ -1,5 +1,8 @@
 import { useRef } from "react";
-import gsap, { useGSAP, SplitText } from "@/shared/lib/gsap";
+import gsap, { useGSAP } from "@/shared/lib/gsap";
+import { SplitText } from "gsap/all";
+
+gsap.registerPlugin(SplitText);
 
 export function useContactAnimation() {
   const container = useRef<HTMLDivElement>(null);
